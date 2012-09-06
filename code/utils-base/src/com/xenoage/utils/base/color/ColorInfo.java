@@ -9,7 +9,7 @@ package com.xenoage.utils.base.color;
  */
 public class ColorInfo
 {
-	
+
 	public static final ColorInfo black = new ColorInfo(0, 0, 0);
 	public static final ColorInfo blue = new ColorInfo(0, 0, 255);
 	public static final ColorInfo gray = new ColorInfo(128, 128, 128);
@@ -18,10 +18,10 @@ public class ColorInfo
 	public static final ColorInfo red = new ColorInfo(255, 0, 0);
 	public static final ColorInfo white = new ColorInfo(255, 255, 255);
 	public static final ColorInfo yellow = new ColorInfo(255, 255, 0);
-	
+
 	public final int r, g, b, a;
-	
-	
+
+
 	public ColorInfo(int r, int g, int b, int a)
 	{
 		this.r = r;
@@ -29,8 +29,8 @@ public class ColorInfo
 		this.b = b;
 		this.a = a;
 	}
-	
-	
+
+
 	public ColorInfo(int r, int g, int b)
 	{
 		this.r = r;
@@ -38,8 +38,8 @@ public class ColorInfo
 		this.b = b;
 		this.a = 255;
 	}
-	
-	
+
+
 	@Override public int hashCode()
 	{
 		final int prime = 31;
@@ -50,23 +50,20 @@ public class ColorInfo
 		result = prime * result + r;
 		return result;
 	}
-	
-	
+
+
 	@Override public boolean equals(Object o)
 	{
 		if (this == o)
 			return true;
 		else if (o == null)
 			return false;
-		else if (o instanceof ColorInfo)
-		{
+		else if (o instanceof ColorInfo) {
 			ColorInfo c = (ColorInfo) o;
 			return c.r == r && c.b == b && c.g == g && c.a == a;
-		}
-		else
-		{
+		} else {
 			return super.equals(o);
 		}
 	}
-	
+
 }
