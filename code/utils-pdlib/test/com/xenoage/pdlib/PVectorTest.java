@@ -1,7 +1,7 @@
 package com.xenoage.pdlib;
 
-import static com.xenoage.kernel.Tuple2.t;
 import static com.xenoage.pdlib.PVector.pvec;
+import static com.xenoage.utils.kernel.Tuple2.t;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 

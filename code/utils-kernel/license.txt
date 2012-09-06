@@ -1,7 +1,7 @@
-Xenoage kernel
-*************
+Xenoage utils-kernel
+********************
 
-Xenoage kernel is provided under the MIT license:
+Xenoage utils-kernel is provided under the MIT license:
 
 Copyright (c) 2010-2012 Xenoage Software
 

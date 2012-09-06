@@ -1,4 +1,4 @@
-package com.xenoage.kernel;
+package com.xenoage.utils.kernel;
 
 
 /**

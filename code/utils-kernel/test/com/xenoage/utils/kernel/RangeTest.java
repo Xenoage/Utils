@@ -1,7 +1,7 @@
-package com.xenoage.kernel;
+package com.xenoage.utils.kernel;
 
-import static com.xenoage.kernel.Range.range;
-import static com.xenoage.kernel.Range.rangeReverse;
+import static com.xenoage.utils.kernel.Range.range;
+import static com.xenoage.utils.kernel.Range.rangeReverse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -11,7 +11,7 @@ import java.util.Iterator;
 
 import org.junit.Test;
 
-import com.xenoage.kernel.Range;
+import com.xenoage.utils.kernel.Range;
 
 
 /**

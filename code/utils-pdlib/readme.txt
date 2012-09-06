@@ -1,9 +1,9 @@
-Xenoage pdlib
-*************
+Xenoage utils-pdlib
+*******************
 
-Xenoage pdlib is provided under the MIT license, see license.txt.
+Xenoage utils-pdlib is provided under the MIT license, see license.txt.
 
-Xenoage pdlib (persistent data structures library) provides
+Xenoage utils-pdlib (persistent data structures library) provides
 persistent and immutable data structures based on the Java Collections API.
 
 Rather than implementing these complicated techniques itself,

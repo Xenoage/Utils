@@ -1,7 +1,7 @@
 package com.xenoage.pdlib;
 
-import static com.xenoage.kernel.Tuple2.t;
 import static com.xenoage.pdlib.It.it;
+import static com.xenoage.utils.kernel.Tuple2.t;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,7 +11,7 @@ import java.util.ListIterator;
 
 import org.pcollections.TreePVector;
 
-import com.xenoage.kernel.Tuple2;
+import com.xenoage.utils.kernel.Tuple2;
 
 
 /**
