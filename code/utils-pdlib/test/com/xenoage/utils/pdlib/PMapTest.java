@@ -1,9 +1,11 @@
-package com.xenoage.pdlib;
+package com.xenoage.utils.pdlib;
 
-import static com.xenoage.pdlib.PMap.pmap;
+import static com.xenoage.utils.pdlib.PMap.pmap;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import com.xenoage.utils.pdlib.PMap;
 
 
 /**

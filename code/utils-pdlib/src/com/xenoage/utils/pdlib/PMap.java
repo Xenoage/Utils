@@ -1,4 +1,4 @@
-package com.xenoage.pdlib;
+package com.xenoage.utils.pdlib;
 
 import java.util.ArrayList;
 import java.util.Collection;

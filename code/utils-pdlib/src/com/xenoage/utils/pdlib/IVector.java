@@ -1,7 +1,7 @@
-package com.xenoage.pdlib;
+package com.xenoage.utils.pdlib;
 
-import static com.xenoage.pdlib.It.it;
-import static com.xenoage.pdlib.ListIt.listIt;
+import static com.xenoage.utils.pdlib.It.it;
+import static com.xenoage.utils.pdlib.ListIt.listIt;
 
 import java.util.ArrayList;
 import java.util.Collection;

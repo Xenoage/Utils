@@ -1,7 +1,7 @@
-package com.xenoage.pdlib;
+package com.xenoage.utils.pdlib;
 
-import static com.xenoage.pdlib.It.it;
 import static com.xenoage.utils.kernel.Tuple2.t;
+import static com.xenoage.utils.pdlib.It.it;
 
 import java.util.ArrayList;
 import java.util.Collection;

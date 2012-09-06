@@ -1,11 +1,13 @@
-package com.xenoage.pdlib;
+package com.xenoage.utils.pdlib;
 
-import static com.xenoage.pdlib.PVector.pvec;
 import static com.xenoage.utils.kernel.Tuple2.t;
+import static com.xenoage.utils.pdlib.PVector.pvec;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
+
+import com.xenoage.utils.pdlib.PVector;
 
 
 /**
