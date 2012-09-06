@@ -2,7 +2,7 @@ package com.xenoage.utils.swing.color;
 
 import java.awt.Color;
 
-import com.xenoage.utils.base.color.ColorInfo;
+import com.xenoage.utils.graphics.color.ColorInfo;
 
 
 /**

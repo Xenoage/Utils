@@ -1,4 +1,4 @@
-package com.xenoage.utils.base.color;
+package com.xenoage.utils.graphics.color;
 
 
 /**
