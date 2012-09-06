@@ -9,7 +9,7 @@ import com.xenoage.utils.base.StackUtils;
 import com.xenoage.utils.base.annotations.MaybeNull;
 import com.xenoage.utils.base.annotations.NeverNull;
 import com.xenoage.utils.base.exceptions.ThrowableUtils;
-import com.xenoage.utils.base.lang.VocID;
+import com.xenoage.utils.lang.VocID;
 
 
 /**

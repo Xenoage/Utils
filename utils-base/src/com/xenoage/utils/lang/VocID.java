@@ -1,4 +1,4 @@
-package com.xenoage.utils.base.lang;
+package com.xenoage.utils.lang;
 
 
 /**
