@@ -366,11 +366,13 @@ public final class PVector<T>
 	 */
 	public Tuple2<PVector<T>, PVector<T>> split(int index)
 	{
+		int size = size();
+		index = (index < 0 ? 0 : (index > size ? size : index));
 		PVector<T> p1 = pvec();
 		PVector<T> p2 = pvec();
 		for (int i = 0; i < index; i++)
 			p1 = p1.plus(get(i));
-		for (int i = index; i < size(); i++)
+		for (int i = index; i < size; i++)
 			p2 = p2.plus(get(i));
 		return t(p1, p2);
 	}

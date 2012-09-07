@@ -1,7 +1,7 @@
-Xenoage pdlib
-*************
+Xenoage utils-pdlib
+*******************
 
-Xenoage pdlib is provided under the MIT license:
+Xenoage utils-pdlib is provided under the MIT license:
 
 Copyright (c) 2010-2012 Xenoage Software
 

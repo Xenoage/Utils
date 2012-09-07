@@ -42,10 +42,15 @@ public class PVectorTest
 		PVector<Integer> v = pvec(1, 2, 3, 4, 5);
 		//split in middle
 		assertEquals(t(pvec(1, 2), pvec(3, 4, 5)), v.split(2));
+		assertEquals(t(pvec(1, 2, 3, 4), pvec(5)), v.split(4));
 		//split at start
+		assertEquals(t(pvec(), v), v.split(0));
 		assertEquals(t(pvec(), v), v.split(-1));
+		assertEquals(t(pvec(), v), v.split(-2));
 		//split at end
 		assertEquals(t(v, pvec()), v.split(5));
+		assertEquals(t(v, pvec()), v.split(7));
+		assertEquals(t(v, pvec()), v.split(6));
 	}
 
 }
