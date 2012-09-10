@@ -50,7 +50,7 @@ public enum Level
 	 */
 	public boolean isIncludedIn(Level topLevel)
 	{
-		return this.ordinal() >= topLevel.ordinal();
+		return this.ordinal() <= topLevel.ordinal();
 	}
 	
 	

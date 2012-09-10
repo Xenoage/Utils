@@ -2,6 +2,7 @@ package com.xenoage.utils.error;
 
 import static com.xenoage.utils.log.Log.log;
 
+import com.xenoage.utils.log.Level;
 import com.xenoage.utils.log.Report;
 
 
@@ -43,11 +44,14 @@ public class BasicErrorProcessing
 	
 	
 	/**
-	 * Does nothing. Can be overridden to process the error further, e.g.
+	 * Closes the program, when a fatal error is reported.
+	 * Can be overridden to process the error further, e.g.
 	 * by showing a dialog.
 	 */
 	protected void handleError(Report report)
 	{
+		if (report.level == Level.Fatal)
+			System.exit(1);
 	}
 	
 

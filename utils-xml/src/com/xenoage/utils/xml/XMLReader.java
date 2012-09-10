@@ -5,6 +5,7 @@ import static com.xenoage.utils.kernel.Range.range;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -19,6 +20,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import com.xenoage.utils.base.annotations.MaybeNull;
@@ -60,6 +62,23 @@ public class XMLReader
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			builder.setEntityResolver(new NoResolver());
 			return builder.parse(stream);
+		} catch (Exception ex) {
+			throw new IOException(ex);
+		}
+	}
+	
+	
+	/**
+	 * Reads and returns the XML document in the given string.
+	 */
+	public static Document read(String data)
+		throws IOException
+	{
+		try {
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			builder.setEntityResolver(new NoResolver());
+			return builder.parse((new InputSource(new StringReader(data))));
 		} catch (Exception ex) {
 			throw new IOException(ex);
 		}
