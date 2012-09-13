@@ -1,6 +1,6 @@
 package com.xenoage.utils.math.geom;
 
-import com.xenoage.utils.pdlib.Vector;
+import java.util.List;
 
 
 /**
@@ -11,10 +11,10 @@ import com.xenoage.utils.pdlib.Vector;
 public final class CompositeShape
 {
 
-	private Vector<Shape> shapes;
+	private List<Shape> shapes;
 
 
-	public CompositeShape(Vector<Shape> shapes)
+	public CompositeShape(List<Shape> shapes)
 	{
 		this.shapes = shapes;
 	}
