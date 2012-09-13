@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.xenoage.utils.io.TestIO;
+import com.xenoage.utils.io.IO;
 import com.xenoage.utils.lang.LanguageTest.TestVocabulary;
 
 
@@ -25,7 +25,7 @@ public class LangTest
 	
 	@Before public void setUp()
 	{
-		TestIO.initWithSharedDir();
+		IO.initTest();
 	}
   
 	

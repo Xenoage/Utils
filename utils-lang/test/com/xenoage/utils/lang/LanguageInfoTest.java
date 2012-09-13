@@ -13,7 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.xenoage.utils.io.IO;
-import com.xenoage.utils.io.TestIO;
 
 
 /**
@@ -30,7 +29,7 @@ public class LanguageInfoTest
 	@Before public void setUp()
 		throws Exception
 	{
-		TestIO.initWithSharedDir();
+		IO.initTest();
 		langs = LanguageInfo.getAvailableLanguages(Lang.defaultLangPath);
 		assertTrue("There must be at least one language pack!", langs.size() > 0);
 	}

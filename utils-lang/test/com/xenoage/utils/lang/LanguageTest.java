@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.xenoage.utils.io.IO;
 import com.xenoage.utils.io.TestIO;
 
 
@@ -36,7 +37,7 @@ public class LanguageTest
 	
 	@Before public void setUp()
 	{
-		TestIO.initWithSharedDir();
+		IO.initTest();
 	}
 
   
