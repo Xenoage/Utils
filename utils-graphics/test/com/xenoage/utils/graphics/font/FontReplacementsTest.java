@@ -6,8 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.xenoage.utils.base.settings.Settings;
-import com.xenoage.utils.graphics.font.FontReplacements;
-import com.xenoage.utils.io.TestIO;
+import com.xenoage.utils.io.IO;
 
 
 /**
@@ -23,7 +22,7 @@ public class FontReplacementsTest
 	
 	@Before public void setUp()
 	{
-		TestIO.initWithSharedDir();
+		IO.initTest();
 		settings = new Settings("data/test/config/");
 	}
 	
