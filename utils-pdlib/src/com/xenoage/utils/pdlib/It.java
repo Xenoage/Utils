@@ -78,4 +78,5 @@ public final class It<T>
 		return currentIndex;
 	}
 
+
 }

@@ -29,47 +29,47 @@ import java.util.ListIterator;
 public final class IVector<T>
 	implements Vector<T>
 {
-	
+
 	private final ArrayList<T> array;
 	private boolean closed = false;
-	
-	
+
+
 	public IVector()
 	{
 		array = new ArrayList<T>();
 	}
-	
-	
+
+
 	private IVector(int initialCapacity)
 	{
 		array = new ArrayList<T>(initialCapacity);
 	}
-	
-	
+
+
 	private IVector(Collection<T> c)
 	{
 		array = new ArrayList<T>(c);
 	}
-	
-	
+
+
 	public static <T2> IVector<T2> ivec()
 	{
 		return new IVector<T2>();
 	}
-	
-	
+
+
 	public static <T2> IVector<T2> ivec(int initialCapacity)
 	{
 		return new IVector<T2>(initialCapacity);
 	}
-	
-	
+
+
 	public static <T2> IVector<T2> ivec(Collection<T2> c)
 	{
 		return new IVector<T2>(c);
 	}
-	
-	
+
+
 	@SafeVarargs public static <T2> IVector<T2> ivec(T2... data)
 	{
 		ArrayList<T2> array = new ArrayList<T2>(data.length);
@@ -77,8 +77,8 @@ public final class IVector<T>
 			array.add(o);
 		return new IVector<T2>(array);
 	}
-	
-	
+
+
 	public static <T> IVector<T> ivecInit(T valueForAll, int size)
 	{
 		IVector<T> ret = new IVector<T>(size);
@@ -86,20 +86,20 @@ public final class IVector<T>
 			ret.add(valueForAll);
 		return ret;
 	}
-	
-	
+
+
 	public static <T2> Vector<T2> vec(Collection<T2> data)
 	{
 		return ivec(data).close();
 	}
-	
-	
+
+
 	@SafeVarargs public static <T2> Vector<T2> vec(T2... data)
 	{
 		return ivec(data).close();
 	}
-	
-	
+
+
 	/**
 	 * Closes the vector. All future calls to write methods will fail.
 	 * Returns this vector for convenience.
@@ -109,27 +109,27 @@ public final class IVector<T>
 		closed = true;
 		return this;
 	}
-	
-	
+
+
 	private void requestWrite()
 	{
 		if (closed)
 			throw new IllegalStateException("vector is closed");
 	}
-	
-	
+
+
 	@Override public T getFirst()
 	{
 		return array.get(0);
 	}
-	
-	
+
+
 	@Override public T getLast()
 	{
 		return array.get(array.size() - 1);
 	}
 
-	
+
 	@Override public boolean add(T e)
 	{
 		requestWrite();
@@ -137,27 +137,27 @@ public final class IVector<T>
 		return true;
 	}
 
-	
+
 	@Override public void add(int index, T element)
 	{
 		requestWrite();
 		array.add(index, element);
 	}
 
-	
+
 	@Override public boolean addAll(Collection<? extends T> c)
 	{
 		requestWrite();
 		return array.addAll(c);
 	}
-	
-	
+
+
 	@Override public boolean addAll(int index, Collection<? extends T> c)
 	{
 		requestWrite();
 		return array.addAll(index, c);
 	}
-	
+
 
 	@Override public void clear()
 	{
@@ -165,19 +165,19 @@ public final class IVector<T>
 		array.clear();
 	}
 
-	
+
 	@Override public boolean contains(Object o)
 	{
 		return array.contains(o);
 	}
-	
+
 
 	@Override public boolean containsAll(Collection<?> c)
 	{
 		return array.containsAll(c);
 	}
-	
-	
+
+
 	@Override public T get(int index)
 	{
 		return array.get(index);
@@ -189,13 +189,13 @@ public final class IVector<T>
 		return array.indexOf(o);
 	}
 
-	
+
 	@Override public boolean isEmpty()
 	{
 		return array.isEmpty();
 	}
 
-	
+
 	@Override public Iterator<T> iterator()
 	{
 		if (closed)
@@ -203,8 +203,8 @@ public final class IVector<T>
 		else
 			return array.iterator();
 	}
-	
-	
+
+
 	@Override public int lastIndexOf(Object o)
 	{
 		return array.lastIndexOf(o);
@@ -225,20 +225,20 @@ public final class IVector<T>
 		throw new UnsupportedOperationException();
 	}
 
-	
+
 	@Override public boolean remove(Object o)
 	{
 		requestWrite();
 		return array.remove(o);
 	}
-	
-	
+
+
 	@Override public T remove(int index)
 	{
 		requestWrite();
 		return array.remove(index);
 	}
-	
+
 
 	@Override public boolean removeAll(Collection<?> c)
 	{
@@ -246,45 +246,45 @@ public final class IVector<T>
 		return array.retainAll(c);
 	}
 
-	
+
 	@Override public boolean retainAll(Collection<?> c)
 	{
 		requestWrite();
 		return array.retainAll(c);
 	}
-	
-	
+
+
 	@Override public T set(int index, T element)
 	{
 		requestWrite();
 		return array.set(index, element);
 	}
 
-	
+
 	@Override public int size()
 	{
 		return array.size();
 	}
-	
-	
+
+
 	@Override public Vector<T> subList(int fromIndex, int toIndex)
 	{
 		return ivec(array.subList(fromIndex, toIndex)).close();
 	}
-	
+
 
 	@Override public Object[] toArray()
 	{
 		return array.toArray();
 	}
 
-	
+
 	@Override public <T2> T2[] toArray(T2[] a)
 	{
 		return array.toArray(a);
 	}
-	
-	
+
+
 	/**
 	 * Returns true, if the given collection has the same values as this one,
 	 * otherwise false.
@@ -293,17 +293,18 @@ public final class IVector<T>
 	{
 		return array.equals(o);
 	}
-	
-	
+
+
 	@Override public int hashCode()
 	{
 		return array.hashCode();
 	}
-	
-	
+
+
 	@Override public String toString()
 	{
 		return "{size:" + array.size() + ", data:" + array.toString() + "}";
 	}
-	
+
+
 }

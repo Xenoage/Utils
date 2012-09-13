@@ -33,16 +33,16 @@ import com.xenoage.utils.kernel.Tuple2;
 public final class PVector<T>
 	implements Vector<T>
 {
-	
+
 	private final TreePVector<T> data;
-	
-	
+
+
 	public PVector(Collection<T> data)
 	{
 		this.data = TreePVector.from(data);
 	}
-	
-	
+
+
 	@SafeVarargs public PVector(T... data)
 	{
 		ArrayList<T> array = new ArrayList<T>(data.length);
@@ -50,56 +50,56 @@ public final class PVector<T>
 			array.add(o);
 		this.data = TreePVector.from(array);
 	}
-	
-	
+
+
 	public PVector()
 	{
 		this.data = TreePVector.empty();
 	}
-	
-	
+
+
 	public static <T2> PVector<T2> pvec()
 	{
 		return new PVector<T2>();
 	}
-	
-	
+
+
 	public static <T2> PVector<T2> pvec(Collection<T2> data)
 	{
 		return new PVector<T2>(data);
 	}
-	
-	
+
+
 	@SafeVarargs public static <T2> PVector<T2> pvec(T2... data)
 	{
 		return new PVector<T2>(data);
 	}
-	
-	
+
+
 	private PVector(TreePVector<T> data)
 	{
 		this.data = data;
 	}
-	
-	
+
+
 	@Override public T getFirst()
 	{
 		return data.get(0);
 	}
-	
-	
+
+
 	@Override public T getLast()
 	{
 		return data.get(data.size() - 1);
 	}
 
-	
+
 	@Deprecated @Override public boolean add(T e)
 	{
 		throw new UnsupportedOperationException("Use plus method instead");
 	}
-	
-	
+
+
 	/**
 	 * Adds the given element at the end of this vector.
 	 */
@@ -107,8 +107,8 @@ public final class PVector<T>
 	{
 		return new PVector<T>(data.plus(e));
 	}
-	
-	
+
+
 	/**
 	 * Adds the given element at the end of this vector if it is not null.
 	 */
@@ -119,8 +119,8 @@ public final class PVector<T>
 		else
 			return this;
 	}
-	
-	
+
+
 	/**
 	 * Adds the given element at index 0.
 	 */
@@ -129,61 +129,61 @@ public final class PVector<T>
 		return new PVector<T>(data.plus(0, e));
 	}
 
-	
+
 	@Deprecated @Override public void add(int index, T element)
 	{
 		throw new UnsupportedOperationException("Use plus method instead");
 	}
-	
-	
+
+
 	public PVector<T> plus(int index, T element)
 	{
 		return new PVector<T>(data.plus(index, element));
 	}
 
-	
+
 	@Deprecated @Override public boolean addAll(Collection<? extends T> c)
 	{
 		throw new UnsupportedOperationException("Use plusAll method instead");
 	}
-	
-	
+
+
 	public PVector<T> plusAll(Collection<? extends T> c)
 	{
 		return new PVector<T>(data.plusAll(c));
 	}
-	
-	
+
+
 	@Deprecated @Override public boolean addAll(int index, Collection<? extends T> c)
 	{
 		throw new UnsupportedOperationException("Use plusAll method instead");
 	}
-	
-	
+
+
 	public PVector<T> plusAll(int index, Collection<? extends T> c)
 	{
 		return new PVector<T>(data.plusAll(index, c));
 	}
-	
+
 
 	@Deprecated @Override public void clear()
 	{
 		throw new UnsupportedOperationException("Create an empty instance instead");
 	}
 
-	
+
 	@Override public boolean contains(Object o)
 	{
 		return data.contains(o);
 	}
-	
+
 
 	@Override public boolean containsAll(Collection<?> c)
 	{
 		return data.containsAll(c);
 	}
-	
-	
+
+
 	@Override public T get(int index)
 	{
 		return data.get(index);
@@ -195,19 +195,19 @@ public final class PVector<T>
 		return data.indexOf(o);
 	}
 
-	
+
 	@Override public boolean isEmpty()
 	{
 		return data.isEmpty();
 	}
 
-	
+
 	@Override public Iterator<T> iterator()
 	{
 		return it(data);
 	}
-	
-	
+
+
 	@Override public int lastIndexOf(Object o)
 	{
 		return data.lastIndexOf(o);
@@ -225,86 +225,84 @@ public final class PVector<T>
 		return data.listIterator(index);
 	}
 
-	
+
 	@Deprecated @Override public boolean remove(Object o)
 	{
 		throw new UnsupportedOperationException("Use minus method instead");
 	}
-	
-	
+
+
 	public PVector<T> minus(Object o)
 	{
 		return new PVector<T>(data.minus(o));
 	}
-	
-	
+
+
 	public PVector<T> minusFirst()
 	{
 		return new PVector<T>(data.minus(0));
 	}
-	
-	
+
+
 	@Deprecated @Override public T remove(int index)
 	{
 		throw new UnsupportedOperationException("Use minus method instead");
 	}
-	
-	
+
+
 	public PVector<T> minus(int index)
 	{
 		return new PVector<T>(data.minus(index));
 	}
-	
+
 
 	@Deprecated @Override public boolean removeAll(Collection<?> c)
 	{
 		throw new UnsupportedOperationException("Use minusAll method instead");
 	}
-	
-	
+
+
 	public PVector<T> minusAll(Collection<?> c)
 	{
 		return new PVector<T>(data.minusAll(c));
 	}
 
-	
+
 	@Deprecated @Override public boolean retainAll(Collection<?> c)
 	{
 		throw new UnsupportedOperationException("Use intersect method instead");
 	}
-	
-	
+
+
 	public PVector<T> intersect(Collection<?> c)
 	{
 		LinkedList<T> ret = new LinkedList<T>();
 		boolean modified = false;
-		for (T e : data)
-		{
-			if (c.contains(e))
-			{
+		for (T e : data) {
+			if (c.contains(e)) {
 				ret.add(e);
 				modified = true;
-		  }
+			}
 		}
 		if (modified)
 			return new PVector<T>(ret);
 		else
 			return this;
 	}
-	
-	
+
+
 	@Deprecated @Override public T set(int index, T element)
 	{
 		throw new UnsupportedOperationException("Use with method instead");
 	}
-	
-	
+
+
 	public PVector<T> with(int index, T element)
 	{
 		return new PVector<T>(data.with(index, element));
 	}
-	
-	
+
+
 	/**
 	 * Sets the element at the given index. If the index is out of
 	 * the bounds of this vector, it is extended up to this index
@@ -317,8 +315,8 @@ public final class PVector<T>
 			data = data.plus(fillElement);
 		return new PVector<T>(data.with(index, element));
 	}
-	
-	
+
+
 	/**
 	 * Replaces the given old element by the given new one,
 	 * or does nothing if the old element was not found.
@@ -331,8 +329,8 @@ public final class PVector<T>
 		else
 			return this;
 	}
-	
-	
+
+
 	/**
 	 * Replaces the given old element by the given new one,
 	 * or does nothing if the old element was not found.
@@ -341,24 +339,22 @@ public final class PVector<T>
 	public PVector<T> replaceOrMinus(T oldElement, T newElement)
 	{
 		int i = indexOf(oldElement);
-		if (i > -1)
-		{
+		if (i > -1) {
 			if (newElement != null)
 				return with(i, newElement);
 			else
 				return minus(i);
-		}
-		else
+		} else
 			return this;
 	}
 
-	
+
 	@Override public int size()
 	{
 		return data.size();
 	}
-	
-	
+
+
 	/**
 	 * Splits this vector at the given position. The given index
 	 * is the first element of the second part.
@@ -366,36 +362,35 @@ public final class PVector<T>
 	 */
 	public Tuple2<PVector<T>, PVector<T>> split(int index)
 	{
-		int size = size();
-		index = (index < 0 ? 0 : (index > size ? size : index));
+		index = (index < 0 ? 0 : (index > size() ? size() : index));
 		PVector<T> p1 = pvec();
 		PVector<T> p2 = pvec();
 		for (int i = 0; i < index; i++)
 			p1 = p1.plus(get(i));
-		for (int i = index; i < size; i++)
+		for (int i = index; i < size(); i++)
 			p2 = p2.plus(get(i));
 		return t(p1, p2);
 	}
-	
-	
+
+
 	@Override public PVector<T> subList(int fromIndex, int toIndex)
 	{
 		return new PVector<T>(data.subList(fromIndex, toIndex));
 	}
-	
+
 
 	@Override public Object[] toArray()
 	{
 		return data.toArray();
 	}
 
-	
+
 	@Override public <T2> T2[] toArray(T2[] a)
 	{
 		return data.toArray(a);
 	}
-	
-	
+
+
 	/**
 	 * Returns true, if the given collection has the same values as this one,
 	 * otherwise false.
@@ -404,17 +399,18 @@ public final class PVector<T>
 	{
 		return data.equals(o);
 	}
-	
-	
+
+
 	@Override public int hashCode()
 	{
 		return data.hashCode();
 	}
-	
-	
+
+
 	@Override public String toString()
 	{
 		return "{size:" + data.size() + ", data:" + data.toString() + "}";
 	}
+
 
 }
