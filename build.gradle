@@ -1,3 +1,5 @@
+defaultTasks 'build', 'singleJar'
+
 allprojects {
     apply plugin: 'java'
     
