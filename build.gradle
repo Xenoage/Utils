@@ -1,0 +1,78 @@
+defaultTasks 'build', 'singleJar'
+
+allprojects {
+    apply plugin: 'java'
+    
+	sourceCompatibility = 7
+	
+	repositories {
+		mavenCentral()
+	}
+	
+	dependencies {
+		testCompile group: 'junit', name: 'junit', version: '4.+'
+	}
+
+	sourceSets {
+		main { java { srcDir 'src' } }
+		test { java { srcDir 'test' } }
+	}
+
+	jar {
+		from 'license.txt'
+	}
+}
+
+project(':utils-base') {
+    dependencies {
+        compile project(':utils-kernel')
+    }
+}
+
+project(':utils-graphics') {
+    dependencies {
+        compile project(':utils-base'), project(':utils-kernel'), project(':utils-math'), project(':utils-pdlib')
+    }
+}
+
+project(':utils-lang') {
+    dependencies {
+        compile project(':utils-base'), project(':utils-kernel'), project(':utils-xml')
+    }
+}
+
+project(':utils-pdlib') {
+    dependencies {
+        compile project(':utils-kernel')
+    }
+}
+
+project(':utils-serialize') {
+    dependencies {
+        compile project(':utils-base'), project(':utils-kernel'), project(':utils-math'), project(':utils-xml')
+    }
+}
+
+project(':utils-swing') {
+    dependencies {
+        compile project(':utils-base'), project(':utils-graphics'), project(':utils-kernel'), project(':utils-math'), project(':utils-pdlib')
+    }
+}
+
+project(':utils-xml') {
+    dependencies {
+        compile project(':utils-base'), project(':utils-kernel')
+    }
+}
+
+task singleJar(type: Zip) {
+	subprojects.each() { subproject ->
+		from (zipTree("${subproject.name}/build/libs/${subproject.name}.jar")) { exclude 'license.txt' }
+		from (zipTree("${subproject.name}/build/libs/${subproject.name}.jar")) { include 'license.txt' into("licenses/${subproject.name}/") }
+	};
+	from 'license.txt'
+    destinationDir = buildDir
+    archiveName = 'utils.jar'
+}
+
+
