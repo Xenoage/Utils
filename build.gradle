@@ -1,6 +1,6 @@
-defaultTasks 'build', 'singleJar'
+defaultTasks 'dist'
 
-allprojects {
+subprojects {
     apply plugin: 'java'
     
 	sourceCompatibility = 7
@@ -31,13 +31,13 @@ project(':utils-base') {
 
 project(':utils-graphics') {
     dependencies {
-        compile project(':utils-base'), project(':utils-kernel'), project(':utils-math'), project(':utils-pdlib')
+        compile project(':utils-base'), project(':utils-math'), project(':utils-pdlib')
     }
 }
 
 project(':utils-lang') {
     dependencies {
-        compile project(':utils-base'), project(':utils-kernel'), project(':utils-xml')
+        compile project(':utils-base'), project(':utils-xml')
     }
 }
 
@@ -49,29 +49,34 @@ project(':utils-pdlib') {
 
 project(':utils-serialize') {
     dependencies {
-        compile project(':utils-base'), project(':utils-kernel'), project(':utils-math'), project(':utils-xml')
+        compile project(':utils-math'), project(':utils-xml')
     }
 }
 
 project(':utils-swing') {
     dependencies {
-        compile project(':utils-base'), project(':utils-graphics'), project(':utils-kernel'), project(':utils-math'), project(':utils-pdlib')
+        compile project(':utils-graphics')
     }
 }
 
 project(':utils-xml') {
     dependencies {
-        compile project(':utils-base'), project(':utils-kernel')
+        compile project(':utils-base')
     }
 }
 
-task singleJar(type: Zip) {
+task clean << {
+	delete "dist"
+}
+
+task dist(type: Zip, dependsOn: subprojects*.build) {
 	subprojects.each() { subproject ->
-		from (zipTree("${subproject.name}/build/libs/${subproject.name}.jar")) { exclude 'license.txt' }
-		from (zipTree("${subproject.name}/build/libs/${subproject.name}.jar")) { include 'license.txt' into("licenses/${subproject.name}/") }
+		ext.jarDir = "${subproject.name}/build/libs/"
+		from (zipTree(ext.jarDir + subproject.name + ".jar")) { exclude 'license.txt' }
+		from (zipTree(ext.jarDir + subproject.name + ".jar")) { include 'license.txt' into("licenses/${subproject.name}/") }
 	};
 	from 'license.txt'
-    destinationDir = buildDir
+    destinationDir = file("dist")
     archiveName = 'utils.jar'
 }
 
