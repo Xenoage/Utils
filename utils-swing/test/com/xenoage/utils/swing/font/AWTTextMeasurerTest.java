@@ -7,8 +7,7 @@ import java.awt.Font;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.xenoage.utils.swing.font.AWTTextMeasurer;
-import com.xenoage.utils.swing.font.FontUtils;
+import com.xenoage.utils.graphics.font.FontUtils;
 
 
 /**

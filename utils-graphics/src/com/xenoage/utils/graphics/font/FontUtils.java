@@ -1,4 +1,4 @@
-package com.xenoage.utils.swing.font;
+package com.xenoage.utils.graphics.font;
 
 import static com.xenoage.utils.log.Log.log;
 import static com.xenoage.utils.log.Report.remark;
@@ -28,8 +28,7 @@ public class FontUtils
 	
 	private static FontUtils instance = null;
 	
-	/** The default {@link TextMeasurerFactory}, which is the {@link AWTTextMeasurerFactory} */
-	public static TextMeasurerFactory textMeasurerFactory = new AWTTextMeasurerFactory();
+	public static TextMeasurerFactory textMeasurerFactory = null;
 	
 	private SortedList<String> supportedFontFamiliesSorted;
 	private HashSet<String> supportedFontFamilies;
@@ -103,6 +102,8 @@ public class FontUtils
 	
 	public static TextMeasurer textMeasurer(FontInfo font, String text)
 	{
+		if (textMeasurerFactory == null)
+			throw new IllegalStateException("Init textMeasurerFactory first");
 		return textMeasurerFactory.textMeasurer(font, text);
 	}
 	

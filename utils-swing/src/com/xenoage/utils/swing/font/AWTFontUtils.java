@@ -7,6 +7,7 @@ import java.awt.Font;
 import com.xenoage.utils.graphics.font.FontInfo;
 import com.xenoage.utils.graphics.font.FontReplacements;
 import com.xenoage.utils.graphics.font.FontStyle;
+import com.xenoage.utils.graphics.font.FontUtils;
 import com.xenoage.utils.pdlib.PVector;
 
 
