@@ -25,9 +25,9 @@ public class Lang
 
 	private static Language currentLanguage = null;
 
-	private static LinkedList<WeakReference<LanguageComponent>> languageComponents = new LinkedList<>();
+	private static LinkedList<WeakReference<LanguageComponent>> languageComponents = new LinkedList<WeakReference<LanguageComponent>>();
 
-	private static ArrayList<Tuple2<String, String>> tokens = new ArrayList<>();
+	private static ArrayList<Tuple2<String, String>> tokens = new ArrayList<Tuple2<String, String>>();
 
 
 	/**

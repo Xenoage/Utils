@@ -46,7 +46,7 @@ public final class InvalidXMLData
 	public List<Node> getStack()
 	{
 		Node n = element;
-		LinkedList<Node> stack = new LinkedList<>();
+		LinkedList<Node> stack = new LinkedList<Node>();
 		do
 		{
 			stack.addFirst(n);
