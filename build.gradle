@@ -1,6 +1,7 @@
 defaultTasks 'dist'
 
-subprojects {
+//settings common to all projects
+allprojects {
     apply plugin: 'java'
 	compileJava.options.encoding = 'UTF-8'
     
@@ -21,64 +22,44 @@ subprojects {
 
 	jar {
 		from 'license.txt'
+		manifest.attributes 'Created-By': 'Xenoage Software'
 	}
 }
 
-project(':utils-base') {
-    dependencies {
-        compile project(':utils-kernel')
-    }
+//project dependencies
+project(':utils-base') { dependencies { compile project(':utils-kernel') } }
+project(':utils-graphics') { dependencies { compile project(':utils-base'), project(':utils-math'), project(':utils-pdlib') } }
+project(':utils-lang') { dependencies { compile project(':utils-base'), project(':utils-xml') } }
+project(':utils-pdlib') { dependencies { compile project(':utils-kernel') } }
+project(':utils-serialize') { dependencies { compile project(':utils-math'), project(':utils-xml') } }
+project(':utils-swing') { dependencies { compile project(':utils-graphics') } }
+project(':utils-xml') { dependencies { compile project(':utils-base') } }
+
+//distribution in multiple jars
+task distDir(type:Copy) {
+	dependsOn subprojects*.build
+	from subprojects*.jar.outputs.files
+	into "build/dist/split"
 }
 
-project(':utils-graphics') {
-    dependencies {
-        compile project(':utils-base'), project(':utils-math'), project(':utils-pdlib')
-    }
-}
-
-project(':utils-lang') {
-    dependencies {
-        compile project(':utils-base'), project(':utils-xml')
-    }
-}
-
-project(':utils-pdlib') {
-    dependencies {
-        compile project(':utils-kernel')
-    }
-}
-
-project(':utils-serialize') {
-    dependencies {
-        compile project(':utils-math'), project(':utils-xml')
-    }
-}
-
-project(':utils-swing') {
-    dependencies {
-        compile project(':utils-graphics')
-    }
-}
-
-project(':utils-xml') {
-    dependencies {
-        compile project(':utils-base')
-    }
-}
-
-task clean << {
-	delete "build", "dist"
-}
-
-task dist(type: Zip, dependsOn: subprojects*.build) {
+//distribution in single jar
+task singleJar(type: Jar) {
+	dependsOn subprojects*.build
+	
 	subprojects.each() { subproject ->
 		ext.jarDir = "${subproject.name}/build/libs/"
 		from (zipTree(ext.jarDir + subproject.name + ".jar")) { exclude 'license.txt' }
 		from (zipTree(ext.jarDir + subproject.name + ".jar")) { include 'license.txt' into("licenses/${subproject.name}/") }
 	};
 	from 'license.txt'
-    destinationDir = file("dist")
+    destinationDir = file("build/dist/onejar")
     archiveName = 'utils.jar'
+}
+
+//main task
+task dist {
+	dependsOn build
+	dependsOn distDir, singleJar
 }
 
 
