@@ -4,10 +4,9 @@ import static com.xenoage.utils.error.Err.handle;
 import static com.xenoage.utils.log.Report.fatal;
 import static com.xenoage.utils.log.Report.warning;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
+import com.xenoage.utils.base.collections.WeakList;
 import com.xenoage.utils.base.iterators.It;
 import com.xenoage.utils.kernel.Tuple2;
 
@@ -25,7 +24,7 @@ public class Lang
 
 	private static Language currentLanguage = null;
 
-	private static LinkedList<WeakReference<LanguageComponent>> languageComponents = new LinkedList<WeakReference<LanguageComponent>>();
+	private static WeakList<LanguageComponent> languageComponents = new WeakList<LanguageComponent>();
 
 	private static ArrayList<Tuple2<String, String>> tokens = new ArrayList<Tuple2<String, String>>();
 
@@ -99,6 +98,8 @@ public class Lang
 	 */
 	public static String get(VocID id)
 	{
+		if (id == null)
+			return "";
 		String s = getWithNull(id);
 		return (s != null ? s : id.toString());
 	}
@@ -134,9 +135,7 @@ public class Lang
 	 */
 	public static void registerComponent(LanguageComponent component)
 	{
-		removeObsoleteLanguageComponents();
-		if (component != null)
-			languageComponents.add(new WeakReference<LanguageComponent>(component));
+		languageComponents.add(component);
 	}
 
 
@@ -154,21 +153,8 @@ public class Lang
 	 */
 	static void updateLanguageComponents()
 	{
-		removeObsoleteLanguageComponents();
-		for (WeakReference<LanguageComponent> component : languageComponents) {
-			component.get().languageChanged();
-		}
-	}
-
-
-	/**
-	 * Removes all obsolete language components.
-	 */
-	private static void removeObsoleteLanguageComponents()
-	{
-		for (WeakReference<LanguageComponent> component : languageComponents) {
-			if (component == null || component.get() == null)
-				languageComponents.remove(component);
+		for (LanguageComponent component : languageComponents.getAll()) {
+			component.languageChanged();
 		}
 	}
 
@@ -178,8 +164,7 @@ public class Lang
 	 */
 	static int getLanguageComponentsCount()
 	{
-		removeObsoleteLanguageComponents();
-		return languageComponents.size();
+		return languageComponents.getAll().size();
 	}
 
 

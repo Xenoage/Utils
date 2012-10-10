@@ -158,6 +158,8 @@ public class Language
 	 */
 	public String getWithNull(VocID id)
 	{
+		if (id == null)
+			return null;
 		ProjectLanguage projLang = projects.get(id.getProjectID());
 		if (projLang != null)
 			return projLang.entries.get(id.getID());
