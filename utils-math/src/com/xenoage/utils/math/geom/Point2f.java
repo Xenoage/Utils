@@ -20,6 +20,13 @@ public final class Point2f
   }
   
   
+  public Point2f(Point2i p)
+  {
+    this.x = p.x;
+    this.y = p.y;
+  }
+  
+  
   public Point2f(float x, float y)
   {
     this.x = x;
