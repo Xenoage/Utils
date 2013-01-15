@@ -1,4 +1,4 @@
-package com.xenoage.utils.base;
+package com.xenoage.utils.swing;
 
 import java.applet.Applet;
 import java.awt.Container;
@@ -10,7 +10,7 @@ import java.awt.Frame;
  * 
  * @author Andreas Wenger
  */
-public class AppletUtils
+public class AppletUtil
 {
 	
 	/**

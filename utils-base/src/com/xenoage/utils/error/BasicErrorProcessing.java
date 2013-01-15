@@ -8,7 +8,7 @@ import com.xenoage.utils.log.Report;
 
 /**
  * This class handles all errors and warnings that are caught
- * within this program.
+ * within this program. All errors are just logged.
  * 
  * It can be extended to process the error further, e.g. by
  * showing dialogs.
