@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -366,6 +367,25 @@ public class FileUtils
 		{
 			throw new RuntimeException(ex);
 		}
+  }
+	
+	
+	/**
+   * Copies the given file into the given {@link OutputStream},
+   * which is closed at the end.
+   */
+  public static void copyFile(String filepath, OutputStream out)
+  	throws IOException
+  {
+  	FileInputStream fis = new FileInputStream(filepath);
+  	byte[] buf = new byte[1024];
+		int i = 0;
+		while ((i = fis.read(buf)) != -1)
+		{
+			out.write(buf, 0, i);
+		}
+		fis.close();
+		out.close();
   }
 	
 	
