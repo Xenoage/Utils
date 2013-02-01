@@ -88,5 +88,18 @@ public class StringUtils
 		}
 		return ret.toString();
 	}
+	
+	
+	/**
+	 * Formats the given integer number so that it has at least the given
+	 * number of digits by adding 0 digits to the front.
+	 */
+	public static String fillIntDigits(int number, int minDigits)
+	{
+		String ret = "" + number;
+		while (ret.length() < minDigits)
+			ret = "0" + ret;
+		return ret;
+	}
 
 }

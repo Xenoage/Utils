@@ -5,9 +5,9 @@ package com.xenoage.utils.lang;
  * This interface must be implemented by all enums that contain
  * vocabulary IDs.
  * 
- * There must be a method <code>getProjectID</code> to identify
- * the project to which the vocabulary belongs (like "viewer",
- * or "general") and a method <code>getID</code> that returns the ID
+ * There must be a method {@link #getDefaultValue()} to which
+ * contains the English text (used for English language and fallback)
+ * and a method {@link #getID()} that returns the ID
  * as a String needed to index the vocabulary in XML files
  * (like "Error_UnknownValue").
  * 
@@ -16,7 +16,6 @@ package com.xenoage.utils.lang;
 public interface VocID
 {
 	
-	
 	/**
 	 * Gets the ID of the project.
 	 */
@@ -24,9 +23,14 @@ public interface VocID
 	
 	
 	/**
+	 * Gets the default English text.
+	 */
+	//public String getDefaultValue();
+	
+	
+	/**
 	 * Gets the ID of the vocabulary as a String.
 	 */
 	public String getID();
-	
 
 }
