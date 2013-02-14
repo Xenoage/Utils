@@ -17,15 +17,9 @@ public interface VocID
 {
 	
 	/**
-	 * Gets the ID of the project.
-	 */
-	public String getProjectID();
-	
-	
-	/**
 	 * Gets the default English text.
 	 */
-	//public String getDefaultValue();
+	public String getDefaultValue();
 	
 	
 	/**

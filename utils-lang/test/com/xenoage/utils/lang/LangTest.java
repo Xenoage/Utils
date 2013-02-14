@@ -60,7 +60,9 @@ public class LangTest
   @Test public void get1()
   {
     Lang.loadLanguage("data/test/lang", "testlang", false);
-    assertEquals("This is a test vocabulary.", Lang.get(TestVocabulary.TestVocabulary_TestVoc));
+    assertEquals("This is a test vocabulary.", Lang.get(TestVocabulary.TestVoc));
+    assertEquals("Über", Lang.get(TestVocabulary.About));
+    assertEquals("Noch etwas", Lang.get(TestVocabulary.Another));
     assertNull(Lang.getWithNull(TestVocabulary.NotExisting));
   }
   
@@ -73,7 +75,7 @@ public class LangTest
     Lang.loadLanguage("data/test/lang", "testlang", false);
     String[] tokens = new String[]{"stupid", "- haha", "crazy"};
     assertEquals("This (stupid) text has some crazy tokens in it - haha.",
-      Lang.get(TestVocabulary.TestVocabulary_TestVoc2, tokens));
+      Lang.get(TestVocabulary.TestVoc2, tokens));
   }
   
   

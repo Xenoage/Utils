@@ -20,17 +20,20 @@ public class LanguageTest
 	public enum TestVocabulary
 		implements VocID
 	{
-		Anything, TestVocabulary_TestVoc, TestVocabulary_TestVoc2, NotExisting;
+		About, Another, Anything, TestVoc, TestVoc2, NotExisting;
 		
-		@Override public String getProjectID()
+		
+		@Override public String getDefaultValue()
 		{
-			return "testproject";
+			return getID() + "_Val";
 		}
+		
 		
 		@Override public String getID()
 		{
 			return this.toString();
 		}
+		
 	}
 	
 	
@@ -46,8 +49,8 @@ public class LanguageTest
   @Test public void get1()
   	throws Exception
   {
-    Language l = new Language("data/test/lang", "testlang");
-    assertEquals("This is a test vocabulary.", l.get(TestVocabulary.TestVocabulary_TestVoc));
+    Language l = Language.read("data/test/lang", "testlang");
+    assertEquals("This is a test vocabulary.", l.get(TestVocabulary.TestVoc));
     assertNull(l.getWithNull(TestVocabulary.NotExisting));
   }
   
@@ -58,10 +61,10 @@ public class LanguageTest
   @Test public void get2()
   	throws Exception
   {
-  	Language l = new Language("data/test/lang", "testlang");
+  	Language l = Language.read("data/test/lang", "testlang");
     String[] tokens = new String[]{"stupid", "- haha", "crazy"};
     assertEquals("This (stupid) text has some crazy tokens in it - haha.",
-      l.get(TestVocabulary.TestVocabulary_TestVoc2, tokens));
+      l.get(TestVocabulary.TestVoc2, tokens));
   }
   
   

@@ -53,7 +53,7 @@ public class Lang
 	public static void loadLanguage(String path, String id, boolean warning)
 	{
 		try {
-			currentLanguage = new Language(path, id);
+			currentLanguage = Language.read(path, id);
 		} catch (Exception ex) {
 			//loading language pack failed
 			if (warning)
@@ -61,7 +61,7 @@ public class Lang
 					+ "\" could not be loaded. Loading English pack instead...", ex));
 			//try to load English one
 			try {
-				currentLanguage = new Language(path, "en");
+				currentLanguage = Language.read(path, "en");
 			} catch (Exception ex2) {
 				handle(fatal("The language \"" + id + "\" could not be loaded.", ex2));
 			}
@@ -102,6 +102,25 @@ public class Lang
 			return "";
 		String s = getWithNull(id);
 		return (s != null ? s : id.toString());
+	}
+	
+	
+	/**
+	 * Gets an entry from the language pack as a label text.
+	 * By default this is the text with a trailing colon (":").
+	 */
+	public static String getLabel(VocID id)
+	{
+		return get(id) + ":";
+	}
+	
+	
+	/**
+	 * Gets an entry from the language pack with a trailing "...".
+	 */
+	public static String getWithEllipsis(VocID id)
+	{
+		return get(id) + "...";
 	}
 
 

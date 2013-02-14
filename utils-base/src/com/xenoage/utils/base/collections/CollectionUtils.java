@@ -18,12 +18,19 @@ public final class CollectionUtils
 {
 	
 	
+	/**
+	 * Creates a new empty {@link ArrayList} with the inferred type.
+	 */
 	public static <T> ArrayList<T> alist()
 	{
 		return new ArrayList<T>();
 	}
 	
 	
+	/**
+	 * Creates a new empty {@link ArrayList} with the inferred type
+	 * using the given capacity.
+	 */
 	public static <T> ArrayList<T> alist(int initialCapacity)
 	{
 		return new ArrayList<T>(initialCapacity);
@@ -48,12 +55,18 @@ public final class CollectionUtils
 	}
 	
 	
+	/**
+	 * Creates a new empty {@link HashMap} with the inferred type.
+	 */
 	public static <T1, T2> HashMap<T1, T2> map()
 	{
 		return new HashMap<T1, T2>();
 	}
 	
 	
+	/**
+	 * Creates a new empty {@link LinkedList} with the inferred type.
+	 */
 	public static <T> LinkedList<T> llist()
 	{
 		return new LinkedList<T>();

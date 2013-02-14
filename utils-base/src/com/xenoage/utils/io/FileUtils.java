@@ -72,6 +72,22 @@ public class FileUtils
   
   
   /**
+   * Returns a filename filter for files with ".po" ending.
+   */
+  public static FilenameFilter getPOFilter()
+  {
+    FilenameFilter ret = new FilenameFilter()
+    {
+      @Override public boolean accept(File dir, String name)
+      {
+          return name.toLowerCase().endsWith(".po");
+      }
+    };
+    return ret;
+  }
+  
+  
+  /**
    * Returns a filename filter for files with ".xml" ending.
    */
   public static FilenameFilter getXMLFilter()
@@ -113,6 +129,26 @@ public class FileUtils
       @Override public boolean accept(File dir, String name)
       {
           return name.toLowerCase().endsWith(".ttf");
+      }
+    };
+    return ret;
+  }
+  
+  
+  /**
+   * Returns a filename filter which accepts all of the given filters.
+   */
+  public static FilenameFilter orFilter(final FilenameFilter... filters)
+  {
+    FilenameFilter ret = new FilenameFilter()
+    {
+      @Override public boolean accept(File dir, String name)
+      {
+      		for (FilenameFilter filter : filters) {
+      			if (filter.accept(dir, name))
+      				return true;
+      		}
+          return false;
       }
     };
     return ret;

@@ -1,9 +1,10 @@
 package com.xenoage.utils.lang;
 
 
-
 /**
- * Vocabulary IDs for commands.
+ * Vocabulary IDs in String format.
+ * 
+ * The default value is "".
  * 
  * @author Andreas Wenger
  */
@@ -11,55 +12,23 @@ public class VocByString
 	implements VocID
 {
 	
-	private final String projectID;
 	private final String id;
 	
 	
 	/**
-	 * Creates a new {@link VocID} using the given project ID (like "viewer") and
-	 * vocabulary ID (like "Error_Unknown").
-	 */
-	public static VocByString voc(String projectID, String vocID)
-	{
-		return new VocByString(projectID, vocID);
-	}
-	
-	
-	/**
-	 * Creates a new {@link VocID} using the given project id, package name
-	 * and vocabulary name, like "viewer", "Error" and "Unknown".
-	 */
-	public static VocByString voc(String projectID, String packageName, String vocName)
-	{
-		return new VocByString(projectID, packageName + "_" + vocName);
-	}
-	
-	
-	/**
-	 * Creates a new {@link VocID} using the given vocabulary ID (like "Error_Unknown").
-	 * The project is set to "general".
+	 * Creates a new {@link VocID} using the given vocabulary ID (like "UnknownError").
 	 */
 	public static VocByString voc(String vocID)
 	{
-		return new VocByString("general", vocID);
+		return new VocByString(vocID);
 	}
 	
 	
-	private VocByString(String projectID, String vocID)
+	private VocByString(String vocID)
 	{
-		this.projectID = projectID;
 		this.id = vocID;
 	}
 	
-	
-	/**
-	 * Gets the ID of the project.
-	 */
-	@Override public String getProjectID()
-	{
-		return projectID;
-	}
-
 	
 	/**
 	 * Gets the ID of the vocabulary as a String.
@@ -72,7 +41,13 @@ public class VocByString
 	
 	@Override public String toString()
 	{
-		return projectID + "."  + id;
+		return id;
+	}
+
+
+	@Override public String getDefaultValue()
+	{
+		return "";
 	}
 
 
