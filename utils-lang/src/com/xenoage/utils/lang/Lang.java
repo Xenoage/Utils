@@ -101,7 +101,7 @@ public class Lang
 		if (id == null)
 			return "";
 		String s = getWithNull(id);
-		return (s != null ? s : id.toString());
+		return (s != null ? s : id.getDefaultValue());
 	}
 	
 	

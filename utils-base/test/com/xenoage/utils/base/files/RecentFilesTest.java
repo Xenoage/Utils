@@ -1,4 +1,4 @@
-package com.xenoage.utils.base;
+package com.xenoage.utils.base.files;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.xenoage.utils.base.RecentFiles;
+import com.xenoage.utils.base.files.RecentFiles;
 import com.xenoage.utils.io.IO;
 
 
