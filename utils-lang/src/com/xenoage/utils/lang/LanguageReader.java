@@ -148,7 +148,7 @@ public class LanguageReader
 		
 		//read vocabulary data
 		HashMap<String, String> entries = map();
-		String line, key = null, value = null;
+		String line, key = null, original = null, value = null;
 		while ((line = br.readLine()) != null) {
 			line = line.trim();
 			if (line.startsWith("#") || line.length() == 0) {
@@ -156,17 +156,22 @@ public class LanguageReader
 				if (key != null && value != null)
 					entries.put(key, value);
 				key = null;
+				original = null;
 				value = null;
 			} else {
 				//begin or extend current entry
 				if (line.startsWith("msgctxt "))
 					key = val(line.substring("msgctxt ".length()));
+				else if (line.startsWith("msgid "))
+					original = val(line.substring("msgid ".length()));
 				else if (line.startsWith("msgstr "))
 					value = val(line.substring("msgstr ".length()));
 				else if (line.startsWith("\"")) {
 					String l = val(line); //another text line which belongs to the previous one
 					if (value != null)
 						value += l;
+					else if (original != null)
+						original += l;
 					else if (key != null)
 						key += l;
 				}
