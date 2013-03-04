@@ -15,17 +15,17 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import com.xenoage.utils.swing.components.FontChooserComboBox;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 
 public class FontChooserComboBoxTestFrame
 	extends JFrame
 {
 	
-	FontChooserComboBox fccb;
+	FontStyleChooserComboBox fccb;
 	JLabel lblResult;
 	JTextField txtPreview;
 	JSlider sliderPreview;
@@ -44,7 +44,7 @@ public class FontChooserComboBoxTestFrame
 		add(toolbar, BorderLayout.NORTH);
 		
 		//font chooser
-		fccb = new FontChooserComboBox();
+		fccb = new FontStyleChooserComboBox();
 		fccb.setPreviewFontSize((int) (new JLabel().getFont().getSize2D() * 1.5));
 		fccb.addItemListener(new ItemListener()
 		{
@@ -106,7 +106,7 @@ public class FontChooserComboBoxTestFrame
 		{
 			@Override public void stateChanged(ChangeEvent e)
 			{
-				fccb.setRecentFontsCount(sliderPreview.getValue());
+				//fccb.setRecentFontsCount(sliderPreview.getValue());
 			}
 		});
 		contentPanel.add(sliderPreview);
@@ -121,17 +121,12 @@ public class FontChooserComboBoxTestFrame
 			@Override public void run()
 			{
 				try {
-					//UIManager.setLookAndFeel(new NimbusLookAndFeel());
-					//UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		      //UIManager.setLookAndFeel(new SubstanceOfficeBlue2007LookAndFeel());
-		      //UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel());
-		      //UIManager.setLookAndFeel(new SubstanceOfficeSilver2007LookAndFeel());
+					UIManager.setLookAndFeel(new NimbusLookAndFeel());
 		    } catch (Exception e) {
 		    }
 				
 		    FontChooserComboBoxTestFrame frame = new FontChooserComboBoxTestFrame();
 		    frame.setVisible(true);
-				//mainFrame.setExtendedState(MAXIMIZED_BOTH);
 			}
 		});
 	}

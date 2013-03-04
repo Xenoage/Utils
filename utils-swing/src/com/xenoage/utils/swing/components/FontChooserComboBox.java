@@ -116,8 +116,7 @@ public class FontChooserComboBox
 	 */
 	public void setPreviewString(String previewString)
 	{
-		this.previewString = (previewString != null && previewString.length() > 0 ? previewString
-			: null);
+		this.previewString = (previewString != null && previewString.length() > 0 ? previewString : null);
 		updateList(getSelectedFontName());
 	}
 
@@ -152,8 +151,8 @@ public class FontChooserComboBox
 	{
 		//remember current font in list of recent fonts
 		String fontName = getSelectedFontName();
-		if (fontName != null && recentFontsCount > 0
-			&& !(recentFontNames.size() > 0 && (recentFontNames.getFirst().equals(fontName)))) {
+		if (fontName != null && recentFontsCount > 0 &&
+			!(recentFontNames.size() > 0 && (recentFontNames.getFirst().equals(fontName)))) {
 			//remove occurrence in list
 			recentFontNames.remove(fontName);
 			//add at first position
@@ -175,8 +174,8 @@ public class FontChooserComboBox
 		//recent fonts
 		if (recentFontNames.size() > 0) {
 			for (String recentFontName : recentFontNames) {
-				FontChooserComboBoxItem item = new FontChooserComboBoxItem(recentFontName,
-					previewFontSize, previewString);
+				FontChooserComboBoxItem item = new FontChooserComboBoxItem(recentFontName, previewFontSize,
+					previewString);
 				addItem(item);
 				recentItemsCache.put(recentFontName, item);
 			}
@@ -184,8 +183,7 @@ public class FontChooserComboBox
 		}
 		//regular items
 		for (String fontName : fontNames) {
-			FontChooserComboBoxItem item = new FontChooserComboBoxItem(fontName,
-				previewFontSize, previewString);
+			FontChooserComboBoxItem item = new FontChooserComboBoxItem(fontName, previewFontSize, previewString);
 			addItem(item);
 			itemsCache.put(fontName, item);
 		}
@@ -337,9 +335,8 @@ public class FontChooserComboBox
 		implements ListCellRenderer<FontChooserComboBoxItem>
 	{
 
-		@Override public Component getListCellRendererComponent(
-			JList<? extends FontChooserComboBoxItem> list, FontChooserComboBoxItem item,
-			int index, boolean isSelected, boolean cellHasFocus)
+		@Override public Component getListCellRendererComponent(JList<? extends FontChooserComboBoxItem> list,
+			FontChooserComboBoxItem item, int index, boolean isSelected, boolean cellHasFocus)
 		{
 			//extract the component from the item's value
 			boolean s = (isSelected && !item.isSeparator);

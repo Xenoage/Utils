@@ -23,7 +23,7 @@ public class MultiItTest
 		List<Integer> list2 = Arrays.asList();
 		List<Integer> list3 = Arrays.asList(4);
 		List<Integer> list4 = Arrays.asList();
-		MultiIt<Integer> it = new MultiIt<Integer>(list1, list2, list3, list4);
+		@SuppressWarnings("unchecked") MultiIt<Integer> it = new MultiIt<Integer>(list1, list2, list3, list4);
 		for (int i = 1; i <= 4; i++)
 		{
 			Assert.assertTrue(it.hasNext());
