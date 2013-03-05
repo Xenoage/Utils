@@ -146,5 +146,17 @@ public final class CollectionUtils
   {
     return contains(c, null);
   }
+  
+  
+  /**
+   * Returns the sum of the items of the given collection.
+   */
+  public static float sum(Collection<Float> c)
+  {
+    float ret = 0;
+    for (float i : c)
+      ret += i;
+    return ret;
+  }
 
 }
