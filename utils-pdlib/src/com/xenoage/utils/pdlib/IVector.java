@@ -18,12 +18,12 @@ import java.util.ListIterator;
  * After the {@link #close()} method is called, all calls to write methods
  * will throw an {@link IllegalStateException}.
  * 
- * An {@link IVector} is "branched" when it is created based on an existing {@link Vector}.
- * In this case it shares its array memory, until the first write
- * operation is performed. At this point, a full copy of the array memory is made.
+ * An {@link IVector} is "branched" when it is created based on an existing pdlib {@link Vector}.
+ * In this case it shares its data memory, until the first write
+ * operation is performed. At this point, a full copy of the data memory is made.
  * Thus, if the vector is not modified later, branching the vector is very fast.
  * 
- * As long as the class is used as a {@link IVector}, there are no compiler
+ * As long as the class is used as an {@link IVector}, there are no compiler
  * warnings for the write methods. As soon as it is used as a {@link Vector},
  * compiler warnings for the write methods will show up.
  * 
@@ -41,24 +41,35 @@ public final class IVector<T>
 	private boolean sharedMemory = false; //true, when array is shared with another instance
 
 
+	/**
+	 * Creates an empty and unclosed {@link IVector}.
+	 */
 	public IVector()
 	{
 		this(true);
 	}
-
-
-	private IVector(int initialCapacity)
+	
+	
+	/**
+	 * Creates an empty and unclosed {@link IVector} with the
+	 * given initial capacity.
+	 */
+	public IVector(int initialCapacity)
 	{
 		array = new ArrayList<T>(initialCapacity);
 	}
-
-
-	private IVector(Collection<T> c)
+	
+	
+	/**
+	 * Creates an unclosed {@link IVector} based on the given mutable
+	 * collection. A shallow copy of the given collection is created.
+	 */
+	public IVector(Collection<T> mutableCollection)
 	{
-		array = new ArrayList<T>(c);
+		array = new ArrayList<T>(mutableCollection);
 	}
-	
-	
+
+
 	private IVector(boolean init)
 	{
 		if (init)
@@ -68,12 +79,19 @@ public final class IVector<T>
 	}
 
 
+	/**
+	 * Creates an empty and unclosed {@link IVector}.
+	 */
 	public static <T2> IVector<T2> ivec()
 	{
 		return new IVector<T2>();
 	}
 
 
+	/**
+	 * Creates an empty and unclosed {@link IVector} with the
+	 * given initial capacity.
+	 */
 	public static <T2> IVector<T2> ivec(int initialCapacity)
 	{
 		return new IVector<T2>(initialCapacity);
@@ -81,28 +99,35 @@ public final class IVector<T>
 	
 	
 	/**
-	 * Creates a new {@link IVector} based on the given {@link Vector} as a branch.
+	 * Creates an unclosed {@link IVector} based on the given mutable
+	 * collection. A shallow copy of the given collection is created.
+	 */
+	public static <T2> IVector<T2> ivec(Collection<T2> mutableCollection)
+	{
+		return new IVector<T2>(mutableCollection);
+	}
+	
+	
+	/**
+	 * Creates an unclosed {@link IVector} based on the given {@link Vector} as a branch.
 	 * This means, that the new vector shares the data of the given vector instance.
 	 * The memory is shared until the new vector receives the first write operation.
 	 */
-	@SuppressWarnings("unchecked") public static <T2> IVector<T2> ivec(Vector<T2> c)
+	public static <T2> IVector<T2> ivec(Vector<T2> v)
 	{
 		IVector<T2> ret = new IVector<T2>(false);
 		ret.sharedMemory = true;
-		if (c instanceof IVector)
-			ret.array = ((IVector)c).array; //avoid a stack of redirections. use array directly
+		if (v instanceof IVector)
+			ret.array = ((IVector<T2>)v).array; //avoid a stack of redirections. use array directly
 		else
-			ret.array = c; //no choice, we must use the public interface
+			ret.array = v; //no choice, we must use the public interface
 		return ret;
 	}
 
 
-	public static <T2> IVector<T2> ivec(Collection<T2> c)
-	{
-		return new IVector<T2>(c);
-	}
-
-
+	/**
+	 * Creates an unclosed {@link IVector} with the given items.
+	 */
 	@SafeVarargs public static <T2> IVector<T2> ivec(T2... data)
 	{
 		ArrayList<T2> array = new ArrayList<T2>(data.length);
@@ -112,6 +137,9 @@ public final class IVector<T>
 	}
 
 
+	/**
+	 * TODO: used? add javadoc.
+	 */
 	public static <T> IVector<T> ivecInit(T valueForAll, int size)
 	{
 		IVector<T> ret = new IVector<T>(size);
@@ -121,12 +149,18 @@ public final class IVector<T>
 	}
 	
 
+	/**
+	 * TODO: used? add javadoc.
+	 */
 	public static <T2> Vector<T2> vec(Collection<T2> data)
 	{
 		return ivec(data).close();
 	}
 
 
+	/**
+	 * TODO: used? add javadoc.
+	 */
 	@SafeVarargs public static <T2> Vector<T2> vec(T2... data)
 	{
 		return ivec(data).close();
@@ -146,7 +180,7 @@ public final class IVector<T>
 
 	private void requestWrite()
 	{
-		//if closed, further write operations are forbidded
+		//if closed, further write operations are forbidden
 		if (closed)
 			throw new IllegalStateException("vector is closed");
 		//if shared memory is used, create full copy instead
