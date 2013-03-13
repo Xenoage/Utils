@@ -1,5 +1,7 @@
 package com.xenoage.utils.math;
 
+import static com.xenoage.utils.math.geom.Point2f.p;
+
 import com.xenoage.utils.math.geom.Point2f;
 
 
@@ -232,6 +234,38 @@ public class MathUtils
 			if (ret == null || (t != null && t.compareTo(ret) > 0))
 				ret = t;
 		return ret;
+	}
+	
+	
+	/**
+	 * Returns the normalized normal vector at the second given point.
+	 * It is the mean value of the normal vector between the first and
+	 * second and of the normal vector of the second and third point.
+	 */
+	public static Point2f normalVectorMean(Point2f start, Point2f middle, Point2f end)
+	{
+    Point2f n1 = normalVector(start, middle);
+    Point2f n2 = normalVector(middle, end);
+    return n1.add(n2).normalize();
+	}
+	
+	
+	/**
+	 * Returns the normalized normal vector to the vector between the
+	 * given two points.
+	 */
+	public static Point2f normalVector(Point2f start, Point2f end)
+	{
+    return normalVector(end.sub(start));
+	}
+	
+	
+	/**
+	 * Returns the normalized normal vector to the given vector.
+	 */
+	public static Point2f normalVector(Point2f v)
+	{
+    return p(-v.y, v.x).normalize();
 	}
 
 
