@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -158,5 +159,21 @@ public final class CollectionUtils
       ret += i;
     return ret;
   }
+  
+  
+  /**
+   * Finds the value that belongs to the given key in the given map.
+   * If the key is null or no value is found, an {@link IllegalStateException} is thrown.
+   */
+  public static <T1, T2> T2 find(T1 key, Map<T1, T2> map)
+		throws IllegalStateException
+	{
+  	if (key == null)
+  		throw new IllegalStateException("Key is null");
+		T2 ret = map.get(key);
+		if (ret == null)
+			throw new IllegalStateException("No value for key " + key);
+		return ret;
+	}
 
 }

@@ -40,5 +40,16 @@ public class NullUtils
 			}
 		}
 	}
+	
+	
+	/**
+	 * Throws an IllegalArgumentException if the given argument is null.
+	 */
+	public static <T> T assertNotNull(T o)
+	{
+		if (o == null)
+			throw new IllegalArgumentException("May not be null");
+		return o;
+	}
 
 }
