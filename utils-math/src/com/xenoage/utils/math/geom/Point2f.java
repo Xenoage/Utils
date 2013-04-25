@@ -8,6 +8,10 @@ package com.xenoage.utils.math.geom;
  */
 public final class Point2f
 {
+	
+	/** Origin point, (0, 0). */
+	public static final Point2f origin = new Point2f(0, 0);
+	
   
   public final float x;
   public final float y;
