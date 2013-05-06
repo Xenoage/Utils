@@ -11,12 +11,12 @@ import java.lang.annotation.RetentionPolicy;
  * Can be used to mark methods and fields, where it is unclear if
  * null is allowed or not.
  * 
- * @deprecated Use {@link NonNull}. Renamed for compatibility with
- * other standards.
+ * When used in combination with the Lombok library, generated constructors
+ * and setters will assert non-null values.
  *
  * @author Andreas Wenger
  */
 @Retention(RetentionPolicy.CLASS)
-public @interface NeverNull
+public @interface NonNull
 {
 }

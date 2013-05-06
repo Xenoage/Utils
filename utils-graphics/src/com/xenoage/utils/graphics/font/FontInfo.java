@@ -1,98 +1,106 @@
 package com.xenoage.utils.graphics.font;
 
 import static com.xenoage.utils.base.NullUtils.notNull;
-import static com.xenoage.utils.pdlib.PVector.pvec;
+import static com.xenoage.utils.pdlib.IVector.ivec;
 
 import com.xenoage.utils.base.annotations.MaybeEmpty;
 import com.xenoage.utils.base.annotations.MaybeNull;
 import com.xenoage.utils.base.annotations.NeverEmpty;
 import com.xenoage.utils.base.annotations.NeverNull;
-import com.xenoage.utils.pdlib.PVector;
+import com.xenoage.utils.pdlib.IVector;
 
 
 /**
  * Information about a font.
  * 
- * This class allows to save multiple
- * font names/families and allows the attributes to be unset.
+ * This class allows to save multiple font names/families and allows the attributes to be unset.
  * 
- * It is independent of a specific API like AWT or Android,
- * and can thus be used on each device. The factories in
- * the subpackages can be used to turn instances of this
- * class in real API-specific fonts.
+ * It is independent of a specific API like AWT or Android, and can thus be used on each device. The factories in the
+ * subpackages can be used to turn instances of this class in real API-specific fonts.
  * 
  * @author Andreas Wenger
  */
-public final class FontInfo
-{
-	
-	private final PVector<String> families;
+public final class FontInfo {
+
+	private final IVector<String> families;
 	private final Float size;
 	private final FontStyle style;
-	
-	private static final PVector<String> defaultFamilies =
-		pvec("Times New Roman", "Linux Libertine", "Times");
+
+	private static final IVector<String> defaultFamilies = ivec("Times New Roman", "Linux Libertine", "Times").close();
 	private static final float defaultSize = 12;
 	private static final FontStyle defaultFontStyle = FontStyle.normal;
 	public static final FontInfo defaultValue = new FontInfo((String) null, null, null);
 
-	
-	public FontInfo(@MaybeNull @MaybeEmpty PVector<String> families,
-		@MaybeNull Float size, @MaybeNull FontStyle style)
-	{
+
+	/**
+	 * Creates a new {@link FontInfo} with the given attributes.
+	 */
+	public FontInfo(@MaybeNull @MaybeEmpty IVector<String> families, @MaybeNull Float size,
+		@MaybeNull FontStyle style) {
 		this.families = (families != null && families.size() > 0 ? families : null);
 		this.size = size;
 		this.style = style;
 	}
-	
-	
-	public FontInfo(@MaybeNull String family, @MaybeNull Float size, @MaybeNull FontStyle style)
-	{
-		this(family != null ? pvec(family) : null, size, style);
+
+
+	/**
+	 * Creates a new {@link FontInfo} with the given attributes.
+	 */
+	public FontInfo(@MaybeNull String family, @MaybeNull Float size, @MaybeNull FontStyle style) {
+		this(family != null ? ivec(family).close() : null, size, style);
 	}
 
-	
-	/** The list of families. The first entry is the preferred font, the alternative fonts
-	 * can be found at the following entries. */
-	@NeverEmpty public PVector<String> getFamilies()
-	{
+
+	/** 
+	 * The list of families, or the default families if unset.
+	 * The first entry is the preferred font, the alternative fonts can be found at the following entries.
+	 */
+	@NeverEmpty public IVector<String> getFamilies() {
 		return notNull(families, defaultFamilies);
 	}
 
-	
-	/** The size of the font in pt. */
-	public float getSize()
-	{
+
+	/**
+	 * The size of the font in pt, or the default size if unset.
+	 */
+	public float getSize() {
 		return notNull(size, defaultSize);
 	}
 
-	/** The style of the font */
-	@NeverNull public FontStyle getStyle()
-	{
+
+	/**
+	 * The style of the font, or the default style if unset.
+	 */
+	@NeverNull public FontStyle getStyle() {
 		return notNull(style, defaultFontStyle);
 	}
-	
-	
-	@MaybeNull public PVector<String> getFamiliesNull()
-	{
+
+
+	/**
+	 * The list of families, or null if unset.
+	 */
+	@MaybeNull public IVector<String> getFamiliesOrNull() {
 		return families;
 	}
 
-	
-	@MaybeNull public Float getSizeNull()
-	{
+
+	/**
+	 * The size of the font in pt, or null if unset.
+	 */
+	@MaybeNull public Float getSizeOrNull() {
 		return size;
 	}
 
 
-	@MaybeNull public FontStyle getStyleNull()
-	{
+	/**
+	 * The style of the font, or null if unset.
+	 */
+	@MaybeNull public FontStyle getStyleOrNull() {
 		return style;
 	}
 
 
-	@Override public int hashCode()
-	{
+	@Override public int hashCode() { //auto-generated
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((families == null) ? 0 : families.hashCode());
@@ -102,8 +110,7 @@ public final class FontInfo
 	}
 
 
-	@Override public boolean equals(Object obj)
-	{
+	@Override public boolean equals(Object obj) { //auto-generated
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -111,29 +118,23 @@ public final class FontInfo
 		if (getClass() != obj.getClass())
 			return false;
 		FontInfo other = (FontInfo) obj;
-		if (families == null)
-		{
+		if (families == null) {
 			if (other.families != null)
 				return false;
-		}
-		else if (!families.equals(other.families))
+		} else if (!families.equals(other.families))
 			return false;
-		if (size == null)
-		{
+		if (size == null) {
 			if (other.size != null)
 				return false;
-		}
-		else if (!size.equals(other.size))
+		} else if (!size.equals(other.size))
 			return false;
-		if (style == null)
-		{
+		if (style == null) {
 			if (other.style != null)
 				return false;
-		}
-		else if (!style.equals(other.style))
+		} else if (!style.equals(other.style))
 			return false;
 		return true;
 	}
-	
+
 
 }
