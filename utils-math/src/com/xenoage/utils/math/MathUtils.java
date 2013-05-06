@@ -13,6 +13,10 @@ import com.xenoage.utils.math.geom.Point2f;
  */
 public class MathUtils
 {
+	
+	/** PI in float precision. */
+	public static final float pi = (float) Math.PI;
+	
 
 	/**
 	 * Returns max, if x > max, min, if x < min, else x.
