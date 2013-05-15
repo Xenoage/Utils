@@ -68,6 +68,32 @@ public class MathUtils
 		else
 			return x;
 	}
+	
+	
+	/**
+	 * Returns max, if x > max, min, if x < min, else x.
+	 */
+	public static double clamp(double x, double min, double max)
+	{
+		if (x < min)
+			return min;
+		else if (x > max)
+			return max;
+		else
+			return x;
+	}
+
+
+	/**
+	 * Returns min, if x < min, else x.
+	 */
+	public static double clampMin(double x, double min)
+	{
+		if (x < min)
+			return min;
+		else
+			return x;
+	}
 
 
 	/**
@@ -162,6 +188,9 @@ public class MathUtils
 	}
 
 
+	/**
+	 * @deprecated Use {@link Point2f#distance(Point2f, Point2f)} instead
+	 */
 	public static float distance(Point2f p1, Point2f p2)
 	{
 		float x = p1.x - p2.x;
@@ -245,6 +274,7 @@ public class MathUtils
 	 * Returns the normalized normal vector at the second given point.
 	 * It is the mean value of the normal vector between the first and
 	 * second and of the normal vector of the second and third point.
+	 * @deprecated use {@link Point2f#normalVectorMean(Point2f, Point2f, Point2f)} instead
 	 */
 	public static Point2f normalVectorMean(Point2f start, Point2f middle, Point2f end)
 	{
@@ -257,6 +287,7 @@ public class MathUtils
 	/**
 	 * Returns the normalized normal vector to the vector between the
 	 * given two points.
+	 * @deprecated use {@link Point2f#normalVector(Point2f, Point2f))} instead
 	 */
 	public static Point2f normalVector(Point2f start, Point2f end)
 	{
@@ -266,6 +297,7 @@ public class MathUtils
 	
 	/**
 	 * Returns the normalized normal vector to the given vector.
+	 * @deprecated use {@link Point2f#normalVector(Point2f)} instead
 	 */
 	public static Point2f normalVector(Point2f v)
 	{
@@ -276,6 +308,7 @@ public class MathUtils
 	/**
 	 * Returns true, if the given point p is within the triangle
 	 * defined by the given points t1, t2 and t3.
+	 * @deprecated use {@link Point2f#isPointInTriangle(Point2f, Point2f, Point2f, Point2f)} instead
 	 */
 	public static boolean isPointInTriangle(Point2f p, Point2f t1, Point2f t2, Point2f t3)
 	{
@@ -286,6 +319,9 @@ public class MathUtils
 	}
 	
 	
+	/**
+	 * @deprecated use same method in {@link Point2f} class
+	 */
 	private static float sign(Point2f p1, Point2f p2, Point2f p3)
 	{
 	  return (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y);
