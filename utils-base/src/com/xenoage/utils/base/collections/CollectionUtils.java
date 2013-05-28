@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -176,4 +177,18 @@ public final class CollectionUtils
 		return ret;
 	}
 
+  
+  /**
+	 * In the given list, sets the element at the given index. If the index is out of
+	 * the bounds of this vector, it is extended up to this index
+	 * and the gaps are filled with the given fillElement.
+	 */
+	public static <T> void setExtend(List<T> list, int index, T element, T fillElement)
+	{
+		while (index >= list.size())
+			list.add(fillElement);
+		list.set(index, element);
+	}
+	
+	
 }
