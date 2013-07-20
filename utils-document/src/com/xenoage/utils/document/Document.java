@@ -22,6 +22,6 @@ public interface Document {
 	/**
 	 * Gets the supported file formats for reading and writing documents of this type.
 	 */
-	public SupportedFormats getSupportedFormats();
+	public SupportedFormats<? extends Document> getSupportedFormats();
 	
 }

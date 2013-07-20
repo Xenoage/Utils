@@ -3,10 +3,15 @@ package com.xenoage.utils.document;
 import static com.xenoage.utils.kernel.Range.range;
 import static org.junit.Assert.assertEquals;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 import org.junit.Test;
 
 import com.xenoage.utils.document.command.LineAdd;
 import com.xenoage.utils.document.command.LineRemove;
+import com.xenoage.utils.document.io.FileFormat;
 
 
 /**
@@ -45,12 +50,34 @@ public class DocumentTest {
 		notes.getCommandPerformer().undo();
 		notes.getCommandPerformer().undo();
 		assertEquals("1;2;3;4;5", notes.toString());
+		//no undo should be possible any more
+		assertEquals(false, notes.getCommandPerformer().isUndoPossible());
+		//add two lines
+		notes.getCommandPerformer().execute(new LineAdd(notes, "7"));
+		notes.getCommandPerformer().execute(new LineAdd(notes, "8"));
+		assertEquals("1;2;3;4;5;7;8", notes.toString());
+		//undo last step
+		notes.getCommandPerformer().undo();
+		assertEquals("1;2;3;4;5;7", notes.toString());
+		//add another line
+		notes.getCommandPerformer().execute(new LineAdd(notes, "9"));
+		assertEquals("1;2;3;4;5;7;9", notes.toString());
+		//no redo should be possible
+		assertEquals(false, notes.getCommandPerformer().isRedoPossible());
 	}
 	
 	
-	@Test public void testIO() {
+	@Test public void testIO()
+		throws IOException {
 		Notes notes = createTestNotes();
-		//GOON
+		//write to byte buffer
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		FileFormat<Notes> format = notes.getSupportedFormats().getWriteDefaultFormat();
+		format.getOutput().write(notes, out, null);
+		//read again
+		ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
+		Notes nodesRead = format.getInput().read(in, null);
+		assertEquals("1;2;3;4;5", nodesRead.toString());
 	}
 
 }
