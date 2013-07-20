@@ -180,7 +180,7 @@ public final class CollectionUtils
   
   /**
 	 * In the given list, sets the element at the given index. If the index is out of
-	 * the bounds of this vector, it is extended up to this index
+	 * the bounds of this list, it is extended up to this index
 	 * and the gaps are filled with the given fillElement.
 	 */
 	public static <T> void setExtend(List<T> list, int index, T element, T fillElement)

@@ -6,7 +6,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 import com.xenoage.utils.base.settings.Settings;
-import com.xenoage.utils.io.FileFormat;
+import com.xenoage.utils.document.io.FileFormat;
 
 
 /**

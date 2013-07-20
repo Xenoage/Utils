@@ -1,43 +1,32 @@
-package com.xenoage.utils.io;
+package com.xenoage.utils.document.io;
 
 import java.io.File;
 
+import com.xenoage.utils.document.Document;
+
+import lombok.Data;
+
 
 /**
- * General information on a file format.
+ * General information on a file format for a document.
  * 
  * @author Andreas Wenger
  */
-public final class FileFormat
+@Data public final class FileFormat<T extends Document>
 {
 	
 	/** A unique ID of the format, like "MP3". */
-	public final String id;
+	private final String id;
 	/** The name of the format, like "MPEG Audio Layer III". */
-	public final String name;
+	private final String name;
 	/** The default extension, like ".mp3" or ".xml". */
-	public final String defaultExtension;
+	private final String defaultExtension;
 	/** More supported extensions, like ".mid" or ".xml". */
-	public final String[] otherExtensions;
-	
-
-	public FileFormat(String id, String name, String defaultExtension)
-	{
-		this.id = id;
-		this.name = name;
-		this.defaultExtension = defaultExtension;
-		this.otherExtensions = new String[0];
-	}
-	
-	
-	public FileFormat(String id, String name,
-		String defaultExtension, String... otherExtensions)
-	{
-		this.id = id;
-		this.name = name;
-		this.defaultExtension = defaultExtension;
-		this.otherExtensions = otherExtensions;
-	}
+	private final String[] otherExtensions;
+	/** Reader for this file format, or null if unsupported. */
+	private final FileInput<T> input;
+	/** Writer for this file format, or null if unsupported. */
+	private final FileOutput<T> output;
 	
 	
 	/**

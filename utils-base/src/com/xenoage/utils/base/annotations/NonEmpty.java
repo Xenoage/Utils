@@ -13,12 +13,10 @@ import java.lang.annotation.RetentionPolicy;
  * Can be used to mark collections, where it is unclear if
  * they always contain at least one element, or strings which
  * are not allowed to be empty.
- * 
- * @deprecated Use {@link NonEmpty}. Renamed for better readability.
  *
  * @author Andreas Wenger
  */
 @Retention(RetentionPolicy.CLASS)
-public @interface NeverEmpty
+public @interface NonEmpty
 {
 }
