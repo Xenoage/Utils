@@ -134,7 +134,7 @@ public class Settings
 	 * <code>saveSetting</code>.
 	 * @param key the key of the setting
 	 * @param file the filename where the setting will be stored, without extension
-	 * @param value the new value of the setting
+	 * @param value the new value of the setting. It is converted to a string internally.
 	 */
 	public void setSetting(String key, String file, Object value)
 	{
@@ -144,7 +144,7 @@ public class Settings
 			p = new Properties();
 			files.put(file, p);
 		}
-		p.put(key, value);
+		p.put(key, value.toString());
 	}
 
 
@@ -152,10 +152,13 @@ public class Settings
 	 * Sets the value of th setting with the given key. If the key or the file
 	 * doesn't exist yet, it is created. The setting is immediately stored in
 	 * the given file.
+	 * @param key the key of the setting
+	 * @param file the filename where the setting will be stored, without extension
+	 * @param value the new value of the setting. It is converted to a string internally.
 	 */
-	public void saveSetting(String key, String file, String value)
+	public void saveSetting(String key, String file, Object value)
 	{
-		setSetting(key, file, value);
+		setSetting(key, file, value.toString());
 		save(file);
 	}
 
@@ -209,6 +212,25 @@ public class Settings
 		if (s != null)
 		{
 			Float ret = Parser.parseFloatNull(s);
+			if (ret != null)
+			{
+				return ret;
+			}
+		}
+		return defaultValue;
+	}
+	
+	
+	/**
+	 * Convenience method: Gets the given setting as a boolean value, or use the
+	 * given default value, if the is setting not available or readable.
+	 */
+	public boolean getSetting(String key, String file, boolean defaultValue)
+	{
+		String s = getSetting(key, file);
+		if (s != null)
+		{
+			Boolean ret = Parser.parseBooleanNull(s);
 			if (ret != null)
 			{
 				return ret;
