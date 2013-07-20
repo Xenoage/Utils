@@ -59,7 +59,7 @@ public class MultiIt<T>
 			if (index + 1 < collections.length) {
 				index++;
 				currentIterator = collections[index].iterator();
-				return (T) next();
+				return next();
 			} else {
 				throw new NoSuchElementException();
 			}

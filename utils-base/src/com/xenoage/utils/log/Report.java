@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.xenoage.utils.base.StackUtils;
 import com.xenoage.utils.base.annotations.MaybeNull;
-import com.xenoage.utils.base.annotations.NeverNull;
+import com.xenoage.utils.base.annotations.NonNull;
 import com.xenoage.utils.base.exceptions.ThrowableUtils;
 import com.xenoage.utils.lang.VocID;
 
@@ -21,7 +21,7 @@ public class Report
 {
 	
 	/** The severity of the report. */
-	@NeverNull public final Level level;
+	@NonNull public final Level level;
 	/** The {@link VocID} of the message. */
 	@MaybeNull public final VocID messageID;
 	/** The raw text message. */

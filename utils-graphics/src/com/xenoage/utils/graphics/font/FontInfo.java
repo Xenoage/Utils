@@ -5,8 +5,8 @@ import static com.xenoage.utils.pdlib.IVector.ivec;
 
 import com.xenoage.utils.base.annotations.MaybeEmpty;
 import com.xenoage.utils.base.annotations.MaybeNull;
-import com.xenoage.utils.base.annotations.NeverEmpty;
-import com.xenoage.utils.base.annotations.NeverNull;
+import com.xenoage.utils.base.annotations.NonEmpty;
+import com.xenoage.utils.base.annotations.NonNull;
 import com.xenoage.utils.pdlib.IVector;
 
 
@@ -55,7 +55,7 @@ public final class FontInfo {
 	 * The list of families, or the default families if unset.
 	 * The first entry is the preferred font, the alternative fonts can be found at the following entries.
 	 */
-	@NeverEmpty public IVector<String> getFamilies() {
+	@NonEmpty public IVector<String> getFamilies() {
 		return notNull(families, defaultFamilies);
 	}
 
@@ -71,7 +71,7 @@ public final class FontInfo {
 	/**
 	 * The style of the font, or the default style if unset.
 	 */
-	@NeverNull public FontStyle getStyle() {
+	@NonNull public FontStyle getStyle() {
 		return notNull(style, defaultFontStyle);
 	}
 

@@ -20,7 +20,7 @@ public class JFileChooserUtil
 	/**
 	 * Creates a Swing {@link FileFilter} for the given {@link FileFormat}.
 	 */
-	public static FileFilter createFileFilter(final FileFormat fileFormat)
+	public static FileFilter createFileFilter(final FileFormat<?> fileFormat)
 	{
 		FileFilter ret = new FileFilter()
 		{

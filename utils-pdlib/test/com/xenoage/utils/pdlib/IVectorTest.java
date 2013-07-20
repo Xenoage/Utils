@@ -21,12 +21,12 @@ public class IVectorTest
 	 */
 	@Test public void testBranch()
 	{
-		//test branching without modifications (very fast)
+		//test branching without modifications (very fast) - should be more than 100 times as fast
 		long[] t = performBranchTest(false);
 		assertTrue(t[0] / 100 > t[1]);
 		//test branching with modifications (about as fast as normal copies)
 		t = performBranchTest(true);
-		assertTrue(Math.abs(1 - t[0] / t[1]) < 0.01);
+		assertTrue(Math.abs(1f - t[0] / t[1]) < 0.01);
 	}
 	
 	
@@ -38,7 +38,7 @@ public class IVectorTest
 	private long[] performBranchTest(boolean modify)
 	{
 		//branches must be (if not modified) much faster than normal copies
-		int testsCount = 10000;
+		int testsCount = 100000;
 		//prepare data
 		ArrayList<Integer> originalA = new ArrayList<Integer>();
 		for (int i = 0; i < 20000; i++)

@@ -127,7 +127,7 @@ public class LanguageReader
 		HashMap<String, String> entries = map();
 		List<Element> eEntries = XMLReader.elements(root, "voc");
 		for (int i = 0; i < eEntries.size(); i++) {
-			Element e = (Element) eEntries.get(i);
+			Element e = eEntries.get(i);
 			String eID = XMLReader.attributeNotNull(e, "key");
 			String eValue = XMLReader.attributeNotNull(e, "value");
 			eValue = eValue.replaceAll("\\\\n", "\n");

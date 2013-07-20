@@ -2,7 +2,7 @@ package com.xenoage.utils.log;
 
 import static com.xenoage.utils.base.NullUtils.throwNullArg;
 
-import com.xenoage.utils.base.annotations.NeverNull;
+import com.xenoage.utils.base.annotations.NonNull;
 
 
 /**
@@ -21,7 +21,7 @@ public class Log
   /**
 	 * Sets the current global {@link LogProcessing} instance.
 	 */
-	public static void init(@NeverNull LogProcessing logProcessing)
+	public static void init(@NonNull LogProcessing logProcessing)
 	{
 		throwNullArg(logProcessing);
 		Log.instance = logProcessing;

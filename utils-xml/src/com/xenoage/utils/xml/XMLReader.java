@@ -24,7 +24,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import com.xenoage.utils.base.annotations.MaybeNull;
-import com.xenoage.utils.base.annotations.NeverNull;
+import com.xenoage.utils.base.annotations.NonNull;
 
 
 /**
@@ -241,7 +241,7 @@ public class XMLReader
 	 * list is empty. 
 	 */
 	public static LinkedList<Element> elements(@MaybeNull Node parent,
-		@NeverNull String name)
+		@NonNull String name)
 	{
 		LinkedList<Element> ret = new LinkedList<Element>();
 		if (parent != null) {

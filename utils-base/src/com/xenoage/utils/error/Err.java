@@ -2,7 +2,7 @@ package com.xenoage.utils.error;
 
 import static com.xenoage.utils.base.NullUtils.throwNullArg;
 
-import com.xenoage.utils.base.annotations.NeverNull;
+import com.xenoage.utils.base.annotations.NonNull;
 import com.xenoage.utils.log.Report;
 
 
@@ -21,7 +21,7 @@ public class Err
 	/**
 	 * Sets the current global {@link ErrorProcessing} instance.
 	 */
-	public static void init(@NeverNull ErrorProcessing errorProcessing)
+	public static void init(@NonNull ErrorProcessing errorProcessing)
 	{
 		throwNullArg(errorProcessing);
 		instance = errorProcessing;
