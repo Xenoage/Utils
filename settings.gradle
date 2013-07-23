@@ -1,1 +1,1 @@
-include "utils-base", "utils-graphics", "utils-kernel", "utils-lang", "utils-math", "utils-pdlib", "utils-serialize", "utils-swing", "utils-xml"
+include "utils-base", "utils-document", "utils-graphics", "utils-kernel", "utils-lang", "utils-math", "utils-pdlib", "utils-serialize", "utils-swing", "utils-xml"
