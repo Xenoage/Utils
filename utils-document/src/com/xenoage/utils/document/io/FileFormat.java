@@ -4,6 +4,7 @@ import java.io.File;
 
 import com.xenoage.utils.document.Document;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 
@@ -12,7 +13,7 @@ import lombok.Data;
  * 
  * @author Andreas Wenger
  */
-@Data public final class FileFormat<T extends Document>
+@Data @AllArgsConstructor public final class FileFormat<T extends Document>
 {
 	
 	/** A unique ID of the format, like "MP3". */
@@ -27,6 +28,19 @@ import lombok.Data;
 	private final FileInput<T> input;
 	/** Writer for this file format, or null if unsupported. */
 	private final FileOutput<T> output;
+	
+	
+	/**
+	 * Creates a new {@link FileFormat} with no input and output class.
+	 */
+	public FileFormat(String id, String name, String defaultExtension, String... otherExtensions) {
+		this.id = id;
+		this.name = name;
+		this.defaultExtension = defaultExtension;
+		this.otherExtensions = otherExtensions;
+		this.input = null;
+		this.output = null;
+	}
 	
 	
 	/**
@@ -58,6 +72,5 @@ import lombok.Data;
 		String name = file.getName().toLowerCase();
 		return file.isDirectory() || name.endsWith(defaultExtension);
 	}
-	
 
 }
