@@ -41,7 +41,7 @@ public final class CollectionUtils
 	
 	@SafeVarargs public static <T> ArrayList<T> alist(T... vals)
 	{
-		ArrayList<T> ret = new ArrayList<T>();
+		ArrayList<T> ret = new ArrayList<T>(vals.length);
 		for (T v : vals)
 			ret.add(v);
 		return ret;
