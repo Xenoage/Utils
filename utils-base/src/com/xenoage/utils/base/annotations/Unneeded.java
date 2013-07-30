@@ -5,7 +5,7 @@ import java.lang.annotation.RetentionPolicy;
 
 
 /**
- * Annotation for code, that is never called.
+ * Annotation for code, that is never called, and may be removed later.
  *
  * @author Andreas Wenger
  */
