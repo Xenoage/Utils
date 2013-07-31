@@ -26,7 +26,7 @@ public class IVectorTest
 		assertTrue(t[0] / 100 > t[1]);
 		//test branching with modifications (about as fast as normal copies)
 		t = performBranchTest(true);
-		assertTrue(Math.abs(1f - t[0] / t[1]) < 0.05);
+		assertTrue(Math.abs(t[0] / t[1] - 1) < 0.05);
 	}
 	
 	
