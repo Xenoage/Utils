@@ -1,7 +1,10 @@
 package com.xenoage.utils.graphics.font;
 
 import static com.xenoage.utils.base.NullUtils.notNull;
+import static com.xenoage.utils.base.collections.CollectionUtils.alist;
 import static com.xenoage.utils.pdlib.IVector.ivec;
+
+import java.util.List;
 
 import com.xenoage.utils.base.annotations.MaybeEmpty;
 import com.xenoage.utils.base.annotations.MaybeNull;
@@ -22,11 +25,11 @@ import com.xenoage.utils.pdlib.IVector;
  */
 public final class FontInfo {
 
-	private final IVector<String> families;
+	private final List<String> families;
 	private final Float size;
 	private final FontStyle style;
 
-	private static final IVector<String> defaultFamilies = ivec("Times New Roman", "Linux Libertine", "Times").close();
+	private static final List<String> defaultFamilies = alist("Times New Roman", "Linux Libertine", "Times");
 	private static final float defaultSize = 12;
 	private static final FontStyle defaultFontStyle = FontStyle.normal;
 	public static final FontInfo defaultValue = new FontInfo((String) null, null, null);
@@ -55,7 +58,7 @@ public final class FontInfo {
 	 * The list of families, or the default families if unset.
 	 * The first entry is the preferred font, the alternative fonts can be found at the following entries.
 	 */
-	@NonEmpty public IVector<String> getFamilies() {
+	@NonEmpty public List<String> getFamilies() {
 		return notNull(families, defaultFamilies);
 	}
 
@@ -79,7 +82,7 @@ public final class FontInfo {
 	/**
 	 * The list of families, or null if unset.
 	 */
-	@MaybeNull public IVector<String> getFamiliesOrNull() {
+	@MaybeNull public List<String> getFamiliesOrNull() {
 		return families;
 	}
 
