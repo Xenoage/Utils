@@ -18,9 +18,9 @@ public class MD5Sum {
 	/**
 	 * Computes the MD5 data from the data behind the given file.
 	 */
-	public static String GetMD5Sum(String filepath)
+	public static String GetMD5Sum(String filePath)
 		throws IOException {
-    File f = new File("testdata/testvideo-hdtv-1gb.mp4");
+    File f = new File(filePath);
     InputStream is = new FileInputStream(f);
     String ret = GetMD5Sum(is);
     return ret;
