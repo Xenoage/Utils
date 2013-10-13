@@ -1,8 +1,9 @@
 package com.xenoage.utils.base.collections;
 
+import static com.xenoage.utils.kernel.Range.rangeReverse;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 
 /**
@@ -18,7 +19,7 @@ import java.util.LinkedList;
 public class WeakList<T>
 {
 	
-	private LinkedList<WeakReference<T>> list = new LinkedList<WeakReference<T>>();
+	private ArrayList<WeakReference<T>> list = new ArrayList<WeakReference<T>>();
 	
 	
 	/**
@@ -82,9 +83,9 @@ public class WeakList<T>
 	
 	private synchronized void clean()
 	{
-		for (WeakReference<T> e : list) {
-			if (e.get() == null)
-				list.remove(e);
+		for (int i : rangeReverse(list)) {
+			if (list.get(i).get() == null)
+				list.remove(i);
 		}
 	}
 	
