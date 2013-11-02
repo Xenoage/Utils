@@ -45,8 +45,7 @@ public class XMLWriter
 
 
 	/**
-	 * Writes the given XML document into a file
-	 * at the given path.
+	 * Writes the given XML document into the given {@link OutputStream}.
 	 */
 	public static void writeFile(Document doc, OutputStream outputStream)
 		throws IOException

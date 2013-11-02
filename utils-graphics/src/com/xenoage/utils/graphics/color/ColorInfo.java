@@ -1,5 +1,8 @@
 package com.xenoage.utils.graphics.color;
 
+import static com.xenoage.utils.math.MathUtils.clamp;
+
+import com.xenoage.utils.math.MathUtils;
 
 /**
  * A platform independent way to store a color.
@@ -7,8 +10,7 @@ package com.xenoage.utils.graphics.color;
  * 
  * @author Andreas Wenger
  */
-public class ColorInfo
-{
+public class ColorInfo {
 
 	public static final ColorInfo black = new ColorInfo(0, 0, 0);
 	public static final ColorInfo blue = new ColorInfo(0, 0, 255);
@@ -22,26 +24,31 @@ public class ColorInfo
 	public final int r, g, b, a;
 
 
-	public ColorInfo(int r, int g, int b, int a)
-	{
+	public ColorInfo(int r, int g, int b, int a) {
 		this.r = r;
 		this.g = g;
 		this.b = b;
 		this.a = a;
 	}
 
-
-	public ColorInfo(int r, int g, int b)
-	{
+	public ColorInfo(int r, int g, int b) {
 		this.r = r;
 		this.g = g;
 		this.b = b;
 		this.a = 255;
 	}
 
+	/**
+	 * Adds the given value to the red, green and blue color. The values
+	 * are clamped to the range between 0 and 255. The given summand may also be negative
+	 * to remove light.
+	 */
+	public ColorInfo addWhite(int summand) {
+		return new ColorInfo(clamp(r + summand, 0, 255), clamp(g + summand, 0, 255),
+			clamp(b + summand, 0, 255));
+	}
 
-	@Override public int hashCode()
-	{
+	@Override public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + a;
@@ -51,9 +58,7 @@ public class ColorInfo
 		return result;
 	}
 
-
-	@Override public boolean equals(Object o)
-	{
+	@Override public boolean equals(Object o) {
 		if (this == o)
 			return true;
 		else if (o == null)
@@ -61,7 +66,8 @@ public class ColorInfo
 		else if (o instanceof ColorInfo) {
 			ColorInfo c = (ColorInfo) o;
 			return c.r == r && c.b == b && c.g == g && c.a == a;
-		} else {
+		}
+		else {
 			return super.equals(o);
 		}
 	}

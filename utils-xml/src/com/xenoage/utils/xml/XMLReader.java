@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -240,10 +240,10 @@ public class XMLReader
 	 * the given name. If no such elements are found, the returned
 	 * list is empty. 
 	 */
-	public static LinkedList<Element> elements(@MaybeNull Node parent,
+	public static List<Element> elements(@MaybeNull Node parent,
 		@NonNull String name)
 	{
-		LinkedList<Element> ret = new LinkedList<Element>();
+		ArrayList<Element> ret = new ArrayList<Element>();
 		if (parent != null) {
 			for (Node node = parent.getFirstChild(); node != null; node = node.getNextSibling()) {
 				if (node.getNodeName().equals(name))

@@ -6,7 +6,8 @@ package com.xenoage.utils.lang;
  * vocabulary IDs.
  * 
  * There must be a method {@link #getDefaultValue()} to which
- * contains the English text (used for English language and fallback)
+ * contains the text in the default language of the application
+ * (used for the default language and for fallback)
  * and a method {@link #getID()} that returns the ID
  * as a String needed to index the vocabulary in XML files
  * (like "Error_UnknownValue").
