@@ -1,8 +1,8 @@
 package com.xenoage.utils.base.collections;
 
 import static com.xenoage.utils.kernel.Range.range;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -90,7 +90,7 @@ public class NullableListTest {
 	}
 
 
-	private <T> ArrayList<T> list(T... vals) {
+	@SuppressWarnings("unchecked") private <T> ArrayList<T> list(T... vals) {
 		ArrayList<T> ret = new ArrayList<T>();
 		for (T val : vals)
 			ret.add(val);

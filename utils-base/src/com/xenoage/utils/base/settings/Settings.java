@@ -5,6 +5,7 @@ import static com.xenoage.utils.log.Report.error;
 import static com.xenoage.utils.log.Report.warning;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -173,8 +174,9 @@ public class Settings
 		{
 			try
 			{
-				p.storeToXML(IO.openOutputStream(this.directory + "/" + file
-					+ ".settings"), "Changed " + new Date());
+				OutputStream out = IO.openOutputStream(this.directory + "/" + file + ".settings");
+				p.storeToXML(out, "Changed " + new Date());
+				out.close();
 			}
 			catch (IOException ex)
 			{
