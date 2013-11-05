@@ -2,8 +2,6 @@ package com.xenoage.utils.graphics.color;
 
 import static com.xenoage.utils.math.MathUtils.clamp;
 
-import com.xenoage.utils.math.MathUtils;
-
 /**
  * A platform independent way to store a color.
  * All values are between 0 and 255.
