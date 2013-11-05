@@ -2,7 +2,6 @@ package com.xenoage.utils.document.command;
 
 import com.xenoage.utils.document.Document;
 
-
 /**
  * Interface for commands. Based on the Command Design Pattern.
  * 
@@ -26,16 +25,14 @@ public interface Command {
 	 */
 	public void execute();
 
-
 	/**
 	 * Returns the undoability level of this command.
 	 */
 	public Undoability getUndoability();
 
-
 	/**
 	 * Undoes this command.
 	 */
 	public void undo();
-	
+
 }

@@ -13,7 +13,7 @@ public enum Undoability {
 	 * a zoom command does not affect the content of a document. */
 	Transparent,
 	/** Non-undoable command, which breaks the chain of previously executed commands. For example,
-	 * when finally deleting a file, this can not be undone, and previous operations can also not be undone any
-	 * more (since they may require the deleted file). */
+	 * when a document was closed, this can not be undone, and previous operations on this document can also not be
+	 * undone any more. */
 	Stopper;
 }
