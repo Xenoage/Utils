@@ -1,6 +1,5 @@
 package com.xenoage.utils.graphics.font;
 
-import java.awt.Font;
 import java.util.EnumSet;
 
 
@@ -25,13 +24,14 @@ public class FontStyle
 	private final int style;
 	
 	
+	/* Move into JavaSE utils project
 	public static FontStyle fromFont(Font font)
 	{
 		int style = 0;
 		if (font.isBold()) style |= Bold;
 		if (font.isItalic()) style |= Italic;
 		return new FontStyle(style);
-	}
+	} */
 	
 	
 	public static FontStyle create(int... flags)

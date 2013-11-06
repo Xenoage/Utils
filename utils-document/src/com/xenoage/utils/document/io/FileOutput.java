@@ -1,9 +1,9 @@
 package com.xenoage.utils.document.io;
 
 import java.io.IOException;
-import java.io.OutputStream;
 
 import com.xenoage.utils.document.Document;
+import com.xenoage.utils.io.generic.OutputStream;
 
 
 /**

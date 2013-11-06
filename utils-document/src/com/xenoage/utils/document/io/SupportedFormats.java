@@ -1,6 +1,6 @@
 package com.xenoage.utils.document.io;
 
-import static com.xenoage.utils.pdlib.IVector.ivec;
+import static com.xenoage.utils.base.collections.CollectionUtils.alist;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +8,6 @@ import java.util.List;
 import lombok.Getter;
 
 import com.xenoage.utils.document.Document;
-import com.xenoage.utils.pdlib.IVector;
-import com.xenoage.utils.pdlib.Vector;
 
 /**
  * This base class provides a list of all formats which can be used
@@ -26,24 +24,24 @@ public abstract class SupportedFormats<T extends Document> {
 	/**
 	 * Gets a list of the supported formats for reading.
 	 */
-	public Vector<FileFormat<T>> getReadFormats() {
-		IVector<FileFormat<T>> ret = ivec();
+	public List<FileFormat<T>> getReadFormats() {
+		List<FileFormat<T>> ret = alist();
 		for (FileFormat<T> f : formats)
 			if (f.getInput() != null)
 				ret.add(f);
-		return ret.close();
+		return ret;
 	}
 
 	/**
 	 * Gets a list of the supported formats for reading.
 	 */
-	public Vector<FileFormat<T>> getWriteFormats() {
-		IVector<FileFormat<T>> ret = ivec();
+	public List<FileFormat<T>> getWriteFormats() {
+		List<FileFormat<T>> ret = alist();
 		for (FileFormat<T> f : formats) {
 			if (f.getOutput() != null)
 				ret.add(f);
 		}
-		return ret.close();
+		return ret;
 	}
 
 	/**

@@ -12,6 +12,8 @@ import org.junit.Test;
 import com.xenoage.utils.document.command.LineAdd;
 import com.xenoage.utils.document.command.LineRemove;
 import com.xenoage.utils.document.io.FileFormat;
+import com.xenoage.utils.document.io.JseInputStream;
+import com.xenoage.utils.document.io.JseOutputStream;
 
 
 /**
@@ -73,10 +75,10 @@ public class DocumentTest {
 		//write to byte buffer
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		FileFormat<Notes> format = notes.getSupportedFormats().getWriteDefaultFormat();
-		format.getOutput().write(notes, out, null);
+		format.getOutput().write(notes, new JseOutputStream(out), null);
 		//read again
 		ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
-		Notes nodesRead = format.getInput().read(in, null);
+		Notes nodesRead = format.getInput().read(new JseInputStream(in), null);
 		assertEquals("1;2;3;4;5", nodesRead.toString());
 	}
 

@@ -7,6 +7,7 @@ import javax.swing.filechooser.FileFilter;
 
 import com.xenoage.utils.base.settings.Settings;
 import com.xenoage.utils.document.io.FileFormat;
+import com.xenoage.utils.swing.io.JseFile;
 
 /**
  * Useful methods for working with a {@link JFileChooser}.
@@ -34,7 +35,7 @@ public class JFileChooserUtil {
 			}
 
 			@Override public boolean accept(File f) {
-				return fileFormat.isAccepted(f);
+				return fileFormat.isAccepted(new JseFile(f));
 			}
 		};
 		return ret;
