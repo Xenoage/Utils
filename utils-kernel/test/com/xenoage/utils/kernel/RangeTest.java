@@ -13,17 +13,14 @@ import org.junit.Test;
 
 import com.xenoage.utils.kernel.Range;
 
-
 /**
  * Test cases for the {@link Range} class.
  * 
  * @author Andreas Wenger
  */
-public class RangeTest
-{
+public class RangeTest {
 
-	@Test public void rangeTest1()
-	{
+	@Test public void rangeTest1() {
 		Range r = range(-1, 2);
 		Iterator<Integer> it = r.iterator();
 		for (int i = -1; i <= 2; i++) {
@@ -34,9 +31,7 @@ public class RangeTest
 		assertEquals(4, r.getCount());
 	}
 
-
-	@Test public void rangeTest2()
-	{
+	@Test public void rangeTest2() {
 		Range r = range(3);
 		Iterator<Integer> it = r.iterator();
 		for (int i = 0; i <= 2; i++) {
@@ -47,9 +42,7 @@ public class RangeTest
 		assertEquals(3, r.getCount());
 	}
 
-
-	@Test public void rangeTest3()
-	{
+	@Test public void rangeTest3() {
 		Range r = range(Arrays.asList(5, 2, 8));
 		Iterator<Integer> it = r.iterator();
 		for (int i = 0; i <= 2; i++) {
@@ -60,9 +53,7 @@ public class RangeTest
 		assertEquals(3, r.getCount());
 	}
 
-
-	@Test public void rangeTest4()
-	{
+	@Test public void rangeTest4() {
 		Range r = range(new int[] { 5, 2, 8 });
 		Iterator<Integer> it = r.iterator();
 		for (int i = 0; i <= 2; i++) {
@@ -73,27 +64,21 @@ public class RangeTest
 		assertEquals(3, r.getCount());
 	}
 
-
-	@Test public void rangeTest5()
-	{
+	@Test public void rangeTest5() {
 		Range r = range(Arrays.asList());
 		Iterator<Integer> it = r.iterator();
 		assertFalse(it.hasNext());
 		assertEquals(0, r.getCount());
 	}
 
-
-	@Test public void rangeTest6()
-	{
+	@Test public void rangeTest6() {
 		Range r = range(2, -1);
 		Iterator<Integer> it = r.iterator();
 		assertFalse(it.hasNext());
 		assertEquals(0, r.getCount());
 	}
 
-
-	@Test public void rangeReverseTest1()
-	{
+	@Test public void rangeReverseTest1() {
 		Range r = rangeReverse(Arrays.asList(5, 2, 8));
 		Iterator<Integer> it = r.iterator();
 		for (int i = 2; i >= 0; i--) {
@@ -104,18 +89,14 @@ public class RangeTest
 		assertEquals(3, r.getCount());
 	}
 
-
-	@Test public void rangeReverseTest2()
-	{
+	@Test public void rangeReverseTest2() {
 		Range r = rangeReverse(Arrays.asList());
 		Iterator<Integer> it = r.iterator();
 		assertFalse(it.hasNext());
 		assertEquals(0, r.getCount());
 	}
 
-
-	@Test public void rangeReverseTest3()
-	{
+	@Test public void rangeReverseTest3() {
 		Range r = rangeReverse(5, 3);
 		Iterator<Integer> it = r.iterator();
 		for (int i = 5; i >= 3; i--) {
