@@ -2,7 +2,6 @@ package com.xenoage.utils.error;
 
 import com.xenoage.utils.log.Report;
 
-
 /**
  * This error handler wraps all messages it receives into a
  * {@link RuntimeException} and throws it.
@@ -10,11 +9,9 @@ import com.xenoage.utils.log.Report;
  * @author Andreas Wenger
  */
 public class NoErrorProcessing
-	implements ErrorProcessing
-{
+	implements ErrorProcessing {
 
-	@Override public void report(Report report)
-	{
+	@Override public void report(Report report) {
 		throw new RuntimeException("Received a report: " + report.toString());
 	}
 

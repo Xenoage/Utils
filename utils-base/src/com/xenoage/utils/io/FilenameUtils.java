@@ -1,21 +1,18 @@
 package com.xenoage.utils.io;
 
-import static com.xenoage.utils.base.StringUtils.fillIntDigits;
-import static com.xenoage.utils.base.collections.CollectionUtils.alist;
+import static com.xenoage.utils.StringUtils.fillIntDigits;
+import static com.xenoage.utils.collections.CollectionUtils.alist;
 import static com.xenoage.utils.kernel.Range.range;
 
 import java.util.List;
-
 
 /**
  * Useful methods to work with filenames.
  * 
  * @author Andreas Wenger
  */
-public class FilenameUtils
-{
-	
-	
+public class FilenameUtils {
+
 	/**
 	 * Returns numbered filenames for the given original filename.
 	 * If there is only one file, the original name is returned.
@@ -32,8 +29,7 @@ public class FilenameUtils
 	 * a "/" or "\" in it, only the part behind its last appearance
 	 * is seen as a filename.
 	 */
-	public static List<String> numberFiles(String originalName, int count)
-	{
+	public static List<String> numberFiles(String originalName, int count) {
 		//simple case
 		if (count <= 1)
 			return alist(originalName);
@@ -61,6 +57,5 @@ public class FilenameUtils
 			ret.add(dirPart + namePart + "-" + fillIntDigits(i + 1, digits) + extPart);
 		return ret;
 	}
-	
 
 }

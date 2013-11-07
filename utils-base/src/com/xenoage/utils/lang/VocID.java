@@ -1,6 +1,5 @@
 package com.xenoage.utils.lang;
 
-
 /**
  * This interface must be implemented by all enums that contain
  * vocabulary IDs.
@@ -14,15 +13,13 @@ package com.xenoage.utils.lang;
  * 
  * @author Andreas Wenger
  */
-public interface VocID
-{
-	
+public interface VocID {
+
 	/**
-	 * Gets the default English text.
+	 * Gets the text in the default language.
 	 */
 	public String getDefaultValue();
-	
-	
+
 	/**
 	 * Gets the ID of the vocabulary as a String.
 	 */
