@@ -27,7 +27,7 @@ import java.util.ListIterator;
  * compiler warnings for the write methods will show up.
  * 
  * This class is a pragmatic combination of the idea of functional data structures
- * like PList in the utils-pdlib project and an efficient implementation like {@link ArrayList}.
+ * like PList from utils-pdlib and an efficient implementation like {@link ArrayList}.
  * 
  * @author Andreas Wenger
  */

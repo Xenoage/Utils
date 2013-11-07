@@ -7,17 +7,14 @@ import org.junit.Test;
 
 import com.xenoage.utils.pdlib.PMap;
 
-
 /**
  * Test cases for the {@link PMap} class.
  * 
  * @author Andreas Wenger
  */
-public class PMapTest
-{
-	
-	@Test public void minusValueTest()
-	{
+public class PMapTest {
+
+	@Test public void minusValueTest() {
 		PMap<Integer, Integer> map = pmap();
 		map = map.plus(1, 10);
 		map = map.plus(2, 1);
@@ -28,10 +25,8 @@ public class PMapTest
 		assertEquals(1, (int) map.get(2));
 		assertEquals(5, (int) map.get(4));
 	}
-	
-	
-	@Test public void replaceValueTest()
-	{
+
+	@Test public void replaceValueTest() {
 		PMap<Integer, Integer> map = pmap();
 		map = map.plus(1, 10);
 		map = map.plus(2, 1);
