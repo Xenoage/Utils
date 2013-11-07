@@ -11,7 +11,6 @@ import com.xenoage.utils.document.exceptions.CancelledException;
 import com.xenoage.utils.document.exceptions.PropertyAlreadySetException;
 import com.xenoage.utils.document.exceptions.UselessException;
 
-
 /**
  * This class performs {@link Command}s on a {@link Document} and supports undoing and redoing them.
  * 
@@ -30,14 +29,12 @@ public class CommandPerformer {
 		this.document = document;
 	}
 
-
 	/**
 	 * Gets the {@link Document} this performer is working on.
 	 */
 	public Document getDocument() {
 		return document;
 	}
-
 
 	/**
 	 * Executes the given {@link Command} and updates the command history according to
@@ -76,14 +73,12 @@ public class CommandPerformer {
 		}
 	}
 
-
 	/**
 	 * Returns true, if the last executed command can be undone. 
 	 */
 	public boolean isUndoPossible() {
 		return (history.getLastCommand() != null);
 	}
-
 
 	/**
 	 * Undoes the last command, when possible.
@@ -101,30 +96,27 @@ public class CommandPerformer {
 				l.commandUndone(document, command);
 		}
 	}
-	
-	
+
 	/**
-   * Undoes the given number of commands in the history, if possible.
-   */
-  public void undoMultipleSteps(int steps)
-  {
-  	if (steps < 1)
-  		return;
-  	log(remark("Multiple undo (" + steps + " steps)..."));
-  	Command command = null;
-  	for (int i = 0; i < steps && isUndoPossible(); i++) {
-  		command = history.getLastCommand();
-  		log(remark(command.getClass().getName() + " is undone..."));
-  		//undo the command
+	 * Undoes the given number of commands in the history, if possible.
+	 */
+	public void undoMultipleSteps(int steps) {
+		if (steps < 1)
+			return;
+		log(remark("Multiple undo (" + steps + " steps)..."));
+		Command command = null;
+		for (int i = 0; i < steps && isUndoPossible(); i++) {
+			command = history.getLastCommand();
+			log(remark(command.getClass().getName() + " is undone..."));
+			//undo the command
 			command.undo();
 			//go back in history
 			history.back();
-    }
-  	//notify listeners
+		}
+		//notify listeners
 		for (CommandListener l : listeners)
 			l.commandUndone(document, command);
-  }
-
+	}
 
 	/**
 	 * Returns true, if the last undone command can be executed again. 
@@ -133,24 +125,22 @@ public class CommandPerformer {
 		return (history.getLastUndoneCommand() != null);
 	}
 
-
 	/**
 	 * Executes the last undone command again, when possible.
 	 */
 	public void redo() {
 		if (isRedoPossible()) {
-    	Command command = history.getLastUndoneCommand();
-    	log(remark(command.getClass().getName() + " is redone..."));
-    	//execute the command
-      command.execute();
-      //go forward in history
-      history.forward();
-      //notify listeners
-      for (CommandListener l : listeners)
+			Command command = history.getLastUndoneCommand();
+			log(remark(command.getClass().getName() + " is redone..."));
+			//execute the command
+			command.execute();
+			//go forward in history
+			history.forward();
+			//notify listeners
+			for (CommandListener l : listeners)
 				l.commandExecuted(document, command);
-    }
+		}
 	}
-
 
 	/**
 	 * Registers the given {@link CommandListener}.
@@ -159,13 +149,11 @@ public class CommandPerformer {
 		listeners.add(listener);
 	}
 
-
 	/**
 	 * Unregisters the given {@link CommandListener}.
 	 */
 	public void removeCommandListener(CommandListener listener) {
 		listeners.remove(listener);
 	}
-
 
 }

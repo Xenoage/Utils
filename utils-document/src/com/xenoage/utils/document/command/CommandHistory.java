@@ -5,7 +5,6 @@ import static com.xenoage.utils.kernel.Range.rangeReverse;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * A history of {@link Command}s executed on the same {@link CommandPerformer}.
  * 
@@ -15,8 +14,8 @@ public class CommandHistory {
 
 	private ArrayList<Command> history = new ArrayList<Command>();
 	private int historyPosition = -1;
-	
-	
+
+
 	/**
 	 * Resets the history.
 	 */
@@ -24,7 +23,6 @@ public class CommandHistory {
 		history.clear();
 		historyPosition = -1;
 	}
-
 
 	/**
 	 * Adds the given {@link Command} to the top of the stack and sets it as the
@@ -35,7 +33,6 @@ public class CommandHistory {
 		forward();
 	}
 
-
 	/**
 	 * Sets the next {@link Command} as the last executed command.
 	 */
@@ -43,14 +40,12 @@ public class CommandHistory {
 		historyPosition++;
 	}
 
-
 	/**
 	 * Sets the last {@link Command} as the last executed command.
 	 */
 	public void back() {
 		historyPosition--;
 	}
-
 
 	/**
 	 * Gets the last executed {@link Command}, or null if there is nothing to be undone.
@@ -64,7 +59,6 @@ public class CommandHistory {
 		}
 	}
 
-
 	/**
 	 * Gets the last undone {@link Command}, or null if there is nothing to be redone.
 	 */
@@ -77,7 +71,6 @@ public class CommandHistory {
 		}
 	}
 
-
 	/**
 	 * Delete all commands that follow the current command.
 	 */
@@ -87,7 +80,6 @@ public class CommandHistory {
 			history.remove(history.size() - 1);
 		}
 	}
-
 
 	/**
 	 * Gets a list of the undoable commands. The first one is the command, that must be undone first.
@@ -99,6 +91,5 @@ public class CommandHistory {
 		}
 		return ret;
 	}
-
 
 }

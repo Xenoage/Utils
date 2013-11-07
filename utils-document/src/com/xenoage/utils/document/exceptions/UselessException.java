@@ -10,8 +10,4 @@ package com.xenoage.utils.document.exceptions;
  */
 public class UselessException
 	extends RuntimeException {
-
-	public UselessException() {
-	}
-
 }

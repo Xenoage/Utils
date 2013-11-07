@@ -2,7 +2,6 @@ package com.xenoage.utils.document.command;
 
 import com.xenoage.utils.document.Document;
 
-
 /**
  * Classes implementing this interface can be notified when a {@link Command} has been
  * executed or undone on a {@link Document}.
@@ -11,16 +10,14 @@ import com.xenoage.utils.document.Document;
  * 
  * @author Andreas Wenger
  */
-public interface CommandListener
-{
-	
+public interface CommandListener {
+
 	/**
 	 * This method is called, when the given {@link Command} was performed on
 	 * the given {@link Document}.
 	 */
 	public void commandExecuted(Document document, Command command);
-	
-	
+
 	/**
 	 * This method is called, when the given {@link Command} was undone on
 	 * the given {@link Document}. When multiple steps are undone at the same time,

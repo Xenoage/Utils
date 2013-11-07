@@ -1,6 +1,6 @@
 package com.xenoage.utils.document.io;
 
-import static com.xenoage.utils.base.collections.CollectionUtils.alist;
+import static com.xenoage.utils.collections.CollectionUtils.alist;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import com.xenoage.utils.document.Notes;
-import com.xenoage.utils.io.generic.OutputStream;
-
+import com.xenoage.utils.io.OutputStream;
 
 /**
  * This class writes {@link Notes} to a text file.
@@ -15,7 +14,6 @@ import com.xenoage.utils.io.generic.OutputStream;
 public class NotesOutput
 	implements FileOutput<Notes> {
 
-	
 	@Override public void write(Notes document, OutputStream stream, String filePath)
 		throws IOException {
 		PrintWriter writer = new PrintWriter(new JseOutputStream(stream));
@@ -25,7 +23,6 @@ public class NotesOutput
 		writer.close();
 	}
 
-	
 	@Override public boolean isFilePathRequired(Notes document) {
 		return false;
 	}

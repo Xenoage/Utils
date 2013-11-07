@@ -4,22 +4,23 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * Copy of file in the utils-swing project.
+ * Based on file in the utils-jse project.
  * 
  * @author Andreas Wenger
  */
 public class JseOutputStream
 	extends OutputStream
-	implements com.xenoage.utils.io.generic.OutputStream {
-	
+	implements com.xenoage.utils.io.OutputStream {
+
 	private OutputStream jseOutputStream = null;
-	private com.xenoage.utils.io.generic.OutputStream genOutputStream = null;
-	
+	private com.xenoage.utils.io.OutputStream genOutputStream = null;
+
+
 	public JseOutputStream(OutputStream jseOutputStream) {
 		this.jseOutputStream = jseOutputStream;
 	}
-	
-	public JseOutputStream(com.xenoage.utils.io.generic.OutputStream genOutputStream) {
+
+	public JseOutputStream(com.xenoage.utils.io.OutputStream genOutputStream) {
 		this.genOutputStream = genOutputStream;
 	}
 

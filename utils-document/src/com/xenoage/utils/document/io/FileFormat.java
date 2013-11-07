@@ -1,7 +1,7 @@
 package com.xenoage.utils.document.io;
 
 import com.xenoage.utils.document.Document;
-import com.xenoage.utils.io.generic.File;
+import com.xenoage.utils.io.File;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

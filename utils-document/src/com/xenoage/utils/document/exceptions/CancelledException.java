@@ -8,8 +8,4 @@ package com.xenoage.utils.document.exceptions;
  */
 public class CancelledException
 	extends RuntimeException {
-
-	public CancelledException() {
-	}
-
 }

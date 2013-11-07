@@ -15,15 +15,13 @@ import com.xenoage.utils.document.io.FileFormat;
 import com.xenoage.utils.document.io.JseInputStream;
 import com.xenoage.utils.document.io.JseOutputStream;
 
-
 /**
  * Tests for the document framework, based on the test data class {@link Notes}.
  * 
  * @author Andreas Wenger
  */
 public class DocumentTest {
-	
-	
+
 	private Notes createTestNotes() {
 		Notes notes = new Notes();
 		//add 5 lines
@@ -32,8 +30,7 @@ public class DocumentTest {
 		assertEquals("1;2;3;4;5", notes.toString());
 		return notes;
 	}
-	
-	
+
 	@Test public void testCommands() {
 		Notes notes = createTestNotes();
 		//remove the second line
@@ -67,8 +64,7 @@ public class DocumentTest {
 		//no redo should be possible
 		assertEquals(false, notes.getCommandPerformer().isRedoPossible());
 	}
-	
-	
+
 	@Test public void testIO()
 		throws IOException {
 		Notes notes = createTestNotes();

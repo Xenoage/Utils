@@ -31,7 +31,6 @@ public class LineAdd
 		return Undoability.Undoable;
 	}
 
-	
 	@Override public void undo() {
 		notes.getLines().remove(notes.getLines().size() - 1);
 	}
