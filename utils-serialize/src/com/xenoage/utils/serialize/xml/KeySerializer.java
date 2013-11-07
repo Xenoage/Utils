@@ -4,7 +4,7 @@ import static com.xenoage.utils.xml.XMLWriter.addAttribute;
 
 import org.w3c.dom.Element;
 
-import com.xenoage.utils.base.Key;
+import com.xenoage.utils.jse.Key;
 import com.xenoage.utils.xml.Parse;
 import com.xenoage.utils.xml.XMLWriter;
 
