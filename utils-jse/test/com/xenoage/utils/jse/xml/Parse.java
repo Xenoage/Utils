@@ -1,28 +1,25 @@
-package com.xenoage.utils.xml;
+package com.xenoage.utils.jse.xml;
 
-import static com.xenoage.utils.xml.InvalidXMLData.invalid;
-import static com.xenoage.utils.xml.InvalidXMLData.throwNull;
-import static com.xenoage.utils.xml.XMLReader.attribute;
-import static com.xenoage.utils.xml.XMLReader.element;
-import static com.xenoage.utils.xml.XMLReader.text;
+import static com.xenoage.utils.jse.xml.InvalidXMLData.invalid;
+import static com.xenoage.utils.jse.xml.InvalidXMLData.throwNull;
+import static com.xenoage.utils.jse.xml.XMLReader.attribute;
+import static com.xenoage.utils.jse.xml.XMLReader.element;
+import static com.xenoage.utils.jse.xml.XMLReader.text;
 
 import org.w3c.dom.Element;
-
 
 /**
  * Useful parsing methods.
  * 
  * @author Andreas Wenger
  */
-public final class Parse
-{
+public final class Parse {
 
 	/**
 	 * Gets the enum value from the given array, that
 	 * matches (lower case) the given text, or null if not found.
 	 */
-	public static <T extends EnumWithXMLNames> T getEnumValueNamed(String text, T[] values)
-	{
+	public static <T extends EnumWithXMLNames> T getEnumValueNamed(String text, T[] values) {
 		if (text != null) {
 			for (T value : values) {
 				if (text.equals(value.getXMLName())) {
@@ -33,13 +30,11 @@ public final class Parse
 		return null;
 	}
 
-
 	/**
 	 * Gets the text of the child element with the given name
 	 * of the given parent element as an float.
 	 */
-	public static float parseChildFloat(Element parent, String eName)
-	{
+	public static float parseChildFloat(Element parent, String eName) {
 		Element e = element(parent, eName);
 		if (e != null) {
 			return parseFloat(e);
@@ -47,13 +42,11 @@ public final class Parse
 		throw invalid(e);
 	}
 
-
 	/**
 	 * Gets the text of the child element with the given name
 	 * of the given parent element as an int.
 	 */
-	public static int parseChildInt(Element parent, String eName)
-	{
+	public static int parseChildInt(Element parent, String eName) {
 		Element e = element(parent, eName);
 		if (e != null) {
 			return parseInt(e);
@@ -61,14 +54,12 @@ public final class Parse
 		throw invalid(parent);
 	}
 
-
 	/**
 	 * Gets the text of the child element with the given name
 	 * of the given parent element as an Integer, or null if the
 	 * element does not exist.
 	 */
-	public static Integer parseChildIntNull(Element parent, String eName)
-	{
+	public static Integer parseChildIntNull(Element parent, String eName) {
 		Element e = element(parent, eName);
 		if (e != null) {
 			return parseInt(e);
@@ -76,14 +67,12 @@ public final class Parse
 		return null;
 	}
 
-
 	/**
 	 * Gets the text of the child element with the given name
 	 * of the given parent element as an Integer, or null if the
 	 * element does not exist or the parsing fails.
 	 */
-	public static Integer parseChildIntNullTry(Element parent, String eName)
-	{
+	public static Integer parseChildIntNullTry(Element parent, String eName) {
 		Element e = element(parent, eName);
 		if (e != null) {
 			try {
@@ -94,23 +83,16 @@ public final class Parse
 		return null;
 	}
 
-
-	public static Boolean parseAttrBoolean(Element e, String attrName)
-	{
+	public static Boolean parseAttrBoolean(Element e, String attrName) {
 		return throwNull(parseAttrBooleanNull(e, attrName), e);
 	}
 
-
-	public static Boolean parseAttrBooleanDefault(Element e, String attrName,
-		boolean defaultValue)
-	{
+	public static Boolean parseAttrBooleanDefault(Element e, String attrName, boolean defaultValue) {
 		Boolean ret = parseAttrBooleanNull(e, attrName);
 		return (ret != null ? ret : defaultValue);
 	}
 
-
-	public static Boolean parseAttrBooleanNull(Element e, String attrName)
-	{
+	public static Boolean parseAttrBooleanNull(Element e, String attrName) {
 		try {
 			String value = attribute(e, attrName);
 			return value != null ? Boolean.parseBoolean(value) : null;
@@ -119,15 +101,11 @@ public final class Parse
 		}
 	}
 
-
-	public static Float parseAttrFloat(Element e, String attrName)
-	{
+	public static Float parseAttrFloat(Element e, String attrName) {
 		return throwNull(parseAttrFloatNull(e, attrName), e);
 	}
 
-
-	public static Float parseAttrFloatNull(Element e, String attrName)
-	{
+	public static Float parseAttrFloatNull(Element e, String attrName) {
 		try {
 			String value = attribute(e, attrName);
 			return value != null ? Float.parseFloat(value) : null;
@@ -136,15 +114,11 @@ public final class Parse
 		}
 	}
 
-
-	public static int parseAttrInt(Element e, String attrName)
-	{
+	public static int parseAttrInt(Element e, String attrName) {
 		return throwNull(parseAttrIntNull(e, attrName), e);
 	}
 
-
-	public static Integer parseAttrIntNull(Element e, String attrName)
-	{
+	public static Integer parseAttrIntNull(Element e, String attrName) {
 		try {
 			String value = attribute(e, attrName);
 			return value != null ? parseInt(value) : null;
@@ -153,12 +127,10 @@ public final class Parse
 		}
 	}
 
-
 	/**
 	 * Gets the text of the given element as a float.
 	 */
-	public static float parseFloat(Element e)
-	{
+	public static float parseFloat(Element e) {
 		try {
 			return Float.parseFloat(text(e));
 		} catch (NumberFormatException ex) {
@@ -166,13 +138,11 @@ public final class Parse
 		}
 	}
 
-
 	/**
 	 * Gets the text of the child element with the given name
 	 * of the given parent element as a float.
 	 */
-	public static float parseFloatInt(Element parent, String eName)
-	{
+	public static float parseFloatInt(Element parent, String eName) {
 		Element e = element(parent, eName);
 		if (e != null) {
 			return parseFloat(e);
@@ -180,14 +150,12 @@ public final class Parse
 		throw invalid(e);
 	}
 
-
 	/**
 	 * Gets the text of the child element with the given name
 	 * of the given parent element as a Float, or null if the
 	 * element does not exist.
 	 */
-	public static Float parseChildFloatNull(Element parent, String eName)
-	{
+	public static Float parseChildFloatNull(Element parent, String eName) {
 		Element e = element(parent, eName);
 		if (e != null) {
 			return parseFloat(e);
@@ -195,12 +163,10 @@ public final class Parse
 		return null;
 	}
 
-
 	/**
 	 * Gets the text of the given element as an int.
 	 */
-	public static int parseInt(Element e)
-	{
+	public static int parseInt(Element e) {
 		try {
 			return parseInt(text(e));
 		} catch (NumberFormatException ex) {
@@ -208,13 +174,11 @@ public final class Parse
 		}
 	}
 
-
 	/**
 	 * Parses an integer from a string. Also values with ".0", ".00" and so
 	 * on are allowed.
 	 */
-	private static int parseInt(String value)
-	{
+	private static int parseInt(String value) {
 		try {
 			return Integer.parseInt(value);
 		} catch (NumberFormatException ex) {
@@ -226,6 +190,5 @@ public final class Parse
 				throw new NumberFormatException("No integer");
 		}
 	}
-
 
 }

@@ -1,4 +1,4 @@
-package com.xenoage.utils.xml;
+package com.xenoage.utils.jse.xml;
 
 import static com.xenoage.utils.kernel.Range.range;
 
@@ -23,9 +23,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.xenoage.utils.base.annotations.MaybeNull;
-import com.xenoage.utils.base.annotations.NonNull;
-
+import com.xenoage.utils.annotations.MaybeNull;
+import com.xenoage.utils.annotations.NonNull;
 
 /**
  * This class contains some helper functions
@@ -34,29 +33,24 @@ import com.xenoage.utils.base.annotations.NonNull;
  *
  * @author Andreas Wenger
  */
-public class XMLReader
-{
-
+public class XMLReader {
 
 	/**
 	 * Reads and returns the XML document at the given path.
 	 */
 	public static Document readFile(String file)
-		throws ParserConfigurationException, SAXException, IOException
-	{
+		throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		builder.setEntityResolver(new NoResolver());
 		return builder.parse(file);
 	}
 
-
 	/**
 	 * Reads and returns the XML document at the given input stream.
 	 */
 	public static Document readFile(InputStream stream)
-		throws IOException
-	{
+		throws IOException {
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
@@ -66,14 +60,12 @@ public class XMLReader
 			throw new IOException(ex);
 		}
 	}
-	
-	
+
 	/**
 	 * Reads and returns the XML document in the given string.
 	 */
 	public static Document read(String data)
-		throws IOException
-	{
+		throws IOException {
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
@@ -84,23 +76,19 @@ public class XMLReader
 		}
 	}
 
-
 	/**
 	 * Returns a XMLStreamReader for the XML document at the given path.
 	 */
 	public static XMLStreamReader createXMLStreamReader(String file)
-		throws IOException, XMLStreamException
-	{
+		throws IOException, XMLStreamException {
 		return createXMLStreamReader(new FileInputStream(file));
 	}
-
 
 	/**
 	 * Returns a XMLStreamReader for the XML document at the given input stream.
 	 */
 	public static XMLStreamReader createXMLStreamReader(InputStream stream)
-		throws IOException, XMLStreamException
-	{
+		throws IOException, XMLStreamException {
 		XMLInputFactory factory = XMLInputFactory.newInstance();
 		//disable DTD resolver
 		factory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
@@ -108,66 +96,54 @@ public class XMLReader
 		return reader;
 	}
 
-
 	/**
 	 * Gets the root element of the given document.
 	 */
-	public static Element root(Document doc)
-	{
+	public static Element root(Document doc) {
 		return doc.getDocumentElement();
 	}
-
 
 	/**
 	 * Gets the trimmed text of the given element, or "".
 	 */
-	public static String text(Element element)
-	{
+	public static String text(Element element) {
 		if (element == null)
 			return "";
 		else
 			return getTextContent(element).trim();
 	}
 
-
 	/**
 	 * Gets the untrimmed trimmed text of the given element, or "".
 	 */
-	public static String textUntrimmed(Element element)
-	{
+	public static String textUntrimmed(Element element) {
 		if (element == null)
 			return "";
 		else
 			return getTextContent(element);
 	}
 
-
 	/**
 	 * Reads and returns the value of the attribute with the
 	 * given name of the given element, or null if not found.
 	 */
-	public static String attribute(Element element, String name)
-	{
+	public static String attribute(Element element, String name) {
 		String ret = attributeNotNull(element, name);
 		return (ret.length() > 0 ? ret : null);
 	}
-
 
 	/**
 	 * Reads and returns the value of the attribute with the
 	 * given name of the given element, or "" if not found.
 	 */
-	public static String attributeNotNull(Element element, String name)
-	{
+	public static String attributeNotNull(Element element, String name) {
 		return element.getAttribute(name);
 	}
-
 
 	/**
 	 * Gets the first child element of the given node, or null if not found.
 	 */
-	public static Element element(Node parent)
-	{
+	public static Element element(Node parent) {
 		for (Node node = parent.getFirstChild(); node != null; node = node.getNextSibling()) {
 			if (node instanceof Element)
 				return (Element) node;
@@ -175,41 +151,35 @@ public class XMLReader
 		return null;
 	}
 
-
 	/**
 	 * Gets the first child element of the given node with
 	 * the given name and id attribute, or throws a {@link RuntimeException} if it is missing.
 	 */
-	public static Element elementWithIDNotNull(Element parent, String name, String id)
-	{
+	public static Element elementWithIDNotNull(Element parent, String name, String id) {
 		Element ret = element(parent, name, id);
 		if (ret == null)
-			throw new RuntimeException("Required child element \"" + name + "\" with id \""
-				+ id + "\" " + "in parent element \"" + parent.getNodeName() + "\" is missing!");
+			throw new RuntimeException("Required child element \"" + name + "\" with id \"" + id + "\" " +
+				"in parent element \"" + parent.getNodeName() + "\" is missing!");
 		return ret;
 	}
-
 
 	/**
 	 * Gets the first child element of the given node with
 	 * the given name, or throws a {@link RuntimeException} if it is missing.
 	 */
-	public static Element elementNotNull(Element parent, String name)
-	{
+	public static Element elementNotNull(Element parent, String name) {
 		Element ret = element(parent, name);
 		if (ret == null)
-			throw new RuntimeException("Required child element \"" + name
-				+ "\" in parent element \"" + parent.getNodeName() + "\" is missing!");
+			throw new RuntimeException("Required child element \"" + name + "\" in parent element \"" +
+				parent.getNodeName() + "\" is missing!");
 		return ret;
 	}
-
 
 	/**
 	 * Gets the first child element of the given node with
 	 * the given name, or null if not found.
 	 */
-	public static Element element(Element parent, String name)
-	{
+	public static Element element(Element parent, String name) {
 		for (Node node = parent.getFirstChild(); node != null; node = node.getNextSibling()) {
 			if (node instanceof Element && node.getNodeName().equals(name))
 				return (Element) node;
@@ -217,13 +187,11 @@ public class XMLReader
 		return null;
 	}
 
-
 	/**
 	 * Gets the first child element of the given node with
 	 * the given name and id attribute, or null if not found.
 	 */
-	public static Element element(Element parent, String name, String id)
-	{
+	public static Element element(Element parent, String name, String id) {
 		for (Node node = parent.getFirstChild(); node != null; node = node.getNextSibling()) {
 			if (node instanceof Element && node.getNodeName().equals(name)) {
 				Element e = (Element) node;
@@ -234,15 +202,12 @@ public class XMLReader
 		return null;
 	}
 
-
 	/**
 	 * Gets the a list of all child elements of the given node with
 	 * the given name. If no such elements are found, the returned
 	 * list is empty. 
 	 */
-	public static List<Element> elements(@MaybeNull Node parent,
-		@NonNull String name)
-	{
+	public static List<Element> elements(@MaybeNull Node parent, @NonNull String name) {
 		ArrayList<Element> ret = new ArrayList<Element>();
 		if (parent != null) {
 			for (Node node = parent.getFirstChild(); node != null; node = node.getNextSibling()) {
@@ -253,13 +218,11 @@ public class XMLReader
 		return ret;
 	}
 
-
 	/**
 	 * Gets the a list of all child elements of the given node.
 	 * If no such elements are found, the returned list is empty. 
 	 */
-	public static ArrayList<Element> elements(Element parent)
-	{
+	public static ArrayList<Element> elements(Element parent) {
 		ArrayList<Element> ret = new ArrayList<Element>(parent.getChildNodes().getLength());
 		for (Node node = parent.getFirstChild(); node != null; node = node.getNextSibling()) {
 			if (node.getNodeType() == Node.ELEMENT_NODE)
@@ -268,13 +231,11 @@ public class XMLReader
 		return ret;
 	}
 
-
 	/**
 	 * Gets the text of the given child element with the given name
 	 * of the given parent element, or null if it does not exist.
 	 */
-	public static String elementText(Element parentElement, String elementName)
-	{
+	public static String elementText(Element parentElement, String elementName) {
 		Element e = element(parentElement, elementName);
 		if (e == null)
 			return null;
@@ -282,23 +243,19 @@ public class XMLReader
 			return text(e);
 	}
 
-
 	/**
 	 * Gets the text of the given child element with the given name
 	 * of the given parent element, or "", even if it does not exist.
 	 */
-	public static String elementTextNotNull(Element parentElement, String elementName)
-	{
+	public static String elementTextNotNull(Element parentElement, String elementName) {
 		return text(element(parentElement, elementName));
 	}
-
 
 	/**
 	 * getTextContent reimplementation (needed e.g. for Android).
 	 * See documentation of J2SE's org.w3c.dom.Node.getTextContent().
 	 */
-	public static String getTextContent(Node node)
-	{
+	public static String getTextContent(Node node) {
 		switch (node.getNodeType()) {
 			case Node.ELEMENT_NODE:
 			case Node.ATTRIBUTE_NODE:
@@ -326,6 +283,5 @@ public class XMLReader
 		}
 		return null;
 	}
-
 
 }
