@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.xenoage.utils.io.IO;
+import com.xenoage.utils.jse.io.IO;
 import com.xenoage.utils.xml.XMLReader;
 
 

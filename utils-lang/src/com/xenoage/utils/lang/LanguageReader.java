@@ -2,9 +2,9 @@ package com.xenoage.utils.lang;
 
 import static com.xenoage.utils.base.NullUtils.notNull;
 import static com.xenoage.utils.base.collections.CollectionUtils.map;
-import static com.xenoage.utils.io.FileUtils.getPOFilter;
-import static com.xenoage.utils.io.FileUtils.getXMLFilter;
-import static com.xenoage.utils.io.FileUtils.orFilter;
+import static com.xenoage.utils.jse.io.FileUtils.getPOFilter;
+import static com.xenoage.utils.jse.io.FileUtils.getXMLFilter;
+import static com.xenoage.utils.jse.io.FileUtils.orFilter;
 import static com.xenoage.utils.log.Log.log;
 import static com.xenoage.utils.log.Report.remark;
 import static com.xenoage.utils.log.Report.warning;
@@ -22,7 +22,7 @@ import java.util.Set;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.xenoage.utils.io.IO;
+import com.xenoage.utils.jse.io.IO;
 import com.xenoage.utils.kernel.Tuple2;
 import com.xenoage.utils.xml.XMLReader;
 

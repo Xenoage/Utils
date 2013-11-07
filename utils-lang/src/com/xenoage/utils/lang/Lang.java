@@ -6,8 +6,8 @@ import static com.xenoage.utils.log.Report.warning;
 
 import java.util.ArrayList;
 
-import com.xenoage.utils.base.collections.WeakList;
 import com.xenoage.utils.base.iterators.It;
+import com.xenoage.utils.jse.collections.WeakList;
 import com.xenoage.utils.kernel.Tuple2;
 
 
