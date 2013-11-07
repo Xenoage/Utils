@@ -14,7 +14,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.xenoage.utils.jse.io.IO;
-import com.xenoage.utils.xml.XMLReader;
+import com.xenoage.utils.jse.xml.XMLReader;
 
 
 /**

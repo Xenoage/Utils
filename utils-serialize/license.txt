@@ -1,7 +1,7 @@
 Xenoage utils-serialize
 ***********************
 
-Xenoage utils-base is provided under the MIT license:
+Xenoage utils-serialize is provided under the MIT license:
 
 Copyright (c) 2010-2012 Xenoage Software
 
