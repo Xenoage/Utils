@@ -1,7 +1,7 @@
-Xenoage utils-swing
-*******************
+Xenoage utils-jse
+*****************
 
-Xenoage utils-swing is provided under the MIT license:
+Xenoage utils-jse is provided under the MIT license:
 
 Copyright (c) 2010-2012 Xenoage Software
 

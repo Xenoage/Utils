@@ -41,13 +41,10 @@ allprojects {
 
 //project dependencies
 project(':utils-base') { dependencies { compile project(':utils-kernel') } }
-project(':utils-document') { dependencies { compile project(':utils-base'), project(':utils-kernel'), project(':utils-pdlib') } }
-project(':utils-graphics') { dependencies { compile project(':utils-base'), project(':utils-math'), project(':utils-pdlib') } }
-project(':utils-lang') { dependencies { compile project(':utils-base'), project(':utils-xml') } }
-project(':utils-pdlib') { dependencies { compile project(':utils-kernel') } }
-project(':utils-serialize') { dependencies { compile project(':utils-math'), project(':utils-xml') } }
-project(':utils-swing') { dependencies { compile project(':utils-document'), project(':utils-graphics') } }
-project(':utils-xml') { dependencies { compile project(':utils-base') } }
+project(':utils-document') { dependencies { compile project(':utils-base') } }
+project(':utils-pdlib') { dependencies { compile project(':utils-base') } }
+project(':utils-jse') { dependencies { compile project(':utils-document') } }
+project(':utils-serialize') { dependencies { compile project(':utils-jse') } }
 
 //distribution in multiple jars
 task distDir(type:Copy) {
