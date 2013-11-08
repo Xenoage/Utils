@@ -1,4 +1,4 @@
-package com.xenoage.utils;
+package com.xenoage.utils.jse;
 
 /**
  * Useful methods to cast classes.
