@@ -29,7 +29,7 @@ import com.xenoage.utils.annotations.Const;
 			return new FontStyle(style);
 	}
 
-	private FontStyle(int style) {
+	public FontStyle(int style) {
 		this.style = style;
 	}
 

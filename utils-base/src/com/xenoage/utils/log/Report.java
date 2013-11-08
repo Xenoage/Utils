@@ -6,7 +6,6 @@ import static com.xenoage.utils.collections.CollectionUtils.alist;
 
 import java.util.List;
 
-import com.xenoage.utils.StackUtils;
 import com.xenoage.utils.annotations.MaybeNull;
 import com.xenoage.utils.annotations.NonNull;
 import com.xenoage.utils.lang.VocID;
@@ -51,7 +50,7 @@ public class Report {
 		//get stack trace, if requested and if possible
 		StackTraceElement caller = null;
 		if (findCaller) {
-			caller = StackUtils.getCaller(platformUtils().getCurrentStackTrace(), 1); //TODO: check 1
+			caller = platformUtils().getCaller(1);
 		}
 		return new Report(level, messageID, message, caller, error, filePaths);
 	}

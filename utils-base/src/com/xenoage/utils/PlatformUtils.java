@@ -52,10 +52,21 @@ public class PlatformUtils {
 	}
 	
 	/**
-	 * Returns a new {@link TextMeasurer} for the given font and text.
+	 * Gets the caller of a method. If unknown, null is returned.
+	 * @param stackTrace  The stack trace, or null if unknown (then, null is returned)
+	 * @param level       The level of the caller: 1 = the caller, 2 = the caller of the caller, ...
+	 *                    For example, when A.a() calls B.b(), and in B.b() you want to know who
+	 *                    called B.b(), use getCaller(1).
+	 */
+	public StackTraceElement getCaller(int level) {
+		return null;
+	}
+	
+	/**
+	 * Returns the {@link TextMeasurer}.
 	 * If this platform is not able to retrieve it, null is returned.
 	 */
-	public TextMeasurer textMeasurer() {
+	public TextMeasurer getTextMeasurer() {
 		return null;
 	}
 	

@@ -8,28 +8,8 @@ package com.xenoage.utils.font;
 public interface TextMeasurer {
 
 	/**
-	 * Initializes a {@link TextMeasurer} for the given {@link FontInfo} and text.
+	 * Measures the given text, using the given {@link FontInfo}.
 	 */
-	public void init(FontInfo font, String text);
-
-	/**
-	 * Gets the ascent of this font in mm.
-	 */
-	public float getAscent();
-
-	/**
-	 * Gets the descent of this font in mm.
-	 */
-	public float getDescent();
-
-	/**
-	 * Gets the leading of this font in mm.
-	 */
-	public float getLeading();
-
-	/**
-	 * Measure the width of this text in mm.
-	 */
-	public float getWidth();
+	public TextMetrics measure(FontInfo font, String text);
 
 }
