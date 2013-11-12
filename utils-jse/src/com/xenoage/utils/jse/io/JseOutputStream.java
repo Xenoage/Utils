@@ -1,5 +1,8 @@
 package com.xenoage.utils.jse.io;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -22,6 +25,11 @@ public class JseOutputStream
 
 	public JseOutputStream(com.xenoage.utils.io.OutputStream genOutputStream) {
 		this.genOutputStream = genOutputStream;
+	}
+	
+	public JseOutputStream(File file)
+		throws FileNotFoundException {
+		this.jseOutputStream = new FileOutputStream(file);
 	}
 
 	@Override public void write(int b)

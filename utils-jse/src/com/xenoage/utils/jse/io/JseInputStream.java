@@ -1,5 +1,8 @@
 package com.xenoage.utils.jse.io;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -22,6 +25,11 @@ public class JseInputStream
 
 	public JseInputStream(com.xenoage.utils.io.InputStream genInputStream) {
 		this.genInputStream = genInputStream;
+	}
+	
+	public JseInputStream(File file)
+		throws FileNotFoundException {
+		this.jseInputStream = new FileInputStream(file);
 	}
 
 	@Override public int read()

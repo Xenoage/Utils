@@ -16,7 +16,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +26,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.xenoage.utils.jse.io.DesktopIO;
-import com.xenoage.utils.jse.io.FileUtils;
 import com.xenoage.utils.jse.xml.XMLReader;
 import com.xenoage.utils.kernel.Tuple2;
 import com.xenoage.utils.lang.Lang;
@@ -186,6 +184,7 @@ public class LanguageReader {
 				}
 			}
 		}
+		br.close();
 		//finish entry, if one is open
 		if (key != null && value != null)
 			entries.put(key, value);

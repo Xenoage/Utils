@@ -18,17 +18,17 @@ public class Md5Sum {
 	/**
 	 * Computes the MD5 data from the data behind the given file.
 	 */
-	public static String GetMD5Sum(File file)
+	public static String GetMd5Sum(File file)
 		throws IOException {
     InputStream is = new FileInputStream(file);
-    String ret = GetMD5Sum(is);
+    String ret = GetMd5Sum(is);
     return ret;
 	}
 	
 	/**
 	 * Computes the MD5 data from the data behind the given input stream.
 	 */
-	public static String GetMD5Sum(InputStream is)
+	public static String GetMd5Sum(InputStream is)
 		throws IOException {
 		MessageDigest md;
 		try {
