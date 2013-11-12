@@ -18,7 +18,8 @@ public class TextMetrics {
 	}
 
 	/**
-	 * Gets the ascent of this font in mm.
+	 * Gets the ascent of this text in mm.
+	 * This is the height of the text above the baseline.
 	 */
 	public float getAscent() {
 		return ascent;
@@ -26,6 +27,7 @@ public class TextMetrics {
 
 	/**
 	 * Gets the descent of this font in mm.
+	 * This is the height of the paragraph below the baseline.
 	 */
 	public float getDescent() {
 		return descent;
@@ -33,13 +35,15 @@ public class TextMetrics {
 
 	/**
 	 * Gets the leading of this font in mm.
+	 * This is the height between the bottommost point of this text
+	 * to the topmost point of the following line of text
 	 */
 	public float getLeading() {
 		return leading;
 	}
 
 	/**
-	 * Measure the width of this text in mm.
+	 * Gets the width of this text in mm.
 	 */
 	public float getWidth()  {
 		return width;

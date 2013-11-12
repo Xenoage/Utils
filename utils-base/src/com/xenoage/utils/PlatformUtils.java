@@ -14,6 +14,8 @@ import com.xenoage.utils.font.TextMeasurer;
  * {@link #init(PlatformUtils)} method, using the
  * implementation of the current platform.
  * 
+ * GOON: must be initialized, otherwise throw exception!
+ * 
  * @author Andreas Wenger
  */
 public class PlatformUtils {
