@@ -81,7 +81,7 @@ public class Lang {
 		String ret = get(id);
 		//search for {n}-tokens and replace them
 		for (int i = 0; i < replacements.length; i++) {
-			ret = ret.replaceAll("\\{" + (i + 1) + "\\}", replacements[i]);
+			ret = ret.replace("{" + (i + 1) + "}", replacements[i]);
 		}
 		return ret;
 	}
