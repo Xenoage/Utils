@@ -135,6 +135,14 @@ public final class CList<T>
 	@SafeVarargs public static <T2> IList<T2> ilist(T2... data) {
 		return clist(data).close();
 	}
+	
+	/**
+	 * Creates a {@link IList} with the given items.
+	 * It is a closed {@link CList}.
+	 */
+	public static <T2> IList<T2> ilist(Collection<T2> data) {
+		return clist(data).close();
+	}
 
 	/**
 	 * Closes the list. All future calls to write methods will fail.
