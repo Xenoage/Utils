@@ -43,9 +43,16 @@ public class Settings {
 
 
 	/**
-	 * Gets the only instance of the Settings class.
+	 * Gets the only instance of the {@link Settings} class.
 	 */
 	public static Settings getInstance() {
+		return settings();
+	}
+	
+	/**
+	 * Gets the only instance of the {@link Settings} class.
+	 */
+	public static Settings settings() {
 		if (instance == null) {
 			instance = new Settings("data/config");
 		}
