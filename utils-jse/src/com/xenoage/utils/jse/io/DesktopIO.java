@@ -44,7 +44,7 @@ public class DesktopIO {
 
 	/**
 	 * Gets the only instance of the {@link DesktopIO} class.
-	 * The 
+	 * One of the <code>init</code> methods has to be called before.
 	 */
 	public static DesktopIO desktopIO() {
 		if (instance == null)
