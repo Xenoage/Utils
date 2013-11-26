@@ -54,7 +54,23 @@ public class JFileChooserUtil {
 	 * as the last directory within the {@link Settings}, if available. Otherwise, the given default directory is set.
 	 */
 	public static void setDirFromSettings(JFileChooser fileChooser, File defaultDir) {
-		String lastDocumentDir = Settings.getInstance().getSetting("lastdocumentdirectory", "paths");
+		setDirFromSettings(fileChooser, "lastdocumentdirectory", defaultDir);
+	}
+
+	/**
+	 * Saves the directory of the given {@link JFileChooser}
+	 * as the last directory to the {@link Settings}.
+	 */
+	public static void rememberDir(JFileChooser fileChooser) {
+		rememberDir(fileChooser, "lastdocumentdirectory");
+	}
+	
+	/**
+	 * Sets the given {@link JFileChooser} to the location that has been saved under the given key
+	 * within the {@link Settings}, if available. Otherwise, the given default directory is set.
+	 */
+	public static void setDirFromSettings(JFileChooser fileChooser, String key, File defaultDir) {
+		String lastDocumentDir = Settings.getInstance().getSetting(key, "paths");
 		if (lastDocumentDir != null) {
 			fileChooser.setCurrentDirectory(new File(lastDocumentDir));
 		}
@@ -65,10 +81,10 @@ public class JFileChooserUtil {
 
 	/**
 	 * Saves the directory of the given {@link JFileChooser}
-	 * as the last directory to the {@link Settings}.
+	 * under the given key to the {@link Settings}.
 	 */
-	public static void rememberDir(JFileChooser fileChooser) {
-		Settings.getInstance().saveSetting("lastdocumentdirectory", "paths",
+	public static void rememberDir(JFileChooser fileChooser, String key) {
+		Settings.getInstance().saveSetting(key, "paths",
 			fileChooser.getCurrentDirectory().toString());
 	}
 
