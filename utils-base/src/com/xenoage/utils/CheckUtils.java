@@ -11,39 +11,46 @@ public class CheckUtils {
 
 	/**
 	 * Throws an {@link IllegalStateException} if the given object is null.
+	 * For convenience, the object is returned.
 	 */
-	public static void checkNotNull(Object o)
+	public static <T> T checkNotNull(T o)
 		throws IllegalStateException {
 		if (o == null)
 			throw new IllegalStateException();
+		return o;
 	}
 
 	/**
 	 * Throws an {@link IllegalStateException} with the given message
 	 * if the given object is null.
+	 * For convenience, the object is returned.
 	 */
-	public static void checkNotNull(Object o, String message)
+	public static <T> T checkNotNull(T o, String message)
 		throws IllegalStateException {
 		if (o == null)
 			throw new IllegalStateException(message);
+		return o;
 	}
 
 	/**
 	 * Throws an {@link IllegalStateException} if the given collection is null
 	 * or contains null.
+	 * For convenience, the collection is returned.
 	 */
-	public static void checkNotNullIn(Collection<?> c)
+	public static <T> Collection<T> checkNotNullIn(Collection<T> c)
 		throws IllegalStateException {
 		if (c == null)
 			throw new IllegalStateException();
 		for (Object o : c)
 			if (o == null)
 				throw new IllegalStateException();
+		return c;
 	}
 
 	/**
 	 * Throws an {@link IllegalStateException} with the given message
 	 * if the given collection is null or contains null.
+	 * For convenience, the collection is returned.
 	 */
 	public static void checkNotNullIn(Collection<?> c, String message)
 		throws IllegalStateException {
@@ -69,21 +76,25 @@ public class CheckUtils {
 	/**
 	 * Throws an {@link IllegalStateException} if the given collection is null
 	 * or is empty.
+	 * For convenience, the collection is returned.
 	 */
-	public static void checkNotEmpty(Collection<?> c)
+	public static <T> Collection<T> checkNotEmpty(Collection<T> c)
 		throws IllegalStateException {
 		if (c == null || c.size() == 0)
 			throw new IllegalStateException();
+		return c;
 	}
 
 	/**
 	 * Throws an {@link IllegalStateException} with the given message
 	 * if the given collection is null or is empty.
+	 * For convenience, the collection is returned.
 	 */
-	public static void checkNotEmpty(Collection<?> c, String message)
+	public static <T> Collection<T> checkNotEmpty(Collection<T> c, String message)
 		throws IllegalStateException {
 		if (c == null || c.size() == 0)
 			throw new IllegalStateException(message);
+		return c;
 	}
 
 }
