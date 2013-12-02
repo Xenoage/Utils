@@ -31,6 +31,17 @@ public final class CollectionUtils {
 	public static <T> ArrayList<T> alist(int initialCapacity) {
 		return new ArrayList<T>(initialCapacity);
 	}
+	
+	/**
+	 * Creates a new {@link ArrayList} with the inferred type
+	 * using the given elements.
+	 */
+	public static <T> ArrayList<T> alist(Collection<T> vals) {
+		ArrayList<T> ret = new ArrayList<T>(vals.size());
+		for (T v : vals)
+			ret.add(v);
+		return ret;
+	}
 
 	/**
 	 * Creates a new {@link ArrayList} with the inferred type
