@@ -14,18 +14,18 @@ import com.xenoage.utils.font.TextMeasurer;
  * {@link #init(PlatformUtils)} method, using the
  * implementation of the current platform.
  * 
- * GOON: must be initialized, otherwise throw exception!
- * 
  * @author Andreas Wenger
  */
-public class PlatformUtils {
+public abstract class PlatformUtils {
 
-	@NonNull private static PlatformUtils platformUtils = new PlatformUtils();
+	@NonNull private static PlatformUtils platformUtils = null;
 	
 	/**
 	 * Gets the current PlatformUtils.
 	 */
 	public static PlatformUtils platformUtils() {
+		if (platformUtils == null)
+			throw new IllegalStateException(PlatformUtils.class.getName() + " not initialized");
 		return platformUtils;
 	}
 	
