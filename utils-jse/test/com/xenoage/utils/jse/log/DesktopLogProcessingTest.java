@@ -11,6 +11,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.xenoage.utils.PlatformUtils;
+import com.xenoage.utils.jse.JsePlatformUtils;
 import com.xenoage.utils.jse.io.DesktopIO;
 import com.xenoage.utils.jse.io.FileUtils;
 import com.xenoage.utils.log.Log;
@@ -26,6 +28,7 @@ public class DesktopLogProcessingTest {
 
 
 	@Before public void setUp() {
+		PlatformUtils.init(JsePlatformUtils.instance);
 		DesktopIO.initTest();
 		logFilename = "data/test/temp.log";
 	}
