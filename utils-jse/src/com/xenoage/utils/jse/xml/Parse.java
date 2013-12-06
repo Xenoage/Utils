@@ -8,6 +8,8 @@ import static com.xenoage.utils.jse.xml.XMLReader.text;
 
 import org.w3c.dom.Element;
 
+import com.xenoage.utils.xml.EnumWithXmlNames;
+
 /**
  * Useful parsing methods.
  * 
@@ -19,10 +21,10 @@ public final class Parse {
 	 * Gets the enum value from the given array, that
 	 * matches (lower case) the given text, or null if not found.
 	 */
-	public static <T extends EnumWithXMLNames> T getEnumValueNamed(String text, T[] values) {
+	public static <T extends EnumWithXmlNames> T getEnumValueNamed(String text, T[] values) {
 		if (text != null) {
 			for (T value : values) {
-				if (text.equals(value.getXMLName())) {
+				if (text.equals(value.getXmlName())) {
 					return value;
 				}
 			}
