@@ -1,6 +1,7 @@
 package com.xenoage.utils.xml;
 
 import com.xenoage.utils.Parser;
+import com.xenoage.utils.annotations.Unneeded;
 
 /**
  * Platform independent base class of a XML stream reader,
@@ -17,6 +18,13 @@ public abstract class XmlReader {
 	 * Gets the name of this element.
 	 */
 	public abstract String getElementName();
+	
+	/**
+	 * Gets the complete text content of this element,
+	 * or null if there is none.
+	 * This method only works correct if called at the start of an element.
+	 */
+	public abstract String getText();
 
 	/**
 	 * Gets the number of attributes at this element.
@@ -82,10 +90,23 @@ public abstract class XmlReader {
 	}
 
 	/**
-	 * Moves forward to the next start of an element and returns true.
-	 * If there is none or if the end of an element is seen before, false is returned.
+	 * Moves forward to the next start of an child element and returns true.
+	 * If there is none (i.e. if the end of the current element is seen before), false is returned.
 	 */
-	public abstract boolean moveToNextElement();
+	public abstract boolean openNextChildElement();
+	
+	/**
+	 * Moves forward to the next start of an child element with the given local name and returns true.
+	 * Child elements with other names are skipped.
+	 * If there is none (i.e. if the end of the current element is seen before), false is returned.
+	 */
+	@Unneeded public abstract boolean openNextChildElement(String name);
+	
+	/**
+	 * Closes the current element, i.e. moves forward to the end of the current element.
+	 * If the current element has child elements, they are skipped.
+	 */
+	public abstract void closeElement();
 
 	/**
 	 * Throws a {@link XmlDataException} at the current position.
