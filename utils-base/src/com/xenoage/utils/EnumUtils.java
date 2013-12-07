@@ -1,5 +1,7 @@
 package com.xenoage.utils;
 
+import com.xenoage.utils.xml.EnumWithXmlNames;
+
 /**
  * Useful methods for working with enumerations.
  * 
@@ -35,6 +37,22 @@ public class EnumUtils {
 	public static <T> T getEnumValue(Object text, T[] values) {
 		if (text != null)
 			return getEnumValue("" + text, values);
+		return null;
+	}
+	
+	/**
+	 * Gets the {@link EnumWithXmlNames}
+	 *  enum value from the given array, that
+	 * matches (lower case) the given text, or null if not found.
+	 */
+	public static <T extends EnumWithXmlNames> T getEnumValueNamed(String text, T[] values) {
+		if (text != null) {
+			for (T value : values) {
+				if (text.equals(value.getXmlName())) {
+					return value;
+				}
+			}
+		}
 		return null;
 	}
 
