@@ -6,7 +6,7 @@ package com.xenoage.utils.xml;
  * 
  * @author Andreas Wenger
  */
-public abstract class XmlDataException
+public class XmlDataException
 	extends RuntimeException {
 
 	public XmlDataException(String message) {
