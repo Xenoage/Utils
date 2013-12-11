@@ -64,6 +64,17 @@ public abstract class XmlReader {
 		}
 		return null;
 	}
+	
+	/**
+	 * Like {@link #getAttributeString(String)}, but throws an {@link XmlDataException} if the
+	 * attribute is not set.
+	 */
+	public String getAttributeStringNotNull(String name) {
+		String ret = getAttributeString(name);
+		if (ret == null)
+			throwDataException(name + " unknown");
+		return ret;
+	}
 
 	/**
 	 * Gets the value of the attribute with the given name at this element
