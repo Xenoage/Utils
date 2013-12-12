@@ -2,6 +2,7 @@ package com.xenoage.utils.xml;
 
 
 
+
 /**
  * Platform independent base class of a XML stream writer,
  * inspired by the StAX Cursor API.
@@ -79,5 +80,10 @@ public abstract class XmlWriter {
   		return;
   	writeAttributeInternal(name, value.toString());
   }
+  
+  /**
+   * Writes an XML comment with the given text.
+   */
+  public abstract void writeComment(String text);
 
 }
