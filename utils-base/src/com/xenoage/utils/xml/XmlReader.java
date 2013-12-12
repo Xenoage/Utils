@@ -25,6 +25,68 @@ public abstract class XmlReader {
 	 * This method only works correct if called at the start of an element.
 	 */
 	public abstract String getText();
+	
+	/**
+	 * Gets the complete text content of this element,
+	 * but throws an {@link XmlDataException} if the text does not exist.
+	 * This method only works correct if called at the start of an element.
+	 */
+	public String getTextNotNull() {
+		String v = getText();
+		if (v == null)
+			throw dataException("text content missing");
+		return v;
+	}
+	
+	/**
+	 * Gets the complete text content of this element as an integer,
+	 * or null if there is none.
+	 * This method only works correct if called at the start of an element.
+	 */
+	public Integer getTextInt() {
+		String v = getText();
+		if (v == null)
+			return null;
+		return Parser.parseIntegerNull(v);
+	}
+	
+	/**
+	 * Gets the complete text content of this element as an integer,
+	 * but throws an {@link XmlDataException} if the text does not exist or can not be converted.
+	 * This method only works correct if called at the start of an element.
+	 */
+	public int getTextIntNotNull() {
+		String v = getText();
+		Integer ret = Parser.parseIntegerNull(v);
+		if (ret == null)
+			throw dataException(v + " can not be parsed to int");
+		return ret;
+	}
+	
+	/**
+	 * Gets the complete text content of this element as a float,
+	 * or null if there is none.
+	 * This method only works correct if called at the start of an element.
+	 */
+	public Float getTextFloat() {
+		String v = getText();
+		if (v == null)
+			return null;
+		return Parser.parseFloatNull(v);
+	}
+	
+	/**
+	 * Gets the complete text content of this element as a float,
+	 * but throws an {@link XmlDataException} if the text does not exist or can not be converted.
+	 * This method only works correct if called at the start of an element.
+	 */
+	public float getTextFloatNotNull() {
+		String v = getText();
+		Float ret = Parser.parseFloatNull(v);
+		if (ret == null)
+			throw dataException(v + " can not be parsed to float");
+		return ret;
+	}
 
 	/**
 	 * Gets the number of attributes at this element.
@@ -39,7 +101,7 @@ public abstract class XmlReader {
 	/**
 	 * Gets the string value of the attribute at the given index at this element.
 	 */
-	public abstract String getAttributeString(int index);
+	public abstract String getAttribute(int index);
 
 	/**
 	 * Gets all attributes at this element.
@@ -47,7 +109,7 @@ public abstract class XmlReader {
 	public XmlAttribute[] getAttributes() {
 		XmlAttribute[] ret = new XmlAttribute[getAttributeCount()];
 		for (int i = 0; i < ret.length; i++) {
-			ret[i] = new XmlAttribute(getAttributeName(i), getAttributeString(i));
+			ret[i] = new XmlAttribute(getAttributeName(i), getAttribute(i));
 		}
 		return ret;
 	}
@@ -57,22 +119,22 @@ public abstract class XmlReader {
 	 * This method is convenient, but slower than iterating through the attributes on the caller side.
 	 * For each call, the whole list of attributes has to be checked.
 	 */
-	public String getAttributeString(String name) {
+	public String getAttribute(String name) {
 		for (int i = 0; i < getAttributeCount(); i++) {
 			if (getAttributeName(i).equals(name))
-				return getAttributeString(i);
+				return getAttribute(i);
 		}
 		return null;
 	}
 	
 	/**
-	 * Like {@link #getAttributeString(String)}, but throws an {@link XmlDataException} if the
+	 * Like {@link #getAttribute(String)}, but throws an {@link XmlDataException} if the
 	 * attribute is not set.
 	 */
-	public String getAttributeStringNotNull(String name) {
-		String ret = getAttributeString(name);
+	public String getAttributeNotNull(String name) {
+		String ret = getAttribute(name);
 		if (ret == null)
-			throwDataException(name + " unknown");
+			throw dataException(name + " unknown");
 		return ret;
 	}
 
@@ -82,7 +144,7 @@ public abstract class XmlReader {
 	 * See {@link #getAttributeValue(String)} for a notice about performance.
 	 */
 	public Integer getAttributeInt(String name) {
-		String v = getAttributeString(name);
+		String v = getAttribute(name);
 		if (v == null)
 			return null;
 		return Parser.parseIntegerNull(v);
@@ -94,7 +156,7 @@ public abstract class XmlReader {
 	 * See {@link #getAttributeValue(String)} for a notice about performance.
 	 */
 	public Float getAttributeFloat(String name) {
-		String v = getAttributeString(name);
+		String v = getAttribute(name);
 		if (v == null)
 			return null;
 		return Parser.parseFloatNull(v);
@@ -120,16 +182,14 @@ public abstract class XmlReader {
 	public abstract void closeElement();
 
 	/**
-	 * Throws a {@link XmlDataException} at the current position.
+	 * Creates a {@link XmlDataException} at the current position.
 	 */
-	public abstract void throwDataException()
-		throws XmlDataException;
+	public abstract XmlDataException dataException();
 
 	/**
-	 * Throws a {@link XmlDataException} at the current position,
+	 * Creates a {@link XmlDataException} at the current position,
 	 * using the additional detail message.
 	 */
-	public abstract void throwDataException(String message)
-		throws XmlDataException;
+	public abstract XmlDataException dataException(String message);
 
 }
