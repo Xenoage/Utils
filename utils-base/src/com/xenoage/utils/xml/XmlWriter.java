@@ -31,9 +31,11 @@ public abstract class XmlWriter {
 	
   /**
    * Writes an element with the given local name and text content.
-   * If the given text is null, no text content is written.
+   * If the given text null, nothing is written.
    */
   public void writeElementText(String name, String text) {
+  	if (text == null)
+  		return;
   	writeElementStart(name);
   	writeText(text);
   	writeElementEnd();
@@ -41,13 +43,13 @@ public abstract class XmlWriter {
   
   /**
    * Writes an element with the given local name and text content.
-   * If the given text is null, no text content is written.
-   * If the text is not null, it is converted to a {@link String}
-   * using {@link Object#toString()}.
+   * If the given text null, nothing is written.
+   * The text is converted to a {@link String} using {@link Object#toString()}.
    */
   public void writeElementText(String name, Object text) {
-  	String s = (text != null ? text.toString() : null);
-  	writeElementText(name, s);
+  	if (text == null)
+  		return;
+  	writeElementText(name, text.toString());
   }
   
   /**
