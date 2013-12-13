@@ -3,6 +3,7 @@ package com.xenoage.utils.xml;
 
 
 
+
 /**
  * Platform independent base class of a XML stream writer,
  * inspired by the StAX Cursor API.
@@ -13,6 +14,17 @@ package com.xenoage.utils.xml;
  * @author Andreas Wenger
  */
 public abstract class XmlWriter {
+	
+	/**
+   * Writes the XML declaration, with version to 1.0 and the encoding utf-8.
+   */
+  public abstract void writeStartDocument();
+  
+  /**
+   * Writes a DTD section. This string represents the entire doctypedecl production
+   * from the XML 1.0 specification.
+   */
+  public abstract void writeDTD(String dtd);
 	
 	/**
    * Writes an element start tag with the given local name.
