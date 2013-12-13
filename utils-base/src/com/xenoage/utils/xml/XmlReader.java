@@ -1,7 +1,6 @@
 package com.xenoage.utils.xml;
 
 import com.xenoage.utils.Parser;
-import com.xenoage.utils.annotations.Unneeded;
 
 /**
  * Platform independent base class of a XML stream reader,
@@ -173,7 +172,13 @@ public abstract class XmlReader {
 	 * Child elements with other names are skipped.
 	 * If there is none (i.e. if the end of the current element is seen before), false is returned.
 	 */
-	@Unneeded public abstract boolean openNextChildElement(String name);
+	public boolean openNextChildElement(String name) {
+		while (openNextChildElement()) {
+			if (getElementName().equals(name))
+				return true;
+		}
+		return false;
+	}
 	
 	/**
 	 * Closes the current element, i.e. moves forward to the end of the current element.
