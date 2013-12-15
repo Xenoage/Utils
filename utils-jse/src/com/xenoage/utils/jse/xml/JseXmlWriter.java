@@ -25,7 +25,7 @@ public class JseXmlWriter
 	public JseXmlWriter(OutputStream out) {
 		XMLOutputFactory output = XMLOutputFactory.newInstance();
 		try {
-			writer = new IndentingXMLStreamWriter(output.createXMLStreamWriter(out));
+			writer = new IndentingXMLStreamWriter(output.createXMLStreamWriter(out, "UTF-8"));
 		} catch (XMLStreamException ex) {
 			throw new XmlException(ex);
 		}
