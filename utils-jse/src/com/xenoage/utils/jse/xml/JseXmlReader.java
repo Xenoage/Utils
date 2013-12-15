@@ -22,9 +22,12 @@ public class JseXmlReader
 	extends XmlReader {
 	
 	private XMLStreamReader reader;
+	private boolean cancelNextClose = false;
 	
 	public JseXmlReader(InputStream in) {
 		XMLInputFactory input = XMLInputFactory.newInstance();
+		//disable DTDs for speed
+		input.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 		try {
 			reader = input.createXMLStreamReader(in);
 		} catch (XMLStreamException ex) {
@@ -85,8 +88,10 @@ public class JseXmlReader
 				int event = reader.next();
 				if (event == XMLStreamConstants.START_ELEMENT)
 					return true;
-				else if (event == XMLStreamConstants.END_ELEMENT)
+				else if (event == XMLStreamConstants.END_ELEMENT) {
+					cancelNextClose = true; //we already reached the end of the parent
 					return false;
+				}
 			}
 			return false;
 		} catch (XMLStreamException ex) {
@@ -95,11 +100,24 @@ public class JseXmlReader
 	}
 
 	@Override public void closeElement() {
+		if (cancelNextClose) {
+			cancelNextClose = false;
+			return;
+		}
 		try {
+			int openChildren = 1;
 			while (reader.hasNext()) {
 				int event = reader.next();
-				if (event == XMLStreamConstants.END_ELEMENT)
-					return;
+				if (event == XMLStreamConstants.START_ELEMENT) {
+					openChildren++;
+					//TEST System.out.println(reader.getLocalName());
+				}
+				else if (event == XMLStreamConstants.END_ELEMENT) {
+					openChildren--;
+				//TEST System.out.println("/" + reader.getLocalName());
+					if (openChildren == 0)
+						return;
+				}	
 			}
 		} catch (XMLStreamException ex) {
 			throw new XmlException(ex);
@@ -117,6 +135,10 @@ public class JseXmlReader
 
 	@Override public XmlDataException dataException(String message) {
 		throw new XmlDataException(message + " (at " + getLocation() + ")");
+	}
+
+	@Override public int getLine() {
+		return reader.getLocation().getLineNumber();
 	}
 
 }

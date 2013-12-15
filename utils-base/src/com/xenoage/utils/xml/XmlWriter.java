@@ -99,5 +99,10 @@ public abstract class XmlWriter {
    * Writes an XML comment with the given text.
    */
   public abstract void writeComment(String text);
+  
+  /**
+   * Writes a line break.
+   */
+  public abstract void writeLineBreak();
 
 }

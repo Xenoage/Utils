@@ -196,5 +196,10 @@ public abstract class XmlReader {
 	 * using the additional detail message.
 	 */
 	public abstract XmlDataException dataException(String message);
+	
+	/**
+	 * Gets the current line number.
+	 */
+	public abstract int getLine();
 
 }

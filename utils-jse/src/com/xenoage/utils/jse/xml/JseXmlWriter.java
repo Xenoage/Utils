@@ -6,6 +6,7 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
+import com.sun.xml.internal.txw2.output.IndentingXMLStreamWriter;
 import com.xenoage.utils.xml.XmlException;
 import com.xenoage.utils.xml.XmlWriter;
 
@@ -24,7 +25,7 @@ public class JseXmlWriter
 	public JseXmlWriter(OutputStream out) {
 		XMLOutputFactory output = XMLOutputFactory.newInstance();
 		try {
-			writer = output.createXMLStreamWriter(out);
+			writer = new IndentingXMLStreamWriter(output.createXMLStreamWriter(out));
 		} catch (XMLStreamException ex) {
 			throw new XmlException(ex);
 		}
@@ -89,6 +90,14 @@ public class JseXmlWriter
 	@Override public void writeComment(String text) {
 		try {
 			writer.writeComment(text);
+		} catch (XMLStreamException ex) {
+			throw new XmlException(ex);
+		}
+	}
+
+	@Override public void writeLineBreak() {
+		try {
+			writer.writeCharacters("\n");
 		} catch (XMLStreamException ex) {
 			throw new XmlException(ex);
 		}
