@@ -1,8 +1,10 @@
 package com.xenoage.utils.iterators;
 
+import static com.xenoage.utils.collections.CList.ilist;
+
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -16,6 +18,8 @@ import java.util.NoSuchElementException;
  */
 public final class It<T>
 	implements Iterator<T>, Iterable<T> {
+	
+	private static final List<Object> emptyList = ilist();
 
 	private final Iterator<T> iterator;
 	private int currentIndex = -1;
@@ -25,11 +29,12 @@ public final class It<T>
 	 * Creates a new {@link It} for the given {@link Collection}.
 	 * If null is given, a valid iterator with no elements is returned.
 	 */
+	@SuppressWarnings("unchecked")
 	public It(Collection<T> collection) {
 		if (collection != null)
 			this.iterator = collection.iterator();
 		else
-			this.iterator = new LinkedList<T>().iterator();
+			this.iterator = ((Collection<T>) emptyList).iterator();
 	}
 
 	/**
