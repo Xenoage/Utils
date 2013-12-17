@@ -2,10 +2,16 @@ package com.xenoage.utils;
 
 import static com.xenoage.utils.CheckUtils.checkArgsNotNull;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.xenoage.utils.annotations.NonNull;
 import com.xenoage.utils.font.TextMeasurer;
+import com.xenoage.utils.io.InputStream;
+import com.xenoage.utils.io.OutputStream;
+import com.xenoage.utils.io.ZipReader;
+import com.xenoage.utils.xml.XmlReader;
+import com.xenoage.utils.xml.XmlWriter;
 
 /**
  * General methods which implementation is platform dependent.
@@ -69,6 +75,31 @@ public abstract class PlatformUtils {
 	 * If this platform is not able to retrieve it, null is returned.
 	 */
 	public TextMeasurer getTextMeasurer() {
+		return null;
+	}
+	
+	/**
+	 * Returns an {@link XmlReader} for the given {@link InputStream} for this platform.
+	 * If this platform is not able to retrieve it, null is returned.
+	 */
+	public XmlReader createXmlReader(InputStream inputStream) {
+		return null;
+	}
+	
+	/**
+	 * Returns an {@link XmlWriter} for the given {@link OutputStream} for this platform.
+	 * If this platform is not able to retrieve it, null is returned.
+	 */
+	public XmlWriter createXmlWriter(OutputStream outputStream) {
+		return null;
+	}
+	
+	/**
+	 * Returns an {@link ZipReader} for the given {@link InputStream} for this platform.
+	 * If this platform is not able to retrieve it, null is returned.
+	 */
+	public ZipReader createZipReader(InputStream inputStream)
+		throws IOException {
 		return null;
 	}
 	

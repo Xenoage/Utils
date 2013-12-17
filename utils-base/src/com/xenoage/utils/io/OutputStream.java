@@ -19,5 +19,11 @@ public interface OutputStream {
    */
 	public void write(int b)
 		throws IOException;
+	
+	/**
+   * Closes this input stream and releases any system resources associated
+   * with the stream.
+   */
+  public void close();
 
 }

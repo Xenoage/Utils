@@ -40,4 +40,14 @@ public class JseInputStream
 			return genInputStream.read();
 	}
 
+	@Override public void close() {
+		try {
+			super.close();
+		} catch (IOException ex) {
+			//ignore
+		}
+	}
+	
+	
+
 }

@@ -20,5 +20,11 @@ public interface InputStream {
 	 */
 	public int read()
 		throws IOException;
+	
+	/**
+   * Closes this input stream and releases any system resources associated
+   * with the stream.
+   */
+  public void close();
 
 }
