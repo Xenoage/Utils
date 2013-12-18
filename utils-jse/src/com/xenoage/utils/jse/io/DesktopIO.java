@@ -85,7 +85,7 @@ public class DesktopIO {
 	private DesktopIO(String programName, File systemDir, File sharedDir) {
 		this.systemDir = systemDir != null ? systemDir : new File(System.getProperty("user.dir"));
 		if (programName != null) {
-			userDir = FileUtils.getUserAppDataDirectory(programName);
+			userDir = JseFileUtils.getUserAppDataDirectory(programName);
 			if (!userDir.exists()) {
 				userDir.mkdirs();
 			}
@@ -267,7 +267,7 @@ public class DesktopIO {
 					break;
 			}
 			if (baseDir != null) {
-				File[] dirs = new File(baseDir, directory).listFiles(FileUtils.getDirectoriesFilter());
+				File[] dirs = new File(baseDir, directory).listFiles(JseFileUtils.getDirectoriesFilter());
 				if (dirs != null) {
 					for (int i = 0; i < dirs.length; i++) {
 						ret.add(dirs[i].getName());

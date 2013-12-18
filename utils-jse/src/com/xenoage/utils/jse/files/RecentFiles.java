@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import com.xenoage.utils.jse.collections.WeakList;
 import com.xenoage.utils.jse.io.DesktopIO;
-import com.xenoage.utils.jse.io.FileUtils;
+import com.xenoage.utils.jse.io.JseFileUtils;
 
 /**
  * Manages a list of the recently opened files.
@@ -40,7 +40,7 @@ public class RecentFiles {
 		File file = desktopIO().findFile(filePath);
 		if (file == null)
 			return ret; //file not existing yet
-		String list = FileUtils.readFile(file);
+		String list = JseFileUtils.readFile(file);
 		if (list != null) {
 			String[] files = list.split("\n");
 			for (int i = 0; i < maxEntries && i < files.length; i++) {

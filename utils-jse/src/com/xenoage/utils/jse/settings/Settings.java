@@ -19,7 +19,7 @@ import java.util.Set;
 import com.xenoage.utils.Parser;
 import com.xenoage.utils.error.BasicErrorProcessing;
 import com.xenoage.utils.jse.io.DesktopIO;
-import com.xenoage.utils.jse.io.FileUtils;
+import com.xenoage.utils.jse.io.JseFileUtils;
 
 /**
  * This class manages simple configuration data, which is String values
@@ -85,7 +85,7 @@ public class Settings {
 			String name = file;
 			if (name.endsWith(".settings")) {
 				try {
-					reload(FileUtils.getNameWithoutExt(file));
+					reload(JseFileUtils.getNameWithoutExt(file));
 				} catch (Exception ex) {
 					if (err != null)
 						err.report(error("Could not load settings from " + file, ex));

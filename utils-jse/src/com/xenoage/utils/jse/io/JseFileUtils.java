@@ -27,7 +27,7 @@ import com.xenoage.utils.kernel.Tuple2;
  *
  * @author Andreas Wenger
  */
-public class FileUtils {
+public class JseFileUtils {
 
 	private static FileFilter directoriesFilter = null;
 

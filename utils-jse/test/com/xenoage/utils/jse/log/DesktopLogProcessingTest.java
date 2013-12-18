@@ -14,7 +14,7 @@ import org.junit.Test;
 import com.xenoage.utils.PlatformUtils;
 import com.xenoage.utils.jse.JsePlatformUtils;
 import com.xenoage.utils.jse.io.DesktopIO;
-import com.xenoage.utils.jse.io.FileUtils;
+import com.xenoage.utils.jse.io.JseFileUtils;
 import com.xenoage.utils.log.Log;
 
 /**
@@ -47,7 +47,7 @@ public class DesktopLogProcessingTest {
 
 		//check logfile
 		assertTrue(desktopIO().existsFile(logFilename));
-		String logText = FileUtils.readFile(desktopIO().findFile(logFilename));
+		String logText = JseFileUtils.readFile(desktopIO().findFile(logFilename));
 		assertNotNull(logText);
 		assertTrue(logText.contains(message));
 		assertTrue(logText.contains(warning));

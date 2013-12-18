@@ -79,6 +79,15 @@ public abstract class PlatformUtils {
 	}
 	
 	/**
+	 * Opens an {@link InputStream} for the file at the given relative path.
+	 * If this platform is not able to retrieve it, null is returned.
+	 */
+	public InputStream openInputStream(String filePath)
+		throws IOException {
+		return null;
+	}
+	
+	/**
 	 * Returns an {@link XmlReader} for the given {@link InputStream} for this platform.
 	 * If this platform is not able to retrieve it, null is returned.
 	 */

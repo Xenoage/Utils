@@ -1,7 +1,11 @@
 package com.xenoage.utils.jse;
 
 import static com.xenoage.utils.collections.CollectionUtils.alist;
+import static com.xenoage.utils.jse.io.DesktopIO.desktopIO;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -56,6 +60,14 @@ public class JsePlatformUtils
 
 	@Override public TextMeasurer getTextMeasurer() {
 		return textMeasurer;
+	}
+
+	@Override public InputStream openInputStream(String filePath)
+		throws IOException {
+		File file = desktopIO().findFile(filePath);
+		if (file == null)
+			throw new FileNotFoundException(filePath);
+		return new JseInputStream(new FileInputStream(file));
 	}
 
 	@Override public XmlReader createXmlReader(InputStream inputStream) {

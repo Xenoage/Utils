@@ -10,7 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.xenoage.utils.jse.io.FileUtils;
+import com.xenoage.utils.jse.io.JseFileUtils;
 import com.xenoage.utils.jse.zip.ZipUtils;
 
 /**
@@ -20,11 +20,11 @@ import com.xenoage.utils.jse.zip.ZipUtils;
  */
 public class ZipUtilsTest {
 
-	File dir = new File(FileUtils.getTempFolder(), getClass().getName() + ".extractAllTest");
+	File dir = new File(JseFileUtils.getTempFolder(), getClass().getName() + ".extractAllTest");
 
 
 	@Before public void setUp() {
-		FileUtils.deleteDirectory(dir);
+		JseFileUtils.deleteDirectory(dir);
 		dir.mkdir();
 	}
 
@@ -38,7 +38,7 @@ public class ZipUtilsTest {
 	}
 
 	@After public void cleanUp() {
-		FileUtils.deleteDirectory(dir);
+		JseFileUtils.deleteDirectory(dir);
 	}
 
 }

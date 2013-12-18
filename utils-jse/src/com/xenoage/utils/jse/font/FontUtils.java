@@ -13,7 +13,7 @@ import java.util.Set;
 import com.xenoage.utils.collections.SortedList;
 import com.xenoage.utils.font.FontStyle;
 import com.xenoage.utils.jse.io.DesktopIO;
-import com.xenoage.utils.jse.io.FileUtils;
+import com.xenoage.utils.jse.io.JseFileUtils;
 
 /**
  * Useful methods to work with fonts.
@@ -58,7 +58,7 @@ public class FontUtils {
 	public void loadShippedFonts()
 		throws Exception {
 		String fontPath = "data/fonts";
-		Set<String> ttfFiles = desktopIO().listFiles(fontPath, FileUtils.getTTFFilter());
+		Set<String> ttfFiles = desktopIO().listFiles(fontPath, JseFileUtils.getTTFFilter());
 		for (String file : ttfFiles) {
 			Font font = Font.createFont(Font.TRUETYPE_FONT, desktopIO().findFile(fontPath + "/" + file));
 			String fontName = font.getFamily();
