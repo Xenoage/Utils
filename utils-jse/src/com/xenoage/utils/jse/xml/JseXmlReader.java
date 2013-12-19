@@ -28,6 +28,7 @@ public class JseXmlReader
 		XMLInputFactory input = XMLInputFactory.newInstance();
 		//disable DTDs for speed
 		input.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+		input.setProperty(XMLInputFactory.IS_COALESCING, true);
 		try {
 			reader = input.createXMLStreamReader(in);
 		} catch (XMLStreamException ex) {

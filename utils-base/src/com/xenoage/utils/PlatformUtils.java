@@ -3,6 +3,7 @@ package com.xenoage.utils;
 import static com.xenoage.utils.CheckUtils.checkArgsNotNull;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import com.xenoage.utils.annotations.NonNull;
@@ -18,20 +19,35 @@ import com.xenoage.utils.xml.XmlWriter;
  * 
  * At the beginning of the startup of an application, call the
  * {@link #init(PlatformUtils)} method, using the
- * implementation of the current platform.
+ * implementation of the current platform. If this is not done,
+ * this class will try to load the class <code>{@value #bootstrapClassName}</code>
+ * and call its <code>init</code> method. If not successfull, an
+ * {@link IllegalStateException} is thrown.
  * 
  * @author Andreas Wenger
  */
 public abstract class PlatformUtils {
 
+	public static final String bootstrapClassName = "com.xenoage.utils.PlatformUtilsInit";
+	
 	@NonNull private static PlatformUtils platformUtils = null;
 	
 	/**
 	 * Gets the current PlatformUtils.
 	 */
 	public static PlatformUtils platformUtils() {
-		if (platformUtils == null)
-			throw new IllegalStateException(PlatformUtils.class.getName() + " not initialized");
+		if (platformUtils == null) {
+			//try to load helper class to init this class
+			try {
+				Class<?> cls = Class.forName(bootstrapClassName);
+				cls.getMethod("init").invoke(null);
+			} catch (Exception ex) {
+			}
+			//successfull?
+			if (platformUtils == null) {
+				throw new IllegalStateException(PlatformUtils.class.getName() + " not initialized");
+			}
+		}
 		return platformUtils;
 	}
 	
