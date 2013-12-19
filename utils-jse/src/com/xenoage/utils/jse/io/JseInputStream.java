@@ -41,13 +41,16 @@ public class JseInputStream
 	}
 
 	@Override public void close() {
-		try {
-			super.close();
-		} catch (IOException ex) {
-			//ignore
+		if (jseInputStream != null) {
+			try {
+				jseInputStream.close();
+			} catch (IOException e) {
+				//ignore
+			}
+		}
+		else {
+			genInputStream.close();
 		}
 	}
-	
-	
 
 }

@@ -6,6 +6,8 @@ import java.io.InputStream;
 /**
  * Based on file in the utils-jse project.
  * 
+ * TIDY: move all tests in own test project! Then this class is not needed any more.
+ * 
  * @author Andreas Wenger
  */
 public class JseInputStream
@@ -31,5 +33,20 @@ public class JseInputStream
 		else
 			return genInputStream.read();
 	}
+
+	@Override public void close() {
+		if (jseInputStream != null) {
+			try {
+				jseInputStream.close();
+			} catch (IOException e) {
+				//ignore
+			}
+		}
+		else {
+			genInputStream.close();
+		}
+	}
+	
+	
 
 }

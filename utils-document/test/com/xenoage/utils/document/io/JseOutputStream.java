@@ -32,4 +32,16 @@ public class JseOutputStream
 			genOutputStream.write(b);
 	}
 
+	@Override public void close() {
+		if (jseOutputStream != null) {
+			try {
+				jseOutputStream.close();
+			} catch (IOException e) {
+				//ignore
+			}
+		}
+		else {
+			genOutputStream.close();
+		}
+	}
 }
