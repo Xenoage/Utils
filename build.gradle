@@ -41,10 +41,10 @@ allprojects {
 
 //project dependencies
 project(':utils-base') { dependencies { compile project(':utils-kernel') } }
-project(':utils-document') { dependencies { compile project(':utils-base') } }
 project(':utils-pdlib') { dependencies { compile project(':utils-base') } }
-project(':utils-jse') { dependencies { compile project(':utils-document') } }
+project(':utils-jse') { dependencies { compile project(':utils-base') } }
 project(':utils-serialize') { dependencies { compile project(':utils-jse') } }
+project(':utils-test') { dependencies { compile project(':utils-jse'), project(':utils-pdlib'), project(':utils-serialize') } }
 
 //distribution in multiple jars
 task distDir(type:Copy) {
