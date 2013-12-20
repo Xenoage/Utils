@@ -13,13 +13,13 @@ import java.io.Writer;
 import java.util.List;
 
 import com.xenoage.utils.PlatformUtils;
-import com.xenoage.utils.document.io.JseInputStream;
-import com.xenoage.utils.document.io.JseOutputStream;
 import com.xenoage.utils.font.TextMeasurer;
 import com.xenoage.utils.io.InputStream;
 import com.xenoage.utils.io.OutputStream;
 import com.xenoage.utils.io.ZipReader;
 import com.xenoage.utils.jse.font.AwtTextMeasurer;
+import com.xenoage.utils.jse.io.JseInputStream;
+import com.xenoage.utils.jse.io.JseOutputStream;
 import com.xenoage.utils.jse.io.JseZipReader;
 import com.xenoage.utils.jse.xml.JseXmlReader;
 import com.xenoage.utils.jse.xml.JseXmlWriter;
