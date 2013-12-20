@@ -62,7 +62,7 @@ public class JsePlatformUtils
 		return textMeasurer;
 	}
 
-	@Override public InputStream openInputStream(String filePath)
+	@Override public InputStream openFile(String filePath)
 		throws IOException {
 		File file = desktopIO().findFile(filePath);
 		if (file == null)

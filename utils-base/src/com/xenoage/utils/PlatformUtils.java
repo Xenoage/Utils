@@ -3,7 +3,6 @@ package com.xenoage.utils;
 import static com.xenoage.utils.CheckUtils.checkArgsNotNull;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import com.xenoage.utils.annotations.NonNull;
@@ -98,7 +97,7 @@ public abstract class PlatformUtils {
 	 * Opens an {@link InputStream} for the file at the given relative path.
 	 * If this platform is not able to retrieve it, null is returned.
 	 */
-	public InputStream openInputStream(String filePath)
+	public InputStream openFile(String filePath)
 		throws IOException {
 		return null;
 	}
