@@ -175,12 +175,16 @@ public final class CollectionUtils {
 	/**
 	 * In the given list, sets the element at the given index. If the index is out of
 	 * the bounds of this list, it is extended up to this index
-	 * and the gaps are filled with the given fillElement.
+	 * and the gaps are filled with the given fillElement. If the given list is null,
+	 * an {@link ArrayList} is created. The modified list is returned.
 	 */
-	public static <T> void setExtend(List<T> list, int index, T element, T fillElement) {
+	public static <T> List<T> setExtend(List<T> list, int index, T element, T fillElement) {
+		if (list == null)
+			list = new ArrayList<T>(index + 1);
 		while (index >= list.size())
 			list.add(fillElement);
 		list.set(index, element);
+		return list;
 	}
 
 }
