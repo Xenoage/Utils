@@ -6,7 +6,7 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-import com.sun.xml.internal.txw2.output.IndentingXMLStreamWriter;
+import com.xenoage.utils.jse.xml.indent.IndentingXMLStreamWriter;
 import com.xenoage.utils.xml.XmlException;
 import com.xenoage.utils.xml.XmlWriter;
 
