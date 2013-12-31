@@ -19,7 +19,7 @@ public class AwtTextMeasurer
 	implements TextMeasurer {
 
 	@Override public TextMetrics measure(FontInfo font, String text) {
-		Font awtFont = AwtFontUtils.createFont(font); 
+		Font awtFont = AwtFontUtils.toAwtFont(font); 
 		return measure(awtFont, text);
 	}
 	

@@ -23,7 +23,7 @@ public class AwtFontUtils {
 	 * Creates a new {@link FontInfo}.
 	 * @param font      the AWT font
 	 */
-	public static FontInfo createFontInfo(Font font) {
+	public static FontInfo fromAwtFont(Font font) {
 		IList<String> families = ilist(font.getFamily());
 		FontStyle style = FontStyle.normal;
 		if (font.isBold())
@@ -38,7 +38,7 @@ public class AwtFontUtils {
 	 * Gets the {@link Font} that matches best to the values of the
 	 * given {@link FontInfo} object.
 	 */
-	public static Font createFont(FontInfo fontInfo) {
+	public static Font toAwtFont(FontInfo fontInfo) {
 		//find an appropriate family:
 		//go through all families, until a known family is found. if no family
 		//is found, look for replacements. If also not found, take the base font family.
