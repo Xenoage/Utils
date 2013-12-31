@@ -44,11 +44,12 @@ public class DesktopIO {
 
 	/**
 	 * Gets the only instance of the {@link DesktopIO} class.
-	 * One of the <code>init</code> methods has to be called before.
+	 * One of the <code>init</code> methods has to be called before, otherwise
+	 * the test mode is used.
 	 */
 	public static DesktopIO desktopIO() {
 		if (instance == null)
-			throw new IllegalStateException("not initialized");
+			initTest(); //init for testing
 		return instance;
 	}
 
