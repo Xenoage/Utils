@@ -9,6 +9,9 @@ import java.io.OutputStream;
 /**
  * Wrapper for a Java SE {@link OutputStream}.
  * 
+ * It can be used in two ways: By wrapping a Java stream to a
+ * Xenoage stream and vice versa.
+ * 
  * @author Andreas Wenger
  */
 public class JseOutputStream
