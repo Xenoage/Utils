@@ -39,6 +39,9 @@ public class AwtFontUtils {
 	 * given {@link FontInfo} object.
 	 */
 	public static Font toAwtFont(FontInfo fontInfo) {
+		if (fontInfo == null) //TIDY
+			return toAwtFont(FontInfo.defaultValue);
+		
 		//find an appropriate family:
 		//go through all families, until a known family is found. if no family
 		//is found, look for replacements. If also not found, take the base font family.
