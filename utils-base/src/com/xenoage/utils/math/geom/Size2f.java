@@ -6,6 +6,9 @@ package com.xenoage.utils.math.geom;
  * @author Andreas Wenger
  */
 public final class Size2f {
+	
+	/** Size with width and height of 0. */
+	public static final Size2f size0 = new Size2f(0, 0);
 
 	public final float width;
 	public final float height;
