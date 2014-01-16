@@ -42,6 +42,22 @@ public class JseInputStream
 		else
 			return genInputStream.read();
 	}
+	
+	@Override public int read(byte[] b)
+		throws IOException {
+		if (jseInputStream != null)
+			return jseInputStream.read(b);
+		else
+			return genInputStream.read(b);
+	}
+
+	@Override public int read(byte[] b, int off, int len)
+		throws IOException {
+		if (jseInputStream != null)
+			return jseInputStream.read(b, off, len);
+		else
+			return genInputStream.read(b, off, len);
+	}
 
 	@Override public void close() {
 		if (jseInputStream != null) {

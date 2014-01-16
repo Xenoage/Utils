@@ -10,8 +10,6 @@ import java.io.IOException;
  * @author Andreas Wenger
  */
 public interface InputStream {
-	
-	//TODO: support more methods, especially faster ones (read array)
 
 	/**
 	 * Reads the next byte of data from the input stream.
@@ -20,11 +18,29 @@ public interface InputStream {
 	 */
 	public int read()
 		throws IOException;
-	
-	/**
-   * Closes this input stream and releases any system resources associated
-   * with the stream.
+
+  /**
+   * Reads some number of bytes from the input stream and stores them into
+   * the buffer array <code>b</code>. The number of bytes actually read is
+   * returned as an integer.
    */
-  public void close();
+  public int read(byte b[])
+  	throws IOException;
+  
+  /**
+   * Reads up to <code>len</code> bytes of data from the input stream into
+   * an array of bytes.  An attempt is made to read as many as
+   * <code>len</code> bytes, but a smaller number may be read.
+   * The number of bytes actually read is returned as an integer.
+   * The first byte read is stored into element <code>b[off]</code>.
+   */
+  public int read(byte b[], int off, int len)
+  	throws IOException;
+
+	/**
+	 * Closes this input stream and releases any system resources associated
+	 * with the stream.
+	 */
+	public void close();
 
 }

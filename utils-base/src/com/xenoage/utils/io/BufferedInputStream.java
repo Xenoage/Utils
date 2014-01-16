@@ -57,6 +57,16 @@ public class BufferedInputStream
 		return data;
 	}
 	
+	@Override public int read(byte[] b)
+		throws IOException {
+		return StreamUtils.read(this, b);
+	}
+
+	@Override public int read(byte[] b, int off, int len)
+		throws IOException {
+		return StreamUtils.read(this, b, off, len);
+	}
+	
 	/**
 	 * Sets the position to where a call of {@link #reset()} will reset the cursor.
 	 */

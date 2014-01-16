@@ -43,6 +43,24 @@ public class JseOutputStream
 			genOutputStream.write(b);
 	}
 	
+	@Override public void write(byte b[])
+  	throws IOException
+	{
+		if (jseOutputStream != null)
+			jseOutputStream.write(b);
+		else
+			genOutputStream.write(b);
+	}
+
+	@Override public void write(byte b[], int off, int len)
+  	throws IOException
+	{
+		if (jseOutputStream != null)
+			jseOutputStream.write(b, off, len);
+		else
+			genOutputStream.write(b, off, len);
+	}
+	
 	@Override public void close() {
 		if (jseOutputStream != null) {
 			try {

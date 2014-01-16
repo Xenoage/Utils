@@ -25,6 +25,16 @@ public class TestInputStream
 		pos++;
 		return ret;
 	}
+	
+	@Override public int read(byte[] b)
+		throws IOException {
+		return StreamUtils.read(this, b);
+	}
+
+	@Override public int read(byte[] b, int off, int len)
+		throws IOException {
+		return StreamUtils.read(this, b, off, len);
+	}
 
 	@Override public void close() {
 	}

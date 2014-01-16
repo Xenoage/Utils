@@ -10,7 +10,7 @@ import java.io.InputStream;
  * 
  * @author Andreas Wenger
  */
-public class StreamUtils {
+public class JseStreamUtils {
 
 	/**
 	 * Mark an {@link BufferedInputStream}),
