@@ -10,8 +10,7 @@ import com.xenoage.utils.font.TextMetrics;
 import com.xenoage.utils.math.Units;
 
 /**
- * This class provides a method to calculate the metrics
- * of a given String with a given font.
+ * AWT implementation of a {@link TextMeasurer}.
  * 
  * @author Andreas Wenger
  */
