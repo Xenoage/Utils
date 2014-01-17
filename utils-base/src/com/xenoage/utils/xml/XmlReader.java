@@ -27,13 +27,13 @@ public abstract class XmlReader {
 	
 	/**
 	 * Gets the complete text content of this element,
-	 * but throws an {@link XmlDataException} if the text does not exist.
+	 * or an empty string if the text does not exist.
 	 * This method only works correct if called at the start of an element.
 	 */
 	public String getTextNotNull() {
 		String v = getText();
 		if (v == null)
-			throw dataException("text content missing");
+			return "";
 		return v;
 	}
 	

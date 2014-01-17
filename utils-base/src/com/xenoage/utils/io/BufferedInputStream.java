@@ -35,7 +35,7 @@ public class BufferedInputStream
 		throws IOException {
 		//if there is remaining data in the buffer, use it
 		if (bufferPos < bufferSize) {
-			return buffer[bufferPos++];
+			return buffer[bufferPos++] & 0xFF;
 		}
 		//read from stream
 		int data = stream.read();

@@ -25,7 +25,7 @@ public class BufferedInputStreamTest {
 		int length = 5000;
 		BufferedInputStream stream = getTestStream(length);
 		for (int i = 0; i < length; i++)
-			assertEquals((byte) i, (byte) stream.read());
+			assertEquals(i % 256, stream.read());
 		assertEquals(-1, stream.read());
 	}
 	
@@ -37,13 +37,13 @@ public class BufferedInputStreamTest {
 		int length = 10;
 		BufferedInputStream stream = getTestStream(length);
 		for (int i = 0; i < 3; i++)
-			assertEquals((byte) i, (byte) stream.read());
+			assertEquals(i % 256, stream.read());
 		stream.mark();
 		for (int i = 3; i < 6; i++)
-			assertEquals((byte) i, (byte) stream.read());
+			assertEquals(i % 256, stream.read());
 		stream.reset();
 		for (int i = 3; i < length; i++)
-			assertEquals((byte) i, (byte) stream.read());
+			assertEquals(i % 256, stream.read());
 		assertEquals(-1, stream.read());
 	}
 	
@@ -55,13 +55,13 @@ public class BufferedInputStreamTest {
 		int length = 5000;
 		BufferedInputStream stream = getTestStream(length);
 		for (int i = 0; i < 2000; i++)
-			assertEquals((byte) i, (byte) stream.read());
+			assertEquals(i % 256, stream.read());
 		stream.mark();
 		for (int i = 2000; i < 4000; i++)
-			assertEquals((byte) i, (byte) stream.read());
+			assertEquals(i % 256, stream.read());
 		stream.reset();
 		for (int i = 2000; i < length; i++)
-			assertEquals("at " + i, (byte) i, (byte) stream.read());
+			assertEquals("at " + i, i % 256, stream.read());
 		assertEquals(-1, stream.read());
 	}
 	
@@ -89,7 +89,7 @@ public class BufferedInputStreamTest {
 				stream.unmark();
 				markedAt = -1;
 			}
-			assertEquals((byte) nextExpected, (byte) stream.read());
+			assertEquals(nextExpected % 256, stream.read());
 		}
 		assertEquals(-1, stream.read());
 	}

@@ -49,10 +49,13 @@ public class JseXmlReader
 		try {
 			while (reader.hasNext()) {
 				int event = reader.next();
-				if (event == XMLStreamConstants.CHARACTERS)
+				if (event == XMLStreamConstants.CHARACTERS) {
 					break;
-				else if (event == XMLStreamConstants.END_ELEMENT)
+				}
+				else if (event == XMLStreamConstants.END_ELEMENT) {
+					cancelNextClose = true;
 					return null;
+				}
 			}
 			return reader.getText();
 		} catch (Exception ex) {
