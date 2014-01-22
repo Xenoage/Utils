@@ -1,12 +1,20 @@
 package com.xenoage.utils.jse.io;
 
+import static com.xenoage.utils.collections.CollectionUtils.alist;
+
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import com.xenoage.utils.io.FileFilter;
+import com.xenoage.utils.io.FilesystemInput;
+import com.xenoage.utils.io.InputStream;
 import com.xenoage.utils.jse.JsePlatformUtils;
 
 /**
@@ -33,7 +41,8 @@ import com.xenoage.utils.jse.JsePlatformUtils;
  *
  * @author Andreas Wenger
  */
-public class DesktopIO {
+public class DesktopIO
+	implements FilesystemInput {
 
 	private final File userDir;
 	private final File systemDir;
@@ -113,7 +122,7 @@ public class DesktopIO {
 	/**
 	 * Returns true, when the given file exists, otherwise false.
 	 */
-	public boolean existsFile(String filepath) {
+	@Override public boolean existsFile(String filepath) {
 		return new File(userDir, filepath).exists() || new File(systemDir, filepath).exists() ||
 			(sharedDir != null ? new File(sharedDir, filepath).exists() : false);
 	}
@@ -121,7 +130,7 @@ public class DesktopIO {
 	/**
 	 * Returns true, when the given directory exists, otherwise false.
 	 */
-	public boolean existsDirectory(String directory) {
+	@Override public boolean existsDirectory(String directory) {
 		File userFile = new File(userDir, directory);
 		if (userFile.exists() && userFile.isDirectory())
 			return true;
@@ -175,6 +184,21 @@ public class DesktopIO {
 			return null;
 		}
 	}
+	
+	/**
+	 * Opens the data file at the given path and returns an input stream.
+	 * If not found, null is returned.
+	 */
+	@Override public InputStream openFile(String filePath) {
+		File file = desktopIO().findFile(filePath);
+		if (file == null)
+			return null;
+		try {
+			return new JseInputStream(new FileInputStream(file));
+		} catch (FileNotFoundException ex) {
+			return null;
+		}
+	}
 
 	/**
 	 * Gets the data file for writing at the given relative path.
@@ -211,18 +235,19 @@ public class DesktopIO {
 
 	/**
 	 * Finds and returns the files in the given relative directory.
-	 * If nothing is found, an empty set is returned.
+	 * If nothing is found, an empty list is returned.
 	 */
-	public Set<String> listFiles(String directory) {
+	@Override public List<String> listFiles(String directory) {
 		return listFiles(directory, null);
 	}
 
 	/**
 	 * Finds and returns the files in the given relative directory
-	 * matching the given filename filter.
-	 * If nothing is found, an empty set is returned.
+	 * matching the given file filter.
+	 * If nothing is found, an empty list is returned.
 	 */
-	public Set<String> listFiles(String directory, FilenameFilter filter) {
+	@Override public List<String> listFiles(String directory, FileFilter filter) {
+		FilenameFilter jseFilenameFilter = JseFileUtils.getFilter(filter);
 		Set<String> ret = new HashSet<String>();
 		for (int iDir = 0; iDir < 3; iDir++) {
 			File baseDir = null;
@@ -239,20 +264,20 @@ public class DesktopIO {
 			}
 			if (baseDir != null) {
 				File dir = new File(baseDir, directory);
-				String[] files = (filter != null ? dir.list(filter) : dir.list());
+				String[] files = (filter != null ? dir.list(jseFilenameFilter) : dir.list());
 				if (files != null) {
 					ret.addAll(Arrays.asList(files));
 				}
 			}
 		}
-		return ret;
+		return alist(ret);
 	}
 
 	/**
 	 * Finds and returns the directories in the given directory.
 	 * If nothing is found, an empty set is returned.
 	 */
-	public Set<String> listDirectories(String directory) {
+	@Override public List<String> listDirectories(String directory) {
 		Set<String> ret = new HashSet<String>();
 		for (int iDir = 0; iDir < 3; iDir++) {
 			File baseDir = null;
@@ -276,7 +301,7 @@ public class DesktopIO {
 				}
 			}
 		}
-		return ret;
+		return alist(ret);
 	}
 
 }

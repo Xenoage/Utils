@@ -50,65 +50,13 @@ public class JseFileUtils {
 	}
 
 	/**
-	 * Returns a filename filter for files with ".java" ending.
+	 * Returns a filename filter for the given {@link com.xenoage.utils.io.FileFilter}.
 	 */
-	public static FilenameFilter getJavaFilter() {
+	public static FilenameFilter getFilter(final com.xenoage.utils.io.FileFilter fileFilter) {
 		FilenameFilter ret = new FilenameFilter() {
 
 			@Override public boolean accept(File dir, String name) {
-				return name.toLowerCase().endsWith(".java");
-			}
-		};
-		return ret;
-	}
-
-	/**
-	 * Returns a filename filter for files with ".po" ending.
-	 */
-	public static FilenameFilter getPOFilter() {
-		FilenameFilter ret = new FilenameFilter() {
-
-			@Override public boolean accept(File dir, String name) {
-				return name.toLowerCase().endsWith(".po");
-			}
-		};
-		return ret;
-	}
-
-	/**
-	 * Returns a filename filter for files with ".xml" ending.
-	 */
-	public static FilenameFilter getXMLFilter() {
-		FilenameFilter ret = new FilenameFilter() {
-
-			@Override public boolean accept(File dir, String name) {
-				return name.toLowerCase().endsWith(".xml");
-			}
-		};
-		return ret;
-	}
-
-	/**
-	 * Returns a filename filter for files with ".svg" ending.
-	 */
-	public static FilenameFilter getSVGFilter() {
-		FilenameFilter ret = new FilenameFilter() {
-
-			@Override public boolean accept(File dir, String name) {
-				return name.toLowerCase().endsWith(".svg");
-			}
-		};
-		return ret;
-	}
-
-	/**
-	 * Returns a filename filter for files with ".ttf" ending.
-	 */
-	public static FilenameFilter getTTFFilter() {
-		FilenameFilter ret = new FilenameFilter() {
-
-			@Override public boolean accept(File dir, String name) {
-				return name.toLowerCase().endsWith(".ttf");
+				return fileFilter.accept(new JseFile(new File(dir, name)));
 			}
 		};
 		return ret;
