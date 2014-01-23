@@ -1,6 +1,6 @@
 package com.xenoage.utils.jse.log;
 
-import static com.xenoage.utils.jse.io.DesktopIO.desktopIO;
+import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
 import static com.xenoage.utils.log.Level.Remark;
 
 import java.io.PrintStream;

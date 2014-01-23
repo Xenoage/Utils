@@ -1,11 +1,7 @@
 package com.xenoage.utils.jse;
 
 import static com.xenoage.utils.collections.CollectionUtils.alist;
-import static com.xenoage.utils.jse.io.DesktopIO.desktopIO;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -14,10 +10,12 @@ import java.util.List;
 
 import com.xenoage.utils.PlatformUtils;
 import com.xenoage.utils.font.TextMeasurer;
+import com.xenoage.utils.io.FilesystemInput;
 import com.xenoage.utils.io.InputStream;
 import com.xenoage.utils.io.OutputStream;
 import com.xenoage.utils.io.ZipReader;
 import com.xenoage.utils.jse.font.AwtTextMeasurer;
+import com.xenoage.utils.jse.io.DesktopIO;
 import com.xenoage.utils.jse.io.JseInputStream;
 import com.xenoage.utils.jse.io.JseOutputStream;
 import com.xenoage.utils.jse.io.JseZipReader;
@@ -34,10 +32,42 @@ import com.xenoage.utils.xml.XmlWriter;
 public class JsePlatformUtils
 	extends PlatformUtils {
 
-	public static final JsePlatformUtils instance = new JsePlatformUtils();
+	private static JsePlatformUtils instance = null;
 
+	private DesktopIO desktopIO = null;
 	private AwtTextMeasurer textMeasurer = new AwtTextMeasurer();
-
+	
+	/**
+	 * Initializes the {@link PlatformUtils} class with an instance of {@link JsePlatformUtils},
+	 * using the given program name.
+	 */
+	public static void init(String programName) {
+		instance = new JsePlatformUtils();
+		instance.desktopIO = new DesktopIO(programName);
+		PlatformUtils.init(instance);
+	}
+	
+	/**
+	 * Initializes the {@link PlatformUtils} class with an instance of {@link JsePlatformUtils}
+	 * for testing (e.g. unit tests).
+	 * See {@link DesktopIO#createTestIO()} for details about the filesystem.
+	 */
+	public static void initForTest() {
+		instance = new JsePlatformUtils();
+		instance.desktopIO = DesktopIO.createTestIO();
+		PlatformUtils.init(instance);
+	}
+	
+	/**
+	 * Gets the {@link DesktopIO} instance.
+	 * If the {@link JsePlatformUtils} are not initialized yet,
+	 * they are initialized for testing (e.g. unit tests).
+	 */
+	public static DesktopIO desktopIO() {
+		if (instance == null)
+			initForTest();
+		return instance.desktopIO;
+	}
 
 	@Override public List<StackTraceElement> getCurrentStackTrace() {
 		return alist(Thread.currentThread().getStackTrace());
@@ -61,13 +91,14 @@ public class JsePlatformUtils
 	@Override public TextMeasurer getTextMeasurer() {
 		return textMeasurer;
 	}
+	
+	@Override public FilesystemInput getFilesystemInput() {
+		return desktopIO;
+	}
 
 	@Override public InputStream openFile(String filePath)
 		throws IOException {
-		File file = desktopIO().findFile(filePath);
-		if (file == null)
-			throw new FileNotFoundException(filePath);
-		return new JseInputStream(new FileInputStream(file));
+		return desktopIO().openFile(filePath);
 	}
 
 	@Override public XmlReader createXmlReader(InputStream inputStream) {

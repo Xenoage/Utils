@@ -3,10 +3,8 @@ package com.xenoage.utils.jse.lang;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import com.xenoage.utils.jse.io.DesktopIO;
 import com.xenoage.utils.lang.Language;
 import com.xenoage.utils.lang.VocID;
 
@@ -35,11 +33,7 @@ public class LanguageTest {
 		}
 
 	}
-	
-	
-	@Before public void setUp() {
-		DesktopIO.initTest();
-	}
+
 
 	/**
 	 * Tests the get(String)-method.

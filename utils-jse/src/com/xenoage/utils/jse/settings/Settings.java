@@ -1,6 +1,6 @@
 package com.xenoage.utils.jse.settings;
 
-import static com.xenoage.utils.jse.io.DesktopIO.desktopIO;
+import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
 import static com.xenoage.utils.log.Log.log;
 import static com.xenoage.utils.log.Report.error;
 import static com.xenoage.utils.log.Report.warning;
@@ -13,8 +13,8 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 import com.xenoage.utils.Parser;
 import com.xenoage.utils.error.BasicErrorProcessing;
@@ -79,7 +79,7 @@ public class Settings {
 		}
 		// load the settings from the .settings files
 		this.files = new Hashtable<String, Properties>();
-		Set<String> fileList = null;
+		List<String> fileList = null;
 			fileList = desktopIO().listFiles(directory);
 		for (String file : fileList) {
 			String name = file;

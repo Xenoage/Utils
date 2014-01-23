@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.xenoage.utils.annotations.NonNull;
 import com.xenoage.utils.font.TextMeasurer;
+import com.xenoage.utils.io.FilesystemInput;
 import com.xenoage.utils.io.InputStream;
 import com.xenoage.utils.io.OutputStream;
 import com.xenoage.utils.io.ZipReader;
@@ -29,12 +30,12 @@ public abstract class PlatformUtils {
 
 	public static final String bootstrapClassName = "com.xenoage.utils.PlatformUtilsInit";
 	
-	@NonNull private static PlatformUtils platformUtils = null;
+	private static PlatformUtils platformUtils = null;
 	
 	/**
-	 * Gets the current PlatformUtils.
+	 * Gets the current {@link PlatformUtils}.
 	 */
-	public static PlatformUtils platformUtils() {
+	@NonNull public static PlatformUtils platformUtils() {
 		if (platformUtils == null) {
 			//try to load helper class to init this class
 			try {
@@ -52,6 +53,7 @@ public abstract class PlatformUtils {
 	
 	/**
 	 * Initializes this class with the given platform-specific implementation.
+	 * Do not call this method directly. Use the <code>init</code> methods of the specific implementations.
 	 */
 	public static void init(PlatformUtils platformUtils) {
 		checkArgsNotNull(platformUtils);
@@ -62,17 +64,13 @@ public abstract class PlatformUtils {
 	 * Gets the current stack trace.
 	 * If this platform is not able to retrieve a stack trace, null is returned.
 	 */
-	public List<StackTraceElement> getCurrentStackTrace() {
-		return null;
-	}
+	public abstract List<StackTraceElement> getCurrentStackTrace();
 	
 	/**
 	 * Gets the stack trace of the given Throwable as a string.
 	 * If this platform is not able to retrieve it, null is returned.
 	 */
-	public String getStackTraceString(Throwable throwable) {
-		return null;
-	}
+	public abstract String getStackTraceString(Throwable throwable);
 	
 	/**
 	 * Gets the caller of a method. If unknown, null is returned.
@@ -81,50 +79,41 @@ public abstract class PlatformUtils {
 	 *                    For example, when A.a() calls B.b(), and in B.b() you want to know who
 	 *                    called B.b(), use getCaller(1).
 	 */
-	public StackTraceElement getCaller(int level) {
-		return null;
-	}
+	public abstract StackTraceElement getCaller(int level);
 	
 	/**
 	 * Returns the {@link TextMeasurer}.
-	 * If this platform is not able to retrieve it, null is returned.
 	 */
-	public TextMeasurer getTextMeasurer() {
-		return null;
-	}
+	@NonNull public abstract TextMeasurer getTextMeasurer();
 	
 	/**
-	 * Opens an {@link InputStream} for the file at the given relative path.
-	 * If this platform is not able to retrieve it, null is returned.
+	 * Gets the input filesystem for this platform.
 	 */
-	public InputStream openFile(String filePath)
-		throws IOException {
-		return null;
-	}
+	@NonNull public abstract FilesystemInput getFilesystemInput();
+	
+	/**
+	 * Convenience method for opening an {@link InputStream} for the file at the given relative path.
+	 * If this platform is not able to retrieve it, e.g. because it does not exist, null is returned.
+	 */
+	@NonNull public abstract InputStream openFile(String filePath)
+		throws IOException;
 	
 	/**
 	 * Returns an {@link XmlReader} for the given {@link InputStream} for this platform.
-	 * If this platform is not able to retrieve it, null is returned.
 	 */
-	public XmlReader createXmlReader(InputStream inputStream) {
-		return null;
-	}
+	@NonNull public abstract XmlReader createXmlReader(InputStream inputStream);
 	
 	/**
 	 * Returns an {@link XmlWriter} for the given {@link OutputStream} for this platform.
 	 * If this platform is not able to retrieve it, null is returned.
 	 */
-	public XmlWriter createXmlWriter(OutputStream outputStream) {
-		return null;
-	}
+	@NonNull public abstract XmlWriter createXmlWriter(OutputStream outputStream);
 	
 	/**
 	 * Returns an {@link ZipReader} for the given {@link InputStream} for this platform.
-	 * If this platform is not able to retrieve it, null is returned.
+	 * If this platform is not able to retrieve it, e.g. because it does not exist, null is returned.
 	 */
-	public ZipReader createZipReader(InputStream inputStream)
-		throws IOException {
-		return null;
-	}
+	@NonNull public abstract ZipReader createZipReader(InputStream inputStream)
+		throws IOException;
 	
 }

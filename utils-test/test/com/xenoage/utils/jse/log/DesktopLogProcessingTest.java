@@ -1,19 +1,18 @@
 package com.xenoage.utils.jse.log;
 
-import static com.xenoage.utils.jse.io.DesktopIO.desktopIO;
+import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
 import static com.xenoage.utils.log.Log.log;
 import static com.xenoage.utils.log.Report.remark;
 import static com.xenoage.utils.log.Report.warning;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.xenoage.utils.PlatformUtils;
-import com.xenoage.utils.jse.JsePlatformUtils;
-import com.xenoage.utils.jse.io.DesktopIO;
 import com.xenoage.utils.jse.io.JseFileUtils;
 import com.xenoage.utils.log.Log;
 
@@ -28,12 +27,11 @@ public class DesktopLogProcessingTest {
 
 
 	@Before public void setUp() {
-		PlatformUtils.init(JsePlatformUtils.instance);
-		DesktopIO.initTest();
 		logFilename = "data/test/temp.log";
 	}
 
-	@Test public void testLogging() {
+	@Test public void testLogging()
+		throws IOException {
 		desktopIO().deleteFile(logFilename, true);
 
 		//create log file

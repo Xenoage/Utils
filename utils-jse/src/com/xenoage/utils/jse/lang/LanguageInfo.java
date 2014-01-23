@@ -1,6 +1,6 @@
 package com.xenoage.utils.jse.lang;
 
-import static com.xenoage.utils.jse.io.DesktopIO.desktopIO;
+import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
@@ -107,7 +106,7 @@ public class LanguageInfo {
 	public static List<LanguageInfo> getAvailableLanguages(String path)
 		throws Exception {
 		ArrayList<LanguageInfo> ret = new ArrayList<LanguageInfo>();
-		Set<String> langs = desktopIO().listDirectories(path);
+		List<String> langs = desktopIO().listDirectories(path);
 		if (langs.size() < 1) {
 			throw new Exception("No language pack installed!");
 		}

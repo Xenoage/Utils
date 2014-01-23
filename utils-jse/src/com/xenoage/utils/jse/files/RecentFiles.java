@@ -1,6 +1,8 @@
 package com.xenoage.utils.jse.files;
 
-import static com.xenoage.utils.jse.io.DesktopIO.desktopIO;
+import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
+import static com.xenoage.utils.log.Log.log;
+import static com.xenoage.utils.log.Report.warning;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -37,7 +39,12 @@ public class RecentFiles {
 	 */
 	public static ArrayList<File> getRecentFiles() {
 		ArrayList<File> ret = new ArrayList<File>(maxEntries);
-		File file = desktopIO().findFile(filePath);
+		File file = null;
+		try {
+			file = desktopIO().findFile(filePath);
+		} catch (IOException ex) {
+			log(warning(ex));
+		}
 		if (file == null)
 			return ret; //file not existing yet
 		String list = JseFileUtils.readFile(file);

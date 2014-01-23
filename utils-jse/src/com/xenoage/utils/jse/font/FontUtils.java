@@ -1,6 +1,7 @@
 package com.xenoage.utils.jse.font;
 
-import static com.xenoage.utils.jse.io.DesktopIO.desktopIO;
+import static com.xenoage.utils.io.FileFilters.ttfFilter;
+import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
 import static com.xenoage.utils.log.Log.log;
 import static com.xenoage.utils.log.Report.remark;
 
@@ -8,12 +9,11 @@ import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import com.xenoage.utils.collections.SortedList;
 import com.xenoage.utils.font.FontStyle;
 import com.xenoage.utils.jse.io.DesktopIO;
-import com.xenoage.utils.jse.io.JseFileUtils;
 
 /**
  * Useful methods to work with fonts.
@@ -58,7 +58,7 @@ public class FontUtils {
 	public void loadShippedFonts()
 		throws Exception {
 		String fontPath = "data/fonts";
-		Set<String> ttfFiles = desktopIO().listFiles(fontPath, JseFileUtils.getTTFFilter());
+		List<String> ttfFiles = desktopIO().listFiles(fontPath, ttfFilter);
 		for (String file : ttfFiles) {
 			Font font = Font.createFont(Font.TRUETYPE_FONT, desktopIO().findFile(fontPath + "/" + file));
 			String fontName = font.getFamily();

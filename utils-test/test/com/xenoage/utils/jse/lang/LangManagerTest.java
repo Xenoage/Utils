@@ -7,10 +7,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import com.xenoage.utils.jse.io.DesktopIO;
 import com.xenoage.utils.jse.lang.LanguageTest.TestVocabulary;
 import com.xenoage.utils.lang.Lang;
 
@@ -20,10 +18,6 @@ import com.xenoage.utils.lang.Lang;
  * @author Andreas Wenger
  */
 public class LangManagerTest {
-	
-	@Before public void setUp() {
-		DesktopIO.initTest();
-	}
 
 	@Test public void testCreateUnknownLanguage() {
 		LangManager.unregisterAllComponents();

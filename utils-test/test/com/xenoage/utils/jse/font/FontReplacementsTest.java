@@ -5,8 +5,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.xenoage.utils.jse.font.FontReplacements;
-import com.xenoage.utils.jse.io.DesktopIO;
 import com.xenoage.utils.jse.settings.Settings;
 
 /**
@@ -20,7 +18,6 @@ public class FontReplacementsTest {
 
 
 	@Before public void setUp() {
-		DesktopIO.initTest();
 		settings = new Settings("data/test/config/");
 	}
 

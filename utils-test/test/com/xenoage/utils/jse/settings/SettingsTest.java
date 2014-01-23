@@ -1,7 +1,10 @@
 package com.xenoage.utils.jse.settings;
 
-import static com.xenoage.utils.jse.io.DesktopIO.desktopIO;
-import static org.junit.Assert.*;
+import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
@@ -9,10 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.xenoage.utils.jse.io.DesktopIO;
-import com.xenoage.utils.jse.settings.Settings;
 import com.xenoage.utils.log.Log;
-
-
 
 /**
  * Test cases for the {@link Setting} class.
@@ -23,29 +23,24 @@ import com.xenoage.utils.log.Log;
  * 
  * @author Andreas Wenger
  */
-public class SettingsTest
-{
+public class SettingsTest {
 
 	private Settings settings = null;
 	private String directory = "data/test/settings";
-	
-	
+
+
 	/**
 	 * Loads the settings.
 	 */
-	@Before public void setUp()
-	{
-		DesktopIO.initTest();
+	@Before public void setUp() {
 		Log.initNoLog();
 		settings = new Settings(directory);
 	}
-	
-	
+
 	/**
 	 * Tests the reload method.
 	 */
-	@Test public void reload()
-	{
+	@Test public void reload() {
 		//changes a value
 		settings.setSetting("changed", "test1", "my.first.setting");
 		//reload the file
@@ -53,13 +48,11 @@ public class SettingsTest
 		//must contain original value
 		assertEquals("my first value", settings.getSetting("my.first.setting", "test1"));
 	}
-	
-	
+
 	/**
 	 * Tests the getSetting method.
 	 */
-	@Test public void getSetting()
-	{
+	@Test public void getSetting() {
 		//reads 3 existing values
 		settings.reload("test1");
 		assertEquals("my first value", settings.getSetting("my.first.setting", "test1"));
@@ -69,13 +62,11 @@ public class SettingsTest
 		assertNull(settings.getSetting("not.find", "test1"));
 		assertNull(settings.getSetting("my.first.setting", "notfind"));
 	}
-	
-	
+
 	/**
 	 * Tests the setSetting method.
 	 */
-	@Test public void setSetting()
-	{
+	@Test public void setSetting() {
 		//changes a value
 		settings.setSetting("my.first.setting", "test1", "value changed");
 		assertEquals("value changed", settings.getSetting("my.first.setting", "test1"));
@@ -83,13 +74,11 @@ public class SettingsTest
 		settings.setSetting("a.new.key", "test2", "a newly created value");
 		assertEquals("a newly created value", settings.getSetting("a.new.key", "test2"));
 	}
-	
-	
+
 	/**
 	 * Tests the saveSetting method.
 	 */
-	@Test public void saveSetting()
-	{
+	@Test public void saveSetting() {
 		//save to temp.settings
 		settings.saveSetting("a.new.key", "temp", "a newly created value");
 		settings.reload("test3");
@@ -97,13 +86,11 @@ public class SettingsTest
 		//delete the temp file
 		new File(directory + "/temp.settings").delete();
 	}
-	
-	
+
 	/**
 	 * Tests the save method.
 	 */
-	@Test public void save()
-	{
+	@Test public void save() {
 		String file = directory + "/temp.settings";
 		desktopIO().deleteFile(file, true);
 		settings.setSetting("a.new.key", "temp", "a newly created value");
@@ -118,6 +105,5 @@ public class SettingsTest
 		//delete the temp file
 		new File(directory + "/temp.settings").delete();
 	}
-	
-	
+
 }

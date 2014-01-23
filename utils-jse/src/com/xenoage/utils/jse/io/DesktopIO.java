@@ -1,11 +1,12 @@
 package com.xenoage.utils.jse.io;
 
+import static com.xenoage.utils.PlatformUtils.platformUtils;
 import static com.xenoage.utils.collections.CollectionUtils.alist;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
@@ -38,40 +39,28 @@ import com.xenoage.utils.jse.JsePlatformUtils;
  * This allows files to be overwritten by individual users, e.g.
  * to replace some provided files with own ones, without destroying
  * the original installation.
+ * 
+ * Use {@link JsePlatformUtils#desktopIO()} to get an instance of this class.
  *
  * @author Andreas Wenger
  */
 public class DesktopIO
 	implements FilesystemInput {
 
-	private final File userDir;
-	private final File systemDir;
-	private final File sharedDir;
+	private File userDir;
+	private File systemDir;
+	private File sharedDir;
 
-	private static DesktopIO instance = null;
-
-
+	
 	/**
-	 * Gets the only instance of the {@link DesktopIO} class.
-	 * One of the <code>init</code> methods has to be called before, otherwise
-	 * the test mode is used.
-	 */
-	public static DesktopIO desktopIO() {
-		if (instance == null)
-			initTest(); //init for testing
-		return instance;
-	}
-
-	/**
-	 * Initializes the {@link DesktopIO}. One of the init methods has to be called
-	 * before this class can be used.
+	 * Creates a {@link DesktopIO}.
 	 * When the directory "../shared" or "shared" exists, it is used as the shared directory.
 	 * @param programName  Name of the program. An user directory for this program
 	 *                     will be created if there is none. If null, no directory is
 	 *                     created and the working directory is used as the user directory.
 	 */
-	public static void init(String programName) {
-		File sharedDir = new File("../shared");
+	public DesktopIO(String programName) {
+		sharedDir = new File("../shared");
 		if (!sharedDir.exists())
 			sharedDir = new File("shared");
 		if (!sharedDir.exists())
@@ -80,19 +69,18 @@ public class DesktopIO
 	}
 
 	/**
-	 * Initializes the {@link DesktopIO}. One of the init methods has to be called
-	 * before this class can be used.
+	 * Creates a {@link DesktopIO}.
 	 * @param programName  Name of the program. An user directory for this program
 	 *                     will be created if there is none. If null, no directory is
 	 *                     created and the working directory is used as the user directory.
 	 * @param systemDir    The custom system directory. If null, the working directory is used
 	 * @param sharedDir    An additional directory with shared files. may be null.
 	 */
-	public static void init(String programName, File systemDir, File sharedDir) {
-		instance = new DesktopIO(programName, systemDir, sharedDir);
+	public DesktopIO(String programName, File systemDir, File sharedDir) {
+		init(programName, systemDir, sharedDir);
 	}
 
-	private DesktopIO(String programName, File systemDir, File sharedDir) {
+	private void init(String programName, File systemDir, File sharedDir) {
 		this.systemDir = systemDir != null ? systemDir : new File(System.getProperty("user.dir"));
 		if (programName != null) {
 			userDir = JseFileUtils.getUserAppDataDirectory(programName);
@@ -107,29 +95,32 @@ public class DesktopIO
 	}
 
 	/**
-	 * Initializes the {@link DesktopIO} for testing (e.g. unit tests).
-	 * The application mode is used, and the program name is
-	 * composed of "xenoage" and the name of the calling class.
+	 * Creates a {@link DesktopIO} for testing (e.g. unit tests).
+	 * The program name is composed of "xenoage" and the name of the latest calling class
+	 * ending with "Test" or "Try" (otherwise "unknown").
 	 * When the directory "../shared" exists, it is used as the shared directory.
 	 */
-	public static void initTest() {
+	public static DesktopIO createTestIO() {
 		File sharedDir = new File("../shared");
 		if (!sharedDir.exists())
 			sharedDir = null;
-		init("xenoage/" + JsePlatformUtils.instance.getCaller(2).getClassName(), null, sharedDir);
+		//get first test class name
+		String s = "unknown";
+		int i = 2;
+		while (s != null) {
+			s = platformUtils().getCaller(i).getClassName();
+			if (s.endsWith("Test") || s.endsWith("Try"))
+				break;
+			i++;
+		}
+		return new DesktopIO("xenoage/" + s, null, sharedDir);
 	}
 
-	/**
-	 * Returns true, when the given file exists, otherwise false.
-	 */
 	@Override public boolean existsFile(String filepath) {
 		return new File(userDir, filepath).exists() || new File(systemDir, filepath).exists() ||
 			(sharedDir != null ? new File(sharedDir, filepath).exists() : false);
 	}
 
-	/**
-	 * Returns true, when the given directory exists, otherwise false.
-	 */
 	@Override public boolean existsDirectory(String directory) {
 		File userFile = new File(userDir, directory);
 		if (userFile.exists() && userFile.isDirectory())
@@ -169,7 +160,8 @@ public class DesktopIO
 	 * application settings directory first, and if not found, in the directory where the
 	 * program was installed. If still not found, null is returned.
 	 */
-	public File findFile(String filepath) {
+	public File findFile(String filepath)
+		throws IOException {
 		File file = new File(userDir, filepath);
 		if (!file.exists()) {
 			file = new File(systemDir, filepath);
@@ -185,19 +177,10 @@ public class DesktopIO
 		}
 	}
 	
-	/**
-	 * Opens the data file at the given path and returns an input stream.
-	 * If not found, null is returned.
-	 */
-	@Override public InputStream openFile(String filePath) {
-		File file = desktopIO().findFile(filePath);
-		if (file == null)
-			return null;
-		try {
-			return new JseInputStream(new FileInputStream(file));
-		} catch (FileNotFoundException ex) {
-			return null;
-		}
+	@Override public InputStream openFile(String filePath)
+		throws IOException {
+		File file = findFile(filePath);
+		return new JseInputStream(new FileInputStream(file));
 	}
 
 	/**
@@ -233,19 +216,10 @@ public class DesktopIO
 		}
 	}
 
-	/**
-	 * Finds and returns the files in the given relative directory.
-	 * If nothing is found, an empty list is returned.
-	 */
 	@Override public List<String> listFiles(String directory) {
 		return listFiles(directory, null);
 	}
 
-	/**
-	 * Finds and returns the files in the given relative directory
-	 * matching the given file filter.
-	 * If nothing is found, an empty list is returned.
-	 */
 	@Override public List<String> listFiles(String directory, FileFilter filter) {
 		FilenameFilter jseFilenameFilter = JseFileUtils.getFilter(filter);
 		Set<String> ret = new HashSet<String>();
@@ -273,10 +247,6 @@ public class DesktopIO
 		return alist(ret);
 	}
 
-	/**
-	 * Finds and returns the directories in the given directory.
-	 * If nothing is found, an empty set is returned.
-	 */
 	@Override public List<String> listDirectories(String directory) {
 		Set<String> ret = new HashSet<String>();
 		for (int iDir = 0; iDir < 3; iDir++) {

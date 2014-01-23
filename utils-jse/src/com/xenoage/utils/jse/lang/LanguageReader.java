@@ -2,10 +2,10 @@ package com.xenoage.utils.jse.lang;
 
 import static com.xenoage.utils.NullUtils.notNull;
 import static com.xenoage.utils.collections.CollectionUtils.map;
-import static com.xenoage.utils.jse.io.DesktopIO.desktopIO;
-import static com.xenoage.utils.jse.io.JseFileUtils.getPOFilter;
-import static com.xenoage.utils.jse.io.JseFileUtils.getXMLFilter;
-import static com.xenoage.utils.jse.io.JseFileUtils.orFilter;
+import static com.xenoage.utils.io.FileFilters.orFilter;
+import static com.xenoage.utils.io.FileFilters.poFilter;
+import static com.xenoage.utils.io.FileFilters.xmlFilter;
+import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
 import static com.xenoage.utils.log.Log.log;
 import static com.xenoage.utils.log.Report.remark;
 import static com.xenoage.utils.log.Report.warning;
@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -69,7 +68,7 @@ public class LanguageReader {
 			throw new FileNotFoundException("Language " + id + " does not exist");
 		
 		//locate vocabulary files
-		Set<String> langFiles = desktopIO().listFiles(dir, orFilter(getXMLFilter(), getPOFilter()));
+		List<String> langFiles = desktopIO().listFiles(dir, orFilter(xmlFilter, poFilter));
 		langFiles.remove("id.xml");
 
 		//load entries

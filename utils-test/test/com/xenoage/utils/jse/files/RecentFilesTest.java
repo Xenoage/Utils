@@ -5,11 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 import java.util.ArrayList;
 
-import org.junit.Before;
 import org.junit.Test;
-
-import com.xenoage.utils.jse.files.RecentFiles;
-import com.xenoage.utils.jse.io.DesktopIO;
 
 /**
  * Test cases for the {@link RecentFiles} class.
@@ -17,10 +13,6 @@ import com.xenoage.utils.jse.io.DesktopIO;
  * @author Andreas Wenger
  */
 public class RecentFilesTest {
-
-	@Before public void setUp() {
-		DesktopIO.initTest();
-	}
 
 	@Test public void test() {
 		assertEquals("Test was written for 5 entries", 5, RecentFiles.maxEntries);
