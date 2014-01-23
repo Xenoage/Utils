@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 
+import com.xenoage.utils.io.FileUtils;
 import com.xenoage.utils.jse.OSUtils;
 import com.xenoage.utils.jse.OSUtils.OS;
 import com.xenoage.utils.kernel.Tuple2;
@@ -120,20 +121,7 @@ public class JseFileUtils {
 	 * first position is allowed)
 	 */
 	public static String getNameWithoutExt(File file) {
-		return getNameWithoutExt(file.getName());
-	}
-
-	/**
-	 * Gets the name of the file without any extensions
-	 * (ends before the first dot, but a dot on the very
-	 * first position is allowed)
-	 */
-	public static String getNameWithoutExt(String filename) {
-		int dotPos = filename.indexOf(".", 1);
-		if (dotPos == -1)
-			return filename;
-		else
-			return filename.substring(0, dotPos);
+		return FileUtils.getNameWithoutExt(file.getName());
 	}
 
 	/**

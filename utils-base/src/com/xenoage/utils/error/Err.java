@@ -8,12 +8,14 @@ import com.xenoage.utils.log.Report;
 /**
  * This class manages a single error handler for
  * non-verbose and quick access.
+ * 
+ * By default, the {@link BasicErrorProcessing} strategy is used.
  *
  * @author Andreas Wenger
  */
 public class Err {
 
-	private static ErrorProcessing instance = new NoErrorProcessing();
+	private static ErrorProcessing instance = new BasicErrorProcessing();
 
 
 	/**

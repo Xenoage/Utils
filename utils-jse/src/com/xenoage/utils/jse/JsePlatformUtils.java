@@ -38,7 +38,8 @@ public class JsePlatformUtils
 	private AwtTextMeasurer textMeasurer = new AwtTextMeasurer();
 	
 	/**
-	 * Initializes the {@link PlatformUtils} class with an instance of {@link JsePlatformUtils},
+	 * Initializes the {@link PlatformUtils} class for usage within a
+	 * desktop Java SE environment (using an instance of {@link JsePlatformUtils}),
 	 * using the given program name.
 	 */
 	public static void init(String programName) {

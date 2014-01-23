@@ -17,9 +17,4 @@ public interface LogProcessing {
 	 */
 	public void close();
 
-	/**
-	 * Gets the filename of the log file.
-	 */
-	public String getLogFilename();
-
 }

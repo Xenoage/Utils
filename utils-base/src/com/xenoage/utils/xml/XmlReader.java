@@ -201,5 +201,10 @@ public abstract class XmlReader {
 	 * Gets the current line number.
 	 */
 	public abstract int getLine();
+	
+	/**
+	 * Convenience method to close the underlying input stream.
+	 */
+	public abstract void close();
 
 }

@@ -14,8 +14,4 @@ public class NoLogProcessing
 	@Override public void close() {
 	}
 
-	@Override public String getLogFilename() {
-		return null;
-	}
-
 }

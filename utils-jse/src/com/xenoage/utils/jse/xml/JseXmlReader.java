@@ -21,17 +21,19 @@ import com.xenoage.utils.xml.XmlReader;
 public class JseXmlReader
 	extends XmlReader {
 	
+	private InputStream inputStream;
 	private XMLStreamReader reader;
 	private boolean cancelNextClose = false;
 	
-	public JseXmlReader(InputStream in) {
+	public JseXmlReader(InputStream inputStream) {
 		XMLInputFactory input = XMLInputFactory.newInstance();
 		//disable DTDs for speed
 		input.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 		input.setProperty(XMLInputFactory.IS_COALESCING, true);
 		input.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, false);
 		try {
-			reader = input.createXMLStreamReader(in);
+			this.inputStream = inputStream;
+			this.reader = input.createXMLStreamReader(inputStream);
 		} catch (XMLStreamException ex) {
 			throw new XmlException(ex);
 		}
@@ -144,6 +146,14 @@ public class JseXmlReader
 
 	@Override public int getLine() {
 		return reader.getLocation().getLineNumber();
+	}
+
+	@Override public void close() {
+		try {
+			reader.close();
+			inputStream.close();
+		} catch (Exception ex) {
+		}
 	}
 
 }

@@ -20,15 +20,19 @@ public class FileUtils {
 
 	/**
 	 * Gets the name of the file without any extensions
-	 * (ends before the first dot, but a dot on the very
-	 * first position is allowed)
+	 * The returned name ends before the first dot, but a dot on the very
+	 * first position is allowed. It begins after the last "/" or "\".
 	 */
-	public static String getNameWithoutExt(String filename) {
-		int dotPos = filename.indexOf(".", 1);
-		if (dotPos == -1)
-			return filename;
-		else
-			return filename.substring(0, dotPos);
+	public static String getNameWithoutExt(String filePath) {
+		String fileName = filePath;
+		int pos = -1;
+		if ((pos = fileName.lastIndexOf('/')) > -1)
+			fileName = fileName.substring(pos + 1);
+		if ((pos = fileName.lastIndexOf('\\')) > -1)
+			fileName = fileName.substring(pos + 1);
+		if ((pos = fileName.indexOf(".", 1)) > -1)
+			fileName = fileName.substring(0, pos);
+		return fileName;
 	}
 
 	/**

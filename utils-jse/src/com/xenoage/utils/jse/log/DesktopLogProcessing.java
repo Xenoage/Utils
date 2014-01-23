@@ -68,7 +68,7 @@ public class DesktopLogProcessing
 	/**
 	 * Gets the filename of the log file.
 	 */
-	@Override public String getLogFilename() {
+	public String getLogFilename() {
 		return logFileName;
 	}
 
