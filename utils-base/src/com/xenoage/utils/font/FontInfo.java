@@ -31,7 +31,7 @@ import com.xenoage.utils.collections.IList;
 		"Times");
 	private static final float defaultSize = 12;
 	private static final FontStyle defaultFontStyle = FontStyle.normal;
-	public static final FontInfo defaultValue = new FontInfo((String) null, null, null);
+	public static final FontInfo defaultValue = new FontInfo(defaultFamilies, defaultSize, defaultFontStyle);
 
 
 	/**
