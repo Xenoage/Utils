@@ -154,7 +154,7 @@ public final class Point2f {
 	}
 
 	@Override public String toString() {
-		return x + ", " + y;
+		return "(" + x + ", " + y + ")";
 	}
 
 	@Override public boolean equals(Object o) {
