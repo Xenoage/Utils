@@ -39,8 +39,9 @@ public abstract class PlatformUtils {
 		if (platformUtils == null) {
 			//try to load helper class to init this class
 			try {
-				Class<?> cls = Class.forName(bootstrapClassName);
-				cls.getMethod("init").invoke(null);
+				//GOON
+				//Class<?> cls = Class.forName(bootstrapClassName);
+				//cls.getMethod("init").invoke(null);
 			} catch (Exception ex) {
 			}
 			//successfull?

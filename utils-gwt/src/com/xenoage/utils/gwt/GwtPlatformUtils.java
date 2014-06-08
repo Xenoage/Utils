@@ -1,26 +1,15 @@
 package com.xenoage.utils.gwt;
 
-import static com.xenoage.utils.collections.CollectionUtils.alist;
-
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.List;
 
 import com.xenoage.utils.PlatformUtils;
 import com.xenoage.utils.font.TextMeasurer;
+import com.xenoage.utils.gwt.io.GwtIO;
 import com.xenoage.utils.io.FilesystemInput;
 import com.xenoage.utils.io.InputStream;
 import com.xenoage.utils.io.OutputStream;
 import com.xenoage.utils.io.ZipReader;
-import com.xenoage.utils.jse.font.AwtTextMeasurer;
-import com.xenoage.utils.jse.io.DesktopIO;
-import com.xenoage.utils.jse.io.JseInputStream;
-import com.xenoage.utils.jse.io.JseOutputStream;
-import com.xenoage.utils.jse.io.JseZipReader;
-import com.xenoage.utils.jse.xml.JseXmlReader;
-import com.xenoage.utils.jse.xml.JseXmlWriter;
 import com.xenoage.utils.xml.XmlReader;
 import com.xenoage.utils.xml.XmlWriter;
 
@@ -79,7 +68,7 @@ public class GwtPlatformUtils
 	}
 
 	@Override public TextMeasurer getTextMeasurer() {
-		return textMeasurer;
+		return null; //TODO textMeasurer;
 	}
 	
 	@Override public FilesystemInput getFilesystemInput() {
@@ -92,7 +81,7 @@ public class GwtPlatformUtils
 	}
 
 	@Override public XmlReader createXmlReader(InputStream inputStream) {
-		return new GwtXmlReader(new GwtInputStream(inputStream));
+		return null; //TODO new GwtXmlReader(new GwtInputStream(inputStream));
 	}
 
 	/**
