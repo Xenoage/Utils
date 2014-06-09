@@ -100,7 +100,7 @@ public abstract class PlatformUtils {
 		throws IOException;
 	
 	/**
-	 * Returns an {@link XmlReader} for the given {@link InputStream} for this platform.
+	 * Returns an {@link XmlReader} for the given opened {@link InputStream} for this platform.
 	 */
 	@NonNull public abstract XmlReader createXmlReader(InputStream inputStream);
 	
