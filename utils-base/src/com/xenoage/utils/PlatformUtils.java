@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.xenoage.utils.annotations.NonNull;
+import com.xenoage.utils.callback.AsyncCallback;
 import com.xenoage.utils.font.TextMeasurer;
 import com.xenoage.utils.io.FilesystemInput;
 import com.xenoage.utils.io.InputStream;
@@ -93,14 +94,15 @@ public abstract class PlatformUtils {
 	@NonNull public abstract FilesystemInput getFilesystemInput();
 	
 	/**
-	 * Convenience method for opening an {@link InputStream} for the file at the given relative path.
-	 * If this platform is not able to retrieve it, e.g. because it does not exist, null is returned.
+	 * Convenience method for asynchronous opening of an {@link InputStream} for the file
+	 * at the given relative path.
+	 * Only asynchronous file reading is supported by all platforms. Specific platform implementations
+	 * may provide also blocking methods for file reading.
 	 */
-	@NonNull public abstract InputStream openFile(String filePath)
-		throws IOException;
+	@NonNull public abstract void openFileAsync(String filePath, AsyncCallback<InputStream> callback);
 	
 	/**
-	 * Returns an {@link XmlReader} for the given opened {@link InputStream} for this platform.
+	 * Returns an {@link XmlReader} for the given {@link InputStream} for this platform.
 	 */
 	@NonNull public abstract XmlReader createXmlReader(InputStream inputStream);
 	

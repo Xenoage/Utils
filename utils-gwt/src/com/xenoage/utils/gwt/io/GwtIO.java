@@ -1,8 +1,8 @@
 package com.xenoage.utils.gwt.io;
 
-import java.io.IOException;
 import java.util.List;
 
+import com.xenoage.utils.callback.AsyncCallback;
 import com.xenoage.utils.gwt.GwtPlatformUtils;
 import com.xenoage.utils.io.FileFilter;
 import com.xenoage.utils.io.FilesystemInput;
@@ -19,36 +19,31 @@ import com.xenoage.utils.io.InputStream;
  */
 public class GwtIO
 	implements FilesystemInput {
-
-	@Override public boolean existsFile(String filepath) {
-		throw new UnsupportedOperationException(); //TODO
-	}
-
-	@Override public boolean existsDirectory(String directory) {
-		throw new UnsupportedOperationException(); //TODO
-	}
 	
-	@Override public InputStream openFile(String filePath)
-		throws IOException {
-		return new GwtInputStream(filePath);
+	@Override public void openFileAsync(String filePath, AsyncCallback<InputStream> callback) {
+		GwtInputStream.open(filePath, callback);
 	}
 
-	@Override public List<String> listFiles(String directory)
-		throws IOException {
-		throw new UnsupportedOperationException(); //TODO
+	@Override public void existsFileAsync(String filepath, AsyncCallback<Boolean> exists) {
+		exists.onFailure(new UnsupportedOperationException()); //TODO
 	}
 
-	@Override public List<String> listFiles(String directory, FileFilter filter)
-		throws IOException {
-		throw new IOException(new UnsupportedOperationException()); //TODO
+	@Override public void existsDirectoryAsync(String directory, AsyncCallback<Boolean> exists) {
+		exists.onFailure(new UnsupportedOperationException()); //TODO
 	}
 
-	/**
-	 * Not supported on Android.
-	 */
-	@Override public List<String> listDirectories(String directory)
-		throws IOException {
-		throw new IOException(new UnsupportedOperationException()); //TODO
+	@Override public void listFilesAsync(String directory, AsyncCallback<List<String>> files) {
+		files.onFailure(new UnsupportedOperationException()); //TODO		
+	}
+
+	@Override public void listFilesAsync(String directory, FileFilter filter,
+		AsyncCallback<List<String>> files) {
+		files.onFailure(new UnsupportedOperationException()); //TODO
+	}
+
+	@Override public void listDirectoriesAsync(String directory,
+		AsyncCallback<List<String>> directories) {
+		directories.onFailure(new UnsupportedOperationException()); //TODO
 	}
 
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.xenoage.utils.PlatformUtils;
+import com.xenoage.utils.callback.AsyncCallback;
 import com.xenoage.utils.font.TextMeasurer;
 import com.xenoage.utils.gwt.io.GwtIO;
 import com.xenoage.utils.io.FilesystemInput;
@@ -75,9 +76,8 @@ public class GwtPlatformUtils
 		return gwtIO;
 	}
 
-	@Override public InputStream openFile(String filePath)
-		throws IOException {
-		return gwtIO().openFile(filePath);
+	@Override public void openFileAsync(String filePath, AsyncCallback<InputStream> callback) {
+		gwtIO().openFileAsync(filePath, callback); 
 	}
 
 	@Override public XmlReader createXmlReader(InputStream inputStream) {

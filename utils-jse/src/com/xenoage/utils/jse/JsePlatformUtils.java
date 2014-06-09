@@ -9,6 +9,8 @@ import java.io.Writer;
 import java.util.List;
 
 import com.xenoage.utils.PlatformUtils;
+import com.xenoage.utils.annotations.NonNull;
+import com.xenoage.utils.callback.AsyncCallback;
 import com.xenoage.utils.font.TextMeasurer;
 import com.xenoage.utils.io.FilesystemInput;
 import com.xenoage.utils.io.InputStream;
@@ -97,7 +99,20 @@ public class JsePlatformUtils
 		return desktopIO;
 	}
 
-	@Override public InputStream openFile(String filePath)
+	@Override public void openFileAsync(String filePath, AsyncCallback<InputStream> callback) {
+		try {
+			InputStream stream = openFile(filePath);
+			callback.onSuccess(stream);
+		} catch (IOException ex) {
+			callback.onFailure(ex);
+		}
+	}
+	
+	/**
+	 * Convenience method for opening an {@link InputStream} for the file at the given relative path.
+	 * This method is blocking.
+	 */
+	@NonNull public InputStream openFile(String filePath)
 		throws IOException {
 		return desktopIO().openFile(filePath);
 	}

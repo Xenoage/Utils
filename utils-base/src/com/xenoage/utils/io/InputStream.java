@@ -10,13 +10,6 @@ import java.io.IOException;
  * @author Andreas Wenger
  */
 public interface InputStream {
-
-	/**
-	 * Opens the input stream asynchronously.
-	 * The {@link InputStreamCallback#inputStreamOpened(boolean, IOException)}
-	 * method is called when the operation was successful or failed.
-	 */
-	public void open(InputStreamCallback callback);
 	
 	/**
 	 * Reads the next byte of data from the input stream.

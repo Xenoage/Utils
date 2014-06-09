@@ -6,8 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.xenoage.utils.io.InputStreamCallback;
-
 /**
  * Wrapper for a Java SE {@link InputStream}.
  * 
@@ -35,10 +33,6 @@ public class JseInputStream
 	public JseInputStream(File file)
 		throws FileNotFoundException {
 		this.jseInputStream = new FileInputStream(file);
-	}
-	
-	@Override public void open(InputStreamCallback callback) {
-		
 	}
 
 	@Override public int read()

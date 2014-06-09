@@ -7,8 +7,8 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.xenoage.utils.callback.AsyncCallback;
 import com.xenoage.utils.io.InputStream;
-import com.xenoage.utils.io.InputStreamCallback;
 
 /**
  * {@link InputStream} implementation of GWT.
@@ -24,43 +24,45 @@ import com.xenoage.utils.io.InputStreamCallback;
 public class GwtInputStream
 	implements InputStream {
 
-	private String file = null;
-	public String data = null; //TODO: not public!!
-	private ByteArrayInputStream stream = null;
-	
-	
+	private ByteArrayInputStream stream;
+
+
 	/**
-	 * Opens the given file. It is immediately read and the method
-	 * returns not before an error occurs or before the file
-	 * is completely read.
-	 * @param file  the path of the file, e.g. "path/to/file.txt"
+	 * Opens the given file asynchronously.
+	 * The given callback methods are used to indicate success or failure.
 	 */
-	public GwtInputStream(String file) {
-		this.file = file;
-	}
-	
-	@Override public void open(final InputStreamCallback callback) {
-		data = null;
+	public static void open(String file, final AsyncCallback<InputStream> callback) {
 		try {
 			new RequestBuilder(RequestBuilder.GET, file).sendRequest("", new RequestCallback() {
 
 				@Override public void onResponseReceived(Request req, Response resp) {
 					try {
-						data = resp.getText();
-						stream = new ByteArrayInputStream(data.getBytes("UTF-8"));
-						callback.inputStreamOpened(true, null);
+						if (resp.getStatusCode() == Response.SC_OK) {
+							//file could be read. success.
+							String data = resp.getText();
+							ByteArrayInputStream stream = new ByteArrayInputStream(data.getBytes("UTF-8"));
+							GwtInputStream result = new GwtInputStream(stream);
+							callback.onSuccess(result);
+						}
+						else {
+							callback.onFailure(new IOException("HTTP status code " + resp.getStatusCode()));
+						}
 					} catch (Exception ex) {
-						callback.inputStreamOpened(false, new IOException(ex));
+						callback.onFailure(new IOException(ex));
 					}
 				}
 
 				@Override public void onError(Request res, Throwable throwable) {
-					callback.inputStreamOpened(false, new IOException(throwable));
+					callback.onFailure(new IOException(throwable));
 				}
 			});
 		} catch (RequestException ex) {
-			callback.inputStreamOpened(false, new IOException(ex));
+			callback.onFailure(new IOException(ex));
 		}
+	}
+
+	private GwtInputStream(ByteArrayInputStream stream) {
+		this.stream = stream;
 	}
 
 	@Override public int read()
@@ -79,8 +81,7 @@ public class GwtInputStream
 	}
 
 	@Override public void close() {
-		data = null;
-		stream  = null;
+		stream = null;
 	}
 
 }
