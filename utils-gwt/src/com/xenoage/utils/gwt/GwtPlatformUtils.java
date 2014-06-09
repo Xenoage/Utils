@@ -1,6 +1,5 @@
 package com.xenoage.utils.gwt;
 
-import java.io.IOException;
 import java.util.List;
 
 import com.xenoage.utils.PlatformUtils;

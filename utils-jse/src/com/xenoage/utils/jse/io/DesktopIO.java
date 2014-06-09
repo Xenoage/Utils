@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.xenoage.utils.callback.AsyncCallback;
 import com.xenoage.utils.io.FileFilter;
 import com.xenoage.utils.io.FilesystemInput;
 import com.xenoage.utils.io.InputStream;
@@ -116,12 +117,18 @@ public class DesktopIO
 		return new DesktopIO("xenoage/" + s, null, sharedDir);
 	}
 
-	@Override public boolean existsFile(String filepath) {
+	/**
+	 * Like {@link #existsFileAsync(String, AsyncCallback)}, but with direct return.
+	 */
+	public boolean existsFile(String filepath) {
 		return new File(userDir, filepath).exists() || new File(systemDir, filepath).exists() ||
 			(sharedDir != null ? new File(sharedDir, filepath).exists() : false);
 	}
 
-	@Override public boolean existsDirectory(String directory) {
+	/**
+	 * Like {@link #existsDirectory(String), but with direct return.
+	 */
+	public boolean existsDirectory(String directory) {
 		File userFile = new File(userDir, directory);
 		if (userFile.exists() && userFile.isDirectory())
 			return true;
@@ -177,7 +184,10 @@ public class DesktopIO
 		}
 	}
 	
-	@Override public InputStream openFile(String filePath)
+	/**
+	 * Like {@link #openFile(String), but with direct return.
+	 */
+	public InputStream openFile(String filePath)
 		throws IOException {
 		File file = findFile(filePath);
 		return new JseInputStream(new FileInputStream(file));
@@ -216,11 +226,17 @@ public class DesktopIO
 		}
 	}
 
-	@Override public List<String> listFiles(String directory) {
+	/**
+	 * Like {@link #listFilesAsync(String)}, but with direct return.
+	 */
+	public List<String> listFiles(String directory) {
 		return listFiles(directory, null);
 	}
 
-	@Override public List<String> listFiles(String directory, FileFilter filter) {
+	/**
+	 * Like {@link #listFilesAsync(String, FileFilter, AsyncCallback), but with direct return.
+	 */
+	public List<String> listFiles(String directory, FileFilter filter) {
 		FilenameFilter jseFilenameFilter = JseFileUtils.getFilter(filter);
 		Set<String> ret = new HashSet<String>();
 		for (int iDir = 0; iDir < 3; iDir++) {
@@ -247,7 +263,10 @@ public class DesktopIO
 		return alist(ret);
 	}
 
-	@Override public List<String> listDirectories(String directory) {
+	/**
+	 * Like {@link #listDirectoriesAsync(String, AsyncCallback)}, but with direct return.
+	 */
+	public List<String> listDirectories(String directory) {
 		Set<String> ret = new HashSet<String>();
 		for (int iDir = 0; iDir < 3; iDir++) {
 			File baseDir = null;
@@ -272,6 +291,36 @@ public class DesktopIO
 			}
 		}
 		return alist(ret);
+	}
+
+	@Override public void existsFileAsync(String filepath, AsyncCallback<Boolean> exists) {
+		exists.onSuccess(existsFile(filepath));
+	}
+
+	@Override public void existsDirectoryAsync(String directory, AsyncCallback<Boolean> exists) {
+		exists.onSuccess(existsDirectory(directory));
+	}
+
+	@Override public void listFilesAsync(String directory, AsyncCallback<List<String>> files) {
+		files.onSuccess(listFiles(directory));
+	}
+
+	@Override public void listFilesAsync(String directory, FileFilter filter,
+		AsyncCallback<List<String>> files) {
+		files.onSuccess(listFiles(directory, filter));
+	}
+
+	@Override public void listDirectoriesAsync(String directory,
+		AsyncCallback<List<String>> directories) {
+		directories.onSuccess(listDirectories(directory));
+	}
+
+	@Override public void openFileAsync(String filepath, AsyncCallback<InputStream> inputStream) {
+		try {
+			inputStream.onSuccess(openFile(filepath));
+		} catch (IOException ex) {
+			inputStream.onFailure(ex);
+		}
 	}
 
 }

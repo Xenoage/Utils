@@ -40,6 +40,16 @@ public class JsePlatformUtils
 	private AwtTextMeasurer textMeasurer = new AwtTextMeasurer();
 	
 	/**
+	 * Gets the {@link JsePlatformUtils} instance.
+	 * If not initialized yet, it is initialized for the testing environment.
+	 */
+	public static JsePlatformUtils jsePlatformUtils() {
+		if (instance == null)
+			initForTest();
+		return instance;
+	}
+	
+	/**
 	 * Initializes the {@link PlatformUtils} class for usage within a
 	 * desktop Java SE environment (using an instance of {@link JsePlatformUtils}),
 	 * using the given program name.

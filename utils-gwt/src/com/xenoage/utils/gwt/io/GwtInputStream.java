@@ -24,6 +24,7 @@ import com.xenoage.utils.io.InputStream;
 public class GwtInputStream
 	implements InputStream {
 
+	private String data;
 	private ByteArrayInputStream stream;
 
 
@@ -41,7 +42,7 @@ public class GwtInputStream
 							//file could be read. success.
 							String data = resp.getText();
 							ByteArrayInputStream stream = new ByteArrayInputStream(data.getBytes("UTF-8"));
-							GwtInputStream result = new GwtInputStream(stream);
+							GwtInputStream result = new GwtInputStream(data, stream);
 							callback.onSuccess(result);
 						}
 						else {
@@ -61,8 +62,16 @@ public class GwtInputStream
 		}
 	}
 
-	private GwtInputStream(ByteArrayInputStream stream) {
+	private GwtInputStream(String data, ByteArrayInputStream stream) {
+		this.data = data;
 		this.stream = stream;
+	}
+	
+	/**
+	 * Gets the whole file data as a string.
+	 */
+	public String getData() {
+		return data;
 	}
 
 	@Override public int read()
