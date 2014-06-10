@@ -5,6 +5,7 @@ import java.util.List;
 import com.xenoage.utils.PlatformUtils;
 import com.xenoage.utils.async.AsyncCallback;
 import com.xenoage.utils.font.TextMeasurer;
+import com.xenoage.utils.gwt.font.GwtTextMeasurer;
 import com.xenoage.utils.gwt.io.GwtIO;
 import com.xenoage.utils.gwt.io.GwtInputStream;
 import com.xenoage.utils.gwt.xml.GwtXmlReader;
@@ -26,6 +27,7 @@ public class GwtPlatformUtils
 	private static GwtPlatformUtils instance = null;
 
 	private GwtIO gwtIO = null;
+	private TextMeasurer textMeasurer = new GwtTextMeasurer();
 	
 	/**
 	 * Initializes the {@link PlatformUtils} class for usage within a
@@ -70,7 +72,7 @@ public class GwtPlatformUtils
 	}
 
 	@Override public TextMeasurer getTextMeasurer() {
-		return null; //TODO textMeasurer;
+		return textMeasurer;
 	}
 	
 	@Override public FilesystemInput getFilesystemInput() {
