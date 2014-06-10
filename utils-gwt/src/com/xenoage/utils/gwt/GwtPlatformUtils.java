@@ -6,6 +6,8 @@ import com.xenoage.utils.PlatformUtils;
 import com.xenoage.utils.async.AsyncCallback;
 import com.xenoage.utils.font.TextMeasurer;
 import com.xenoage.utils.gwt.io.GwtIO;
+import com.xenoage.utils.gwt.io.GwtInputStream;
+import com.xenoage.utils.gwt.xml.GwtXmlReader;
 import com.xenoage.utils.io.FilesystemInput;
 import com.xenoage.utils.io.InputStream;
 import com.xenoage.utils.io.OutputStream;
@@ -80,7 +82,9 @@ public class GwtPlatformUtils
 	}
 
 	@Override public XmlReader createXmlReader(InputStream inputStream) {
-		return null; //TODO new GwtXmlReader(new GwtInputStream(inputStream));
+		//TIDY - normally we always have a GwtInputStream, but who guarantees?
+		GwtInputStream stream = (GwtInputStream) inputStream;
+		return new GwtXmlReader(stream.getData());
 	}
 
 	/**
