@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.xenoage.utils.annotations.NonNull;
-import com.xenoage.utils.callback.AsyncCallback;
+import com.xenoage.utils.async.AsyncCallback;
 import com.xenoage.utils.font.TextMeasurer;
 import com.xenoage.utils.io.FilesystemInput;
 import com.xenoage.utils.io.InputStream;
@@ -40,9 +40,8 @@ public abstract class PlatformUtils {
 		if (platformUtils == null) {
 			//try to load helper class to init this class
 			try {
-				//GOON
-				//Class<?> cls = Class.forName(bootstrapClassName);
-				//cls.getMethod("init").invoke(null);
+				Class<?> cls = Class.forName(bootstrapClassName);
+				cls.getMethod("init").invoke(null);
 			} catch (Exception ex) {
 			}
 			//successfull?

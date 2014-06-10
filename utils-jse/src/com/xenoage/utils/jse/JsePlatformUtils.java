@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.xenoage.utils.PlatformUtils;
 import com.xenoage.utils.annotations.NonNull;
-import com.xenoage.utils.callback.AsyncCallback;
+import com.xenoage.utils.async.AsyncCallback;
 import com.xenoage.utils.font.TextMeasurer;
 import com.xenoage.utils.io.FilesystemInput;
 import com.xenoage.utils.io.InputStream;

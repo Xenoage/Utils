@@ -1,4 +1,4 @@
-package com.xenoage.utils.callback;
+package com.xenoage.utils.async;
 
 
 /**

@@ -2,7 +2,7 @@ package com.xenoage.utils.io;
 
 import java.util.List;
 
-import com.xenoage.utils.callback.AsyncCallback;
+import com.xenoage.utils.async.AsyncCallback;
 
 /**
  * Interface for reading from filesystems.

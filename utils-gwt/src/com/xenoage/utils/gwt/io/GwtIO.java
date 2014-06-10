@@ -2,7 +2,7 @@ package com.xenoage.utils.gwt.io;
 
 import java.util.List;
 
-import com.xenoage.utils.callback.AsyncCallback;
+import com.xenoage.utils.async.AsyncCallback;
 import com.xenoage.utils.gwt.GwtPlatformUtils;
 import com.xenoage.utils.io.FileFilter;
 import com.xenoage.utils.io.FilesystemInput;
