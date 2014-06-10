@@ -18,12 +18,12 @@ public class PlatformUtilsBootstrap {
 	public static final String bootstrapClassName = "com.xenoage.utils.PlatformUtilsInit";
 
 	public static void tryInit() {
-		Class<?> cls;
+		/* GOON Class<?> cls;
 		try {
 			cls = Class.forName(bootstrapClassName);
 			cls.getMethod("init").invoke(null);
 		} catch (Exception e) {
-		}
+		} */
 	}
 	
 }

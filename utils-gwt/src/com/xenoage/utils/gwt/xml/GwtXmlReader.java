@@ -1,5 +1,7 @@
 package com.xenoage.utils.gwt.xml;
 
+import static com.xenoage.utils.kernel.Range.range;
+
 import com.google.gwt.xml.client.DOMException;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Node;
@@ -16,11 +18,12 @@ import com.xenoage.utils.xml.XmlReader;
  */
 public class GwtXmlReader
 	extends XmlReader {
-	
+
 	private Document doc;
 	private Node currentNode;
-	private boolean currentElementChildrenRead = false;
+	private boolean cursorAtElementEnd = false;
 	
+
 	public GwtXmlReader(String xmlData) {
 		try {
 			this.doc = XMLParser.parse(xmlData);
@@ -51,21 +54,62 @@ public class GwtXmlReader
 	}
 
 	@Override public boolean openNextChildElement() {
-		//if the current node has a child element, open it
-		if (currentNode.getChildNodes().getLength() > 0) {
-			currentNode = currentNode.getFirstChild();
-			return true;
+		//if the cursor is within an element and the current node has a child element, open it
+		if (false == cursorAtElementEnd) {
+			Node firstChild = getFirstChildElement(currentNode);
+			if (firstChild != null) {
+				currentNode = firstChild;
+				cursorAtElementEnd = false;
+				return true;
+			}
 		}
-		//else if the current node has a following sibling, open it
-		else if (currentNode.getNextSibling() != null) {
-			currentNode = currentNode.getNextSibling();
-			return false;
+		//otherwise, move to the next sibling if there is one
+		else {
+			Node nextSibiling = getNextSiblingElement(currentNode);
+			if (nextSibiling != null) {
+				currentNode = nextSibiling;
+				cursorAtElementEnd = false;
+				return true;
+			}
 		}
 		return false;
 	}
 
+	/**
+	 * Gets the first child element of the given element,
+	 * or null if there is none.
+	 */
+	private Node getFirstChildElement(Node element) {
+		for (int i : range(element.getChildNodes().getLength())) {
+			Node child = element.getChildNodes().item(i);
+			if (child.getNodeType() == Node.ELEMENT_NODE)
+				return child;
+		}
+		return null;
+	}
+
+	/**
+	 * Gets the next sibling element of the given element,
+	 * or null if there is none.
+	 */
+	private Node getNextSiblingElement(Node element) {
+		Node sibling = element;
+		while (true) {
+			sibling = sibling.getNextSibling();
+			if (sibling == null)
+				return null;
+			else if (sibling.getNodeType() == Node.ELEMENT_NODE)
+				return sibling;
+		}
+	}
+
 	@Override public void closeElement() {
-		currentNode = currentNode.getParentNode();
+		//if we are within an element, move cursor to the end of the element
+		if (false == cursorAtElementEnd)
+			cursorAtElementEnd = true;
+		//else if we are at the end of an element, move back to the parent element
+		else
+			currentNode = currentNode.getParentNode();
 	}
 
 	@Override public XmlDataException dataException() {
