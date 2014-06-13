@@ -14,7 +14,7 @@ public class GwtTextMeasurer
 	implements TextMeasurer {
 
 	@Override public TextMetrics measure(FontInfo font, String text) {
-		return new TextMetrics(0, 0, 0, 0); //GOON
+		return new TextMetrics(0, 0, 0, 0); //TODO
 	}
 
 }
