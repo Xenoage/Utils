@@ -1,7 +1,5 @@
 package com.xenoage.utils.math.geom;
 
-import java.awt.Point;
-
 /**
  * Class for a 2D point.
  *
@@ -12,11 +10,6 @@ public final class Point2i {
 	public final int x;
 	public final int y;
 
-
-	public Point2i(Point p) {
-		this.x = p.x;
-		this.y = p.y;
-	}
 
 	public Point2i(int x, int y) {
 		this.x = x;
