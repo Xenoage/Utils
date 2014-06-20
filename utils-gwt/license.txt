@@ -1,9 +1,9 @@
-Xenoage utils-jse
+Xenoage utils-gwt
 *****************
 
-Xenoage utils-jse is provided under the zlib license:
+Xenoage utils-gwt is provided under the zlib license:
 
-Copyright (c) 2010-2014 Xenoage Software
+Copyright (c) 2014 Xenoage Software
 
 This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.
 

@@ -18,7 +18,6 @@ allprojects {
 	}
 	
 	dependencies {
-		compileOnly group: "org.projectlombok", name: "lombok", version: "0.12.0"
 		testCompile group: 'junit', name: 'junit', version: '4.+'
 	}
 
@@ -45,6 +44,7 @@ project(':utils-pdlib') { dependencies { compile project(':utils-base') } }
 project(':utils-jse') { dependencies { compile project(':utils-base') } }
 project(':utils-serialize') { dependencies { compile project(':utils-jse') } }
 project(':utils-test') { dependencies { compile project(':utils-jse'), project(':utils-pdlib'), project(':utils-serialize') } }
+//utils-gwt is currently not supported by the build script
 
 //distribution in multiple jars
 task distDir(type:Copy) {
