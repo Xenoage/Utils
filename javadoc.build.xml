@@ -1,5 +1,5 @@
-<project name="javadoc" default="antJavadoc">
-	<target name="antJavadoc">
+<project name="javadoc" default="antUtilsJavadoc">
+	<target name="antUtilsJavadoc">
 		<delete dir="doc"/>
 		<javadoc packagenames="com.xenoage"
 				destdir="doc"

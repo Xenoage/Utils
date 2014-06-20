@@ -80,7 +80,7 @@ task dist {
 	
 	//javadocs - this is done in Ant, works much better than in Gradle
 	ant.importBuild 'javadoc.build.xml'
-	dependsOn antJavadoc
+	dependsOn antUtilsJavadoc
 }
 
 
