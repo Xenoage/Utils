@@ -105,7 +105,7 @@ public class JsePlatformUtils
 		return textMeasurer;
 	}
 	
-	@Override public FilesystemInput getFilesystemInput() {
+	@Override public DesktopIO getFilesystemInput() {
 		return desktopIO;
 	}
 
