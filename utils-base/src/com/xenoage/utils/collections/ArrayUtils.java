@@ -33,7 +33,7 @@ public class ArrayUtils {
 	/**
 	 * Converts the given {@link Collection} of <code>String</code>s
 	 * into an <code>String</code> array.
-	 * @param a  the collection, which may not contain null.
+	 * @param l  the collection, which may not contain null.
 	 *           if null, an empty array is returned.
 	 */
 	public static String[] toStringArray(List<String> l) {

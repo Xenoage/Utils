@@ -17,7 +17,7 @@ public interface FileOutput<T extends Document> {
 
 	/**
 	 * Writes the given document data to the given file.
-	 * @param doc       the data of any type. Incompatible types will throw an {@link IOException}.
+	 * @param document  the data of any type. Incompatible types will throw an {@link IOException}.
 	 * @param stream    the output stream, which should be used most of the time. Must not be null.
 	 * @param filePath  the file path, which should be given in addition to the stream.
 	 *                  It is useful for some formats, which create multiple files,

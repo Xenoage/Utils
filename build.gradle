@@ -77,6 +77,11 @@ task singleJar(type: Jar) {
 task dist {
 	dependsOn build
 	dependsOn distDir, singleJar
+	
+	//javadocs - this is done in Ant, works much better than in Gradle
+	ant.importBuild 'javadoc.build.xml'
+	dependsOn antJavadoc
 }
+
 
 

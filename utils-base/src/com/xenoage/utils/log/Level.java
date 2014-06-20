@@ -40,7 +40,7 @@ public enum Level {
 
 	/**
 	 * Returns true, if this log level is included in the given other level.
-	 * E.g. {@link Level#All} includes all other levels, but {@link Level#Error}
+	 * E.g. {@link Level#Remark} includes all other levels, but {@link Level#Error}
 	 * does not include {@link Level#Warning}.
 	 */
 	public boolean isIncludedIn(Level topLevel) {

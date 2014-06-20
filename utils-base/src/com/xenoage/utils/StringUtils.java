@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class StringUtils {
 
-	private static final char[] LINEBREAK_CHARS = new char[] { ' ', '-', '–' };
+	private static final char[] LINEBREAK_CHARS = new char[] { ' ', '-', '\u2013' /* '–' */ };
 
 
 	/**

@@ -171,7 +171,8 @@ public class MathUtils {
 
 	/**
 	 * Computes and returns a rotated rectangle, that encloses the given two
-	 * points with the given width as shown here:
+	 * points with the given width.
+	 * This is shown here:
 	 * 
 	 * <pre>
 	 *    [0]---___
@@ -244,7 +245,7 @@ public class MathUtils {
 	/**
 	 * Returns the normalized normal vector to the vector between the
 	 * given two points.
-	 * @deprecated use {@link Point2f#normalVector(Point2f, Point2f))} instead
+	 * @deprecated use {@link Point2f#normalVector(Point2f, Point2f)} instead
 	 */
 	public static Point2f normalVector(Point2f start, Point2f end) {
 		return normalVector(end.sub(start));

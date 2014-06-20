@@ -68,7 +68,6 @@ public abstract class PlatformUtils {
 	
 	/**
 	 * Gets the caller of a method. If unknown, null is returned.
-	 * @param stackTrace  The stack trace, or null if unknown (then, null is returned)
 	 * @param level       The level of the caller: 1 = the caller, 2 = the caller of the caller, ...
 	 *                    For example, when A.a() calls B.b(), and in B.b() you want to know who
 	 *                    called B.b(), use getCaller(1).

@@ -32,7 +32,7 @@ public class ColorUtils {
 
 	/**
 	 * Gets the given color as a hex string in either the form
-	 * "#aarrggbb" if alpha < 0xFF, or "#rrggbb" otherwise.
+	 * "#aarrggbb" if alpha {@literal <} 0xFF, or "#rrggbb" otherwise.
 	 * a, r, g and b are lowercase.
 	 */
 	public static String getHex(Color color) {

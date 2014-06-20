@@ -13,10 +13,6 @@ import com.xenoage.utils.io.InputStream;
 /**
  * {@link InputStream} implementation of GWT.
  * 
- * Do not forget to call the {@link #open(InputStreamCallback)} method
- * before using the input stream, since this class loads the file
- * content asynchronously.
- * 
  * Currently, this input stream only works with text files.
  * 
  * @author Andreas Wenger

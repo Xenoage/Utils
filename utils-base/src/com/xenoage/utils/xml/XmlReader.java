@@ -140,7 +140,7 @@ public abstract class XmlReader {
 	/**
 	 * Gets the value of the attribute with the given name at this element
 	 * as a int value, or null if not found.
-	 * See {@link #getAttributeValue(String)} for a notice about performance.
+	 * See {@link #getAttribute(String)} for a notice about performance.
 	 */
 	public Integer getAttributeInt(String name) {
 		String v = getAttribute(name);
@@ -152,7 +152,7 @@ public abstract class XmlReader {
 	/**
 	 * Gets the value of the attribute with the given name at this element
 	 * as a float value, or null if not found.
-	 * See {@link #getAttributeValue(String)} for a notice about performance.
+	 * See {@link #getAttribute(String)} for a notice about performance.
 	 */
 	public Float getAttributeFloat(String name) {
 		String v = getAttribute(name);

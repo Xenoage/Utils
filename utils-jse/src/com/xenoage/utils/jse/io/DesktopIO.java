@@ -126,7 +126,7 @@ public class DesktopIO
 	}
 
 	/**
-	 * Like {@link #existsDirectory(String), but with direct return.
+	 * Like {@link #existsDirectory(String)}, but with direct return.
 	 */
 	public boolean existsDirectory(String directory) {
 		File userFile = new File(userDir, directory);
@@ -185,7 +185,7 @@ public class DesktopIO
 	}
 	
 	/**
-	 * Like {@link #openFile(String), but with direct return.
+	 * Like {@link #openFile(String)}, but with direct return.
 	 */
 	public InputStream openFile(String filePath)
 		throws IOException {
@@ -234,7 +234,7 @@ public class DesktopIO
 	}
 
 	/**
-	 * Like {@link #listFilesAsync(String, FileFilter, AsyncCallback), but with direct return.
+	 * Like {@link #listFilesAsync(String, FileFilter, AsyncCallback)}, but with direct return.
 	 */
 	public List<String> listFiles(String directory, FileFilter filter) {
 		FilenameFilter jseFilenameFilter = JseFileUtils.getFilter(filter);
