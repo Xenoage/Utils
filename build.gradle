@@ -44,7 +44,12 @@ project(':utils-pdlib') { dependencies { compile project(':utils-base') } }
 project(':utils-jse') { dependencies { compile project(':utils-base') } }
 project(':utils-serialize') { dependencies { compile project(':utils-jse') } }
 project(':utils-test') { dependencies { compile project(':utils-jse'), project(':utils-pdlib'), project(':utils-serialize') } }
-//utils-gwt is currently not supported by the build script
+
+//utils-gwt dependencies
+project(':utils-gwt') { dependencies {
+	compile project(':utils-base')
+	compile group: 'com.google.gwt', name: 'gwt-user', version: '2.6.1'
+} }
 
 //distribution in multiple jars
 task distDir(type:Copy) {

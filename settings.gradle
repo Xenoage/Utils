@@ -1,1 +1,1 @@
-include "utils-base", "utils-jse", "utils-kernel", "utils-pdlib", "utils-serialize", "utils-test"
+include "utils-base", "utils-gwt", "utils-jse", "utils-kernel", "utils-pdlib", "utils-serialize", "utils-test"
