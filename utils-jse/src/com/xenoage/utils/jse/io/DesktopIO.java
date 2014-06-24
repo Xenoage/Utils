@@ -108,11 +108,15 @@ public class DesktopIO
 		//get first test class name
 		String s = "unknown";
 		int i = 2;
-		while (s != null) {
-			s = platformUtils().getCaller(i).getClassName();
-			if (s.endsWith("Test") || s.endsWith("Try"))
-				break;
-			i++;
+		try {
+			while (s != null) {
+				s = platformUtils().getCaller(i).getClassName();
+				if (s.endsWith("Test") || s.endsWith("Tests") || s.endsWith("Try"))
+					break;
+				i++;
+			}
+		} catch (Exception ex) {
+			s = "unknown";
 		}
 		return new DesktopIO("xenoage/" + s, null, sharedDir);
 	}
