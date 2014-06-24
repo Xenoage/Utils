@@ -5,6 +5,7 @@ import static com.xenoage.utils.collections.CollectionUtils.alist;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.Arrays;
@@ -194,6 +195,8 @@ public class DesktopIO
 	public InputStream openFile(String filePath)
 		throws IOException {
 		File file = findFile(filePath);
+		if (file == null)
+			throw new FileNotFoundException(filePath);
 		return new JseInputStream(new FileInputStream(file));
 	}
 
