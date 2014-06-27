@@ -1,12 +1,10 @@
 package com.xenoage.utils.jse.io;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -87,16 +85,7 @@ public class JseFileUtils {
 	 */
 	public static String readFile(File file) {
 		try {
-			StringBuffer fileData = new StringBuffer(1024);
-			BufferedReader reader = new BufferedReader(new FileReader(file));
-			char[] buf = new char[1024];
-			int numRead = 0;
-			while ((numRead = reader.read(buf)) != -1) {
-				String readData = String.valueOf(buf, 0, numRead);
-				fileData.append(readData);
-			}
-			reader.close();
-			return fileData.toString();
+			return JseStreamUtils.readToString(new FileInputStream(file));
 		} catch (IOException ex) {
 			return null;
 		}

@@ -43,6 +43,9 @@ public class Md5Sum {
     byte[] md5 = md.digest();
     BigInteger bi=new BigInteger(1, md5);
     String ret = bi.toString(16);
+    //fill with leading 0
+    while (ret.length() < 32)
+    	ret = "0" + ret;
     return ret;
 	}
 	
