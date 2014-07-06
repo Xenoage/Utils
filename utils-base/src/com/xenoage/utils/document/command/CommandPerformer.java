@@ -6,6 +6,7 @@ import static com.xenoage.utils.log.Report.remark;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.xenoage.utils.annotations.MaybeNull;
 import com.xenoage.utils.document.Document;
 import com.xenoage.utils.document.exceptions.CancelledException;
 import com.xenoage.utils.document.exceptions.PropertyAlreadySetException;
@@ -20,19 +21,25 @@ import com.xenoage.utils.document.exceptions.UselessException;
  */
 public class CommandPerformer {
 
-	private Document document;
+	@MaybeNull private Document document;
 	private CommandHistory history = new CommandHistory();
 	private List<CommandListener> listeners = new ArrayList<CommandListener>();
 
 
-	public CommandPerformer(Document document) {
+	/**
+	 * Creates a new {@link CommandPerformer}.
+	 * @param document   the {@link Document} this performer is working on.
+	 *                   May be null for an app-wide command performer.
+	 */
+	public CommandPerformer(@MaybeNull Document document) {
 		this.document = document;
 	}
 
 	/**
 	 * Gets the {@link Document} this performer is working on.
+	 * May be null for an app-wide command performer.
 	 */
-	public Document getDocument() {
+	@MaybeNull public Document getDocument() {
 		return document;
 	}
 
