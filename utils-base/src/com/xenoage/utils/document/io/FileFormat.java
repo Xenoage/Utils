@@ -83,6 +83,13 @@ public final class FileFormat<T extends Document> {
 	public FileOutput<T> getOutput() {
 		return output;
 	}
+	
+	/**
+	 * Returns a copy of this {@link FileFormat} with the given input and output class.
+	 */
+	public FileFormat<T> withIO(FileInput<T> input, FileOutput<T> output) {
+		return new FileFormat<T>(id, name, defaultExtension, otherExtensions, input, output);
+	}
 
 	/**
 	 * Gets the file filter description of the format. By default, this
