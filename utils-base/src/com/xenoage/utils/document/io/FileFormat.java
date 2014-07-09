@@ -112,8 +112,9 @@ public final class FileFormat<T extends Document> {
 	 * Returns true, if a file filter dialog would accept the given file.
 	 * By default, directories and files ending with the default extension
 	 * (case insensitive) are accepted.
+	 * @deprecated only needed for Swing
 	 */
-	public boolean isAccepted(File file) {
+	@Deprecated public boolean isAccepted(File file) {
 		String name = file.getName().toLowerCase();
 		return file.isDirectory() || name.endsWith(defaultExtension);
 	}
