@@ -192,7 +192,17 @@ public class DesktopIO
 	/**
 	 * Like {@link #openFile(String)}, but with direct return.
 	 */
-	public InputStream openFile(String filePath)
+	public JseInputStream openFile(File file)
+		throws IOException {
+		if (file == null)
+			throw new FileNotFoundException("file is null");
+		return new JseInputStream(new FileInputStream(file));
+	}
+	
+	/**
+	 * Like {@link #openFile(String)}, but with direct return.
+	 */
+	public JseInputStream openFile(String filePath)
 		throws IOException {
 		File file = findFile(filePath);
 		if (file == null)

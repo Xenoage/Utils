@@ -1,5 +1,6 @@
 package com.xenoage.utils.jse.lang;
 
+import static com.xenoage.utils.NullUtils.notNull;
 import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
 
 import java.io.File;
@@ -9,10 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -36,7 +33,7 @@ public class LanguageInfo {
 	private String id;
 	private String localName;
 	private String internationalName;
-	private ImageIcon flag16;
+	private File flag16;
 
 
 	/**
@@ -63,7 +60,7 @@ public class LanguageInfo {
 			this.localName = XMLReader.text(localName);
 		else
 			this.localName = null;
-		loadFlagImage();
+		findFlagImage();
 	}
 
 	/**
@@ -83,19 +80,16 @@ public class LanguageInfo {
 
 	/**
 	 * Gets the local name of this language file,
-	 * e.g. "Deutsch" or "Français". If not set, null
-	 * is returned. This may be the case if the local
-	 * name and the international name is the same
-	 * (like "English").
+	 * e.g. "Deutsch" or "Français". If not set, the international name is returned.
 	 */
 	public String getLocalName() {
-		return localName;
+		return notNull(localName, internationalName);
 	}
 
 	/**
-	 * Gets the 16px flag icon of this language, or null.
+	 * Gets the 16px flag icon file of this language, or null.
 	 */
-	public Icon getFlag16() {
+	public File getFlag16() {
 		return flag16;
 	}
 
@@ -141,16 +135,12 @@ public class LanguageInfo {
 	}
 
 	/**
-	 * Loads the 16px flag, if there.
+	 * Finds the 16px flag, if there.
 	 */
-	private void loadFlagImage() {
+	private void findFlagImage() {
 		String flagPath = path + "/" + id + "/flag16.png";
 		try {
-			File iconFile = desktopIO().findFile(flagPath);
-			if (iconFile != null)
-				flag16 = new ImageIcon(ImageIO.read(iconFile));
-			else
-				flag16 = null;
+			flag16 = desktopIO().findFile(flagPath);
 		} catch (IOException ex) {
 			flag16 = null;
 		}

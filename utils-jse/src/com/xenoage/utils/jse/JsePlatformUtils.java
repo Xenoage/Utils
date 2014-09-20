@@ -121,7 +121,7 @@ public class JsePlatformUtils
 	 * Convenience method for opening an {@link InputStream} for the file at the given relative path.
 	 * This method is blocking.
 	 */
-	@NonNull public InputStream openFile(String filePath)
+	@NonNull public JseInputStream openFile(String filePath)
 		throws IOException {
 		return desktopIO().openFile(filePath);
 	}
