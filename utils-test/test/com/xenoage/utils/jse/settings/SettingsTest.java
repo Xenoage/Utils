@@ -11,7 +11,6 @@ import java.io.File;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.xenoage.utils.jse.io.DesktopIO;
 import com.xenoage.utils.log.Log;
 
 /**
