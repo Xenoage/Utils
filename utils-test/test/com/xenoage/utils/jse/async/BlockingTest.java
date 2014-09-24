@@ -1,17 +1,17 @@
 package com.xenoage.utils.jse.async;
 
-import static com.xenoage.utils.jse.async.Blocking.blocking;
+import static com.xenoage.utils.jse.async.Sync.sync;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import com.xenoage.utils.async.AsyncCallback;
+import com.xenoage.utils.async.AsyncResult;
 import com.xenoage.utils.async.AsyncProducer;
 
 /**
- * Tests for {@link Blocking}.
+ * Tests for {@link Sync}.
  * 
  * @author Andreas Wenger
  */
@@ -34,7 +34,7 @@ public class BlockingTest {
 			this.duration = duration;
 		}
 
-		@Override public void produce(AsyncCallback<Integer> result) {
+		@Override public void produce(AsyncResult<Integer> result) {
 			try {
 				Thread.sleep(duration);
 			} catch (InterruptedException e) {
@@ -51,7 +51,7 @@ public class BlockingTest {
 		//test sqrt(25). at least <duration> ms required.
 		long time = System.currentTimeMillis();
 		try {
-			int result = blocking(new Sqrt(25, duration));
+			int result = sync(new Sqrt(25, duration));
 			assertEquals(5, result);
 			assertTrue(System.currentTimeMillis() - time >= 500);
 		} catch (Exception ex) {
@@ -60,13 +60,13 @@ public class BlockingTest {
 		//test sqrt(-1). must fail.
 		time = System.currentTimeMillis();
 		try {
-			blocking(new Sqrt(-1, duration));
+			sync(new Sqrt(-1, duration));
 			fail();
 		} catch (Exception ex) {
 		}
 		//test very fast computation
 		try {
-			int result = blocking(new Sqrt(16, 0));
+			int result = sync(new Sqrt(16, 0));
 			assertEquals(4, result);
 		} catch (Exception ex) {
 			fail();

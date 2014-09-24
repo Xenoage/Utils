@@ -8,6 +8,6 @@ package com.xenoage.utils.async;
  */
 public interface AsyncProducer<T> {
 	
-	public void produce(AsyncCallback<T> result);
+	public void produce(AsyncResult<T> result);
 
 }

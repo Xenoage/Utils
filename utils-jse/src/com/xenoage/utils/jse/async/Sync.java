@@ -1,7 +1,7 @@
 package com.xenoage.utils.jse.async;
 
-import com.xenoage.utils.async.AsyncCallback;
 import com.xenoage.utils.async.AsyncProducer;
+import com.xenoage.utils.async.AsyncResult;
 
 /**
  * This class allows to wrap asynchronous methods into
@@ -9,10 +9,10 @@ import com.xenoage.utils.async.AsyncProducer;
  * 
  * @author Andreas Wenger
  */
-public class Blocking {
+public class Sync {
 	
-	private static class AsyncResult<T> {
-		public Object sync = new Object();
+	private static class State<T> {
+		public Object lock = new Object();
 		public boolean finished = false;
 		public T data = null;
 		public Exception exception = null;
@@ -22,44 +22,44 @@ public class Blocking {
 	 * Runs the given {@link AsyncProducer} and waits for the result.
 	 * The result is returned or an exception is thrown.
 	 */
-	public static <T> T blocking(AsyncProducer<T> producer)
+	public static <T> T sync(AsyncProducer<T> producer)
 		throws Exception {
 		//start async production
-		final AsyncResult<T> result = new AsyncResult<T>();
-		producer.produce(new AsyncCallback<T>() {
-
+		final State<T> state = new State<T>();
+		producer.produce(new AsyncResult<T>() {
+	
 			@Override public void onSuccess(T data) {
-				result.data = data;
-				synchronized (result.sync) {
-					result.sync.notify();
-					result.finished = true;
+				state.data = data;
+				synchronized (state.lock) {
+					state.lock.notify();
+					state.finished = true;
 				}
 			}
-
+	
 			@Override public void onFailure(Exception ex) {
-				result.exception = ex;
-				synchronized (result.sync) {
-					result.sync.notify();
-					result.finished = true;
+				state.exception = ex;
+				synchronized (state.lock) {
+					state.lock.notify();
+					state.finished = true;
 				}
 			}
 		});
 		//wait for async production to finish
-		synchronized (result.sync) {
+		synchronized (state.lock) {
 			try {
 				//if the producer was faster then the main thread, we would
 				//wait forever, so we use an additional boolean variable
-				if (false == result.finished)
-					result.sync.wait();
+				if (false == state.finished)
+					state.lock.wait();
 			} catch (InterruptedException ex) {
 				throw ex;
 			}
 		}
 		//throw exception or return result
-		if (result.exception != null)
-			throw result.exception;
+		if (state.exception != null)
+			throw state.exception;
 		else
-			return result.data;
+			return state.data;
 	}
 
 }

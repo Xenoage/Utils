@@ -7,7 +7,7 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
-import com.xenoage.utils.async.AsyncCallback;
+import com.xenoage.utils.async.AsyncResult;
 import com.xenoage.utils.io.InputStream;
 
 /**
@@ -28,7 +28,7 @@ public class GwtInputStream
 	 * Opens the given file asynchronously.
 	 * The given callback methods are used to indicate success or failure.
 	 */
-	public static void open(String file, final AsyncCallback<InputStream> callback) {
+	public static void open(String file, final AsyncResult<InputStream> callback) {
 		try {
 			new RequestBuilder(RequestBuilder.GET, file).sendRequest("", new RequestCallback() {
 

@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.xenoage.utils.annotations.NonNull;
-import com.xenoage.utils.async.AsyncCallback;
+import com.xenoage.utils.async.AsyncResult;
 import com.xenoage.utils.font.TextMeasurer;
 import com.xenoage.utils.io.FilesystemInput;
 import com.xenoage.utils.io.InputStream;
@@ -90,7 +90,7 @@ public abstract class PlatformUtils {
 	 * Only asynchronous file reading is supported by all platforms. Specific platform implementations
 	 * may provide also blocking methods for file reading.
 	 */
-	@NonNull public abstract void openFileAsync(String filePath, AsyncCallback<InputStream> callback);
+	@NonNull public abstract void openFileAsync(String filePath, AsyncResult<InputStream> result);
 	
 	/**
 	 * Returns an {@link XmlReader} for the given {@link InputStream} for this platform.

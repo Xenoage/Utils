@@ -2,7 +2,7 @@ package com.xenoage.utils.io;
 
 import java.util.List;
 
-import com.xenoage.utils.async.AsyncCallback;
+import com.xenoage.utils.async.AsyncResult;
 
 /**
  * Interface for reading from filesystems.
@@ -27,35 +27,35 @@ public interface FilesystemInput {
 	/**
 	 * Yields true, when the given file exists, otherwise false.
 	 */
-	public void existsFileAsync(String filepath, AsyncCallback<Boolean> exists);
+	public void existsFileAsync(String filepath, AsyncResult<Boolean> exists);
 
 	/**
 	 * Yields true, when the given directory exists, otherwise false.
 	 */
-	public void existsDirectoryAsync(String directory, AsyncCallback<Boolean> exists);
+	public void existsDirectoryAsync(String directory, AsyncResult<Boolean> exists);
 
 	/**
 	 * Finds and yields the files in the given directory.
 	 * If nothing is found, an empty list is yielded.
 	 */
-	public void listFilesAsync(String directory, AsyncCallback<List<String>> files);
+	public void listFilesAsync(String directory, AsyncResult<List<String>> files);
 	
 	/**
 	 * Finds and yields the files in the given directory
 	 * matching the given file filter.
 	 * If nothing is found, an empty list is yielded.
 	 */
-	public void listFilesAsync(String directory, FileFilter filter, AsyncCallback<List<String>> files);
+	public void listFilesAsync(String directory, FileFilter filter, AsyncResult<List<String>> files);
 
 	/**
 	 * Finds and yields the directories in the given directory.
 	 * If nothing is found, an empty list is yielded.
 	 */
-	public void listDirectoriesAsync(String directory, AsyncCallback<List<String>> directories);
+	public void listDirectoriesAsync(String directory, AsyncResult<List<String>> directories);
 	
 	/**
 	 * Yields an input stream for the file at the given path.
 	 */
-	public void openFileAsync(String filepath, AsyncCallback<InputStream> inputStream);
+	public void openFileAsync(String filepath, AsyncResult<InputStream> inputStream);
 
 }

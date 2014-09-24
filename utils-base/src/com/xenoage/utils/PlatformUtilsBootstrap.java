@@ -1,7 +1,7 @@
 package com.xenoage.utils;
 
 /**
- * This class tries init the {@link PlatformUtils} automatically.
+ * This class tries to init the {@link PlatformUtils} automatically.
  * 
  * Therefor it loads the class <code>{@value #bootstrapClassName}</code>
  * and call its <code>init</code> method. If not successfull, nothing
