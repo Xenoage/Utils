@@ -139,4 +139,8 @@ public class JsePlatformUtils
 		return new JseZipReader(inputStream);
 	}
 
+	@Override public void exit(Throwable ex) {
+		System.exit(1);
+	}
+
 }

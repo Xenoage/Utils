@@ -1,5 +1,6 @@
 package com.xenoage.utils.error;
 
+import static com.xenoage.utils.PlatformUtils.platformUtils;
 import static com.xenoage.utils.log.Log.log;
 
 import com.xenoage.utils.log.Level;
@@ -45,7 +46,7 @@ public class BasicErrorProcessing
 	 */
 	protected void handleError(Report report) {
 		if (report.level == Level.Fatal)
-			System.exit(1);
+			platformUtils().exit(report.error);
 	}
 
 }

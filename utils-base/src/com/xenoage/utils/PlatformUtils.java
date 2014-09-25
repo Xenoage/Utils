@@ -110,4 +110,10 @@ public abstract class PlatformUtils {
 	@NonNull public abstract ZipReader createZipReader(InputStream inputStream)
 		throws IOException;
 	
+	/**
+	 * Exits the program immediately because of an error (like System.exit(1) in the JRE).
+	 * @param error  the error with more information, or null
+	 */
+	public abstract void exit(Throwable error);
+	
 }

@@ -8,8 +8,6 @@ package com.xenoage.utils.io;
  * @author Andreas Wenger
  */
 public interface File {
-	
-	//TODO: add more methods
 
 	/**
 	 * Returns the name of the file or directory denoted by this abstract pathname.

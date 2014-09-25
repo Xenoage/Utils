@@ -103,4 +103,9 @@ public class GwtPlatformUtils
 		return null;
 	}
 
+	@Override public void exit(Throwable ex) {
+		//we throw an error, to stop further execution immediately
+		throw new Error("Fatal error", ex);
+	}
+
 }
