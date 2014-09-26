@@ -1,7 +1,6 @@
 package com.xenoage.utils.gwt.io;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.xenoage.utils.async.AsyncResult;
