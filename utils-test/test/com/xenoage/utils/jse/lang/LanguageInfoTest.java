@@ -1,6 +1,6 @@
 package com.xenoage.utils.jse.lang;
 
-import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
+import static com.xenoage.utils.jse.JsePlatformUtils.io;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -32,7 +32,7 @@ public class LanguageInfoTest {
 	@Test public void getAvailableLanguages()
 		throws IOException {
 		//all folders from language pack folder must be returned
-		List<String> folders = desktopIO().listDirectories(LangManager.defaultLangPath);
+		List<String> folders = io().listDirectories(LangManager.defaultLangPath);
 		if (folders.size() == 0)
 			fail("Error in test setup: No language found");
 		assertEquals(folders.size(), langs.size());

@@ -5,7 +5,7 @@ import static com.xenoage.utils.collections.CollectionUtils.map;
 import static com.xenoage.utils.io.FileFilters.orFilter;
 import static com.xenoage.utils.io.FileFilters.poFilter;
 import static com.xenoage.utils.io.FileFilters.xmlFilter;
-import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
+import static com.xenoage.utils.jse.JsePlatformUtils.io;
 import static com.xenoage.utils.log.Log.log;
 import static com.xenoage.utils.log.Report.remark;
 import static com.xenoage.utils.log.Report.warning;
@@ -24,7 +24,7 @@ import java.util.Map.Entry;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.xenoage.utils.jse.io.DesktopIO;
+import com.xenoage.utils.jse.io.JseIO;
 import com.xenoage.utils.jse.xml.XMLReader;
 import com.xenoage.utils.kernel.Tuple2;
 import com.xenoage.utils.lang.Lang;
@@ -46,7 +46,7 @@ import com.xenoage.utils.lang.Language;
  * but requires the usage of <code>msgctxt</code> for each entry, which is used as the
  * vocabulary key. The <code>msgid</code> is ignored and is only useful for human translators.
  * 
- * This class uses the {@link DesktopIO}, which must be initialized before.
+ * This class uses the {@link JseIO}, which must be initialized before.
  * 
  * @author Andreas Wenger
  */
@@ -64,11 +64,11 @@ public class LanguageReader {
 
 		//check if language exists
 		String dir = basePath + "/" + id;
-		if (false == desktopIO().existsFile(dir + "/id.xml"))
+		if (false == io().existsFile(dir + "/id.xml"))
 			throw new FileNotFoundException("Language " + id + " does not exist");
 		
 		//locate vocabulary files
-		List<String> langFiles = desktopIO().listFiles(dir, orFilter(xmlFilter, poFilter));
+		List<String> langFiles = io().listFiles(dir, orFilter(xmlFilter, poFilter));
 		langFiles.remove("id.xml");
 
 		//load entries
@@ -77,7 +77,7 @@ public class LanguageReader {
 		int entriesOverwrittenCount = 0;
 		
 		for (String langFileName : langFiles) {
-			File langFile = desktopIO().findFile(dir + "/" + langFileName);
+			File langFile = io().findFile(dir + "/" + langFileName);
 			//read XML or PO file
 			HashMap<String, String> fileEntries = null;
 			if (langFile.getName().endsWith(".po")) {

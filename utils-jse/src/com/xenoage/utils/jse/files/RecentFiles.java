@@ -1,6 +1,6 @@
 package com.xenoage.utils.jse.files;
 
-import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
+import static com.xenoage.utils.jse.JsePlatformUtils.io;
 import static com.xenoage.utils.log.Log.log;
 import static com.xenoage.utils.log.Report.warning;
 
@@ -11,7 +11,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 
 import com.xenoage.utils.jse.collections.WeakList;
-import com.xenoage.utils.jse.io.DesktopIO;
+import com.xenoage.utils.jse.io.JseIO;
 import com.xenoage.utils.jse.io.JseFileUtils;
 
 /**
@@ -21,7 +21,7 @@ import com.xenoage.utils.jse.io.JseFileUtils;
  * are listed, other ones are automatically removed.
  * 
  * Listeners can be registered that are notified when the list changes.
- * This class uses the {@link DesktopIO}, which must be initialized before.
+ * This class uses the {@link JseIO}, which must be initialized before.
  * 
  * @author Andreas Wenger
  */
@@ -41,7 +41,7 @@ public class RecentFiles {
 		ArrayList<File> ret = new ArrayList<File>(maxEntries);
 		File file = null;
 		try {
-			file = desktopIO().findFile(filePath);
+			file = io().findFile(filePath);
 		} catch (IOException ex) {
 			log(warning(ex));
 		}
@@ -77,7 +77,7 @@ public class RecentFiles {
 			files.remove(files.size() - 1);
 		//save list
 		try {
-			Writer writer = new FileWriter(desktopIO().createFile(filePath));
+			Writer writer = new FileWriter(io().createFile(filePath));
 			for (File f : files) {
 				writer.append(f.getAbsolutePath() + "\n");
 			}

@@ -1,13 +1,13 @@
 package com.xenoage.utils.jse.log;
 
-import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
+import static com.xenoage.utils.jse.JsePlatformUtils.io;
 import static com.xenoage.utils.log.Level.Remark;
 
 import java.io.PrintStream;
 import java.text.DateFormat;
 import java.util.Date;
 
-import com.xenoage.utils.jse.io.DesktopIO;
+import com.xenoage.utils.jse.io.JseIO;
 import com.xenoage.utils.log.Level;
 import com.xenoage.utils.log.LogProcessing;
 import com.xenoage.utils.log.Report;
@@ -15,7 +15,7 @@ import com.xenoage.utils.log.Report;
 /**
  * Logging class for desktop applications.
  * 
- * This class uses the {@link DesktopIO}, which must be initialized before.
+ * This class uses the {@link JseIO}, which must be initialized before.
  * 
  * @author Andreas Wenger
  */
@@ -41,7 +41,7 @@ public class DesktopLogProcessing
 	public DesktopLogProcessing(String logFileName, String appNameAndVersion) {
 		try {
 			DesktopLogProcessing.logFileName = logFileName;
-			writer = new PrintStream(desktopIO().createFile(logFileName));
+			writer = new PrintStream(io().createFile(logFileName));
 			//start message
 			println(Remark, "Logging started for: " + appNameAndVersion);
 			//os

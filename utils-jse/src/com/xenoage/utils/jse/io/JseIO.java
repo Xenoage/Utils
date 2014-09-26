@@ -42,11 +42,11 @@ import com.xenoage.utils.jse.JsePlatformUtils;
  * to replace some provided files with own ones, without destroying
  * the original installation.
  * 
- * Use {@link JsePlatformUtils#desktopIO()} to get an instance of this class.
+ * Use {@link JsePlatformUtils#io()} to get an instance of this class.
  *
  * @author Andreas Wenger
  */
-public class DesktopIO
+public class JseIO
 	implements FilesystemInput {
 
 	private File userDir;
@@ -55,13 +55,13 @@ public class DesktopIO
 
 	
 	/**
-	 * Creates a {@link DesktopIO}.
+	 * Creates a {@link JseIO}.
 	 * When the directory "../shared" or "shared" exists, it is used as the shared directory.
 	 * @param programName  Name of the program. An user directory for this program
 	 *                     will be created if there is none. If null, no directory is
 	 *                     created and the working directory is used as the user directory.
 	 */
-	public DesktopIO(String programName) {
+	public JseIO(String programName) {
 		sharedDir = new File("../shared");
 		if (!sharedDir.exists())
 			sharedDir = new File("shared");
@@ -71,14 +71,14 @@ public class DesktopIO
 	}
 
 	/**
-	 * Creates a {@link DesktopIO}.
+	 * Creates a {@link JseIO}.
 	 * @param programName  Name of the program. An user directory for this program
 	 *                     will be created if there is none. If null, no directory is
 	 *                     created and the working directory is used as the user directory.
 	 * @param systemDir    The custom system directory. If null, the working directory is used
 	 * @param sharedDir    An additional directory with shared files. may be null.
 	 */
-	public DesktopIO(String programName, File systemDir, File sharedDir) {
+	public JseIO(String programName, File systemDir, File sharedDir) {
 		init(programName, systemDir, sharedDir);
 	}
 
@@ -97,12 +97,12 @@ public class DesktopIO
 	}
 
 	/**
-	 * Creates a {@link DesktopIO} for testing (e.g. unit tests).
+	 * Creates a {@link JseIO} for testing (e.g. unit tests).
 	 * The program name is composed of "xenoage" and the name of the latest calling class
 	 * ending with "Test" or "Try" (otherwise "unknown").
 	 * When the directory "../shared" exists, it is used as the shared directory.
 	 */
-	public static DesktopIO createTestIO() {
+	public static JseIO createTestIO() {
 		File sharedDir = new File("../shared");
 		if (!sharedDir.exists())
 			sharedDir = null;
@@ -119,7 +119,7 @@ public class DesktopIO
 		} catch (Exception ex) {
 			s = "unknown";
 		}
-		return new DesktopIO("xenoage/" + s, null, sharedDir);
+		return new JseIO("xenoage/" + s, null, sharedDir);
 	}
 
 	/**

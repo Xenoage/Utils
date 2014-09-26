@@ -16,7 +16,7 @@ import com.xenoage.utils.io.InputStream;
 import com.xenoage.utils.io.OutputStream;
 import com.xenoage.utils.io.ZipReader;
 import com.xenoage.utils.jse.font.AwtTextMeasurer;
-import com.xenoage.utils.jse.io.DesktopIO;
+import com.xenoage.utils.jse.io.JseIO;
 import com.xenoage.utils.jse.io.JseInputStream;
 import com.xenoage.utils.jse.io.JseOutputStream;
 import com.xenoage.utils.jse.io.JseZipReader;
@@ -35,7 +35,7 @@ public class JsePlatformUtils
 
 	private static JsePlatformUtils instance = null;
 
-	private DesktopIO desktopIO = null;
+	private JseIO io = null;
 	private AwtTextMeasurer textMeasurer = new AwtTextMeasurer();
 	
 	/**
@@ -55,30 +55,30 @@ public class JsePlatformUtils
 	 */
 	public static void init(String programName) {
 		instance = new JsePlatformUtils();
-		instance.desktopIO = new DesktopIO(programName);
+		instance.io = new JseIO(programName);
 		PlatformUtils.init(instance);
 	}
 	
 	/**
 	 * Initializes the {@link PlatformUtils} class with an instance of {@link JsePlatformUtils}
 	 * for testing (e.g. unit tests).
-	 * See {@link DesktopIO#createTestIO()} for details about the filesystem.
+	 * See {@link JseIO#createTestIO()} for details about the filesystem.
 	 */
 	public static void initForTest() {
 		instance = new JsePlatformUtils();
-		instance.desktopIO = DesktopIO.createTestIO();
+		instance.io = JseIO.createTestIO();
 		PlatformUtils.init(instance);
 	}
 	
 	/**
-	 * Gets the {@link DesktopIO} instance.
+	 * Gets the {@link JseIO} instance.
 	 * If the {@link JsePlatformUtils} are not initialized yet,
 	 * they are initialized for testing (e.g. unit tests).
 	 */
-	public static DesktopIO desktopIO() {
+	public static JseIO io() {
 		if (instance == null)
 			initForTest();
-		return instance.desktopIO;
+		return instance.io;
 	}
 
 	@Override public List<StackTraceElement> getCurrentStackTrace() {
@@ -104,8 +104,8 @@ public class JsePlatformUtils
 		return textMeasurer;
 	}
 	
-	@Override public DesktopIO getFilesystemInput() {
-		return desktopIO;
+	@Override public JseIO getFilesystemInput() {
+		return io;
 	}
 
 	@Override public void openFileAsync(String filePath, AsyncResult<InputStream> callback) {
@@ -123,7 +123,7 @@ public class JsePlatformUtils
 	 */
 	@NonNull public JseInputStream openFile(String filePath)
 		throws IOException {
-		return desktopIO().openFile(filePath);
+		return io().openFile(filePath);
 	}
 
 	@Override public XmlReader createXmlReader(InputStream inputStream) {

@@ -1,6 +1,6 @@
 package com.xenoage.utils.jse;
 
-import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
+import static com.xenoage.utils.jse.JsePlatformUtils.io;
 
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
@@ -14,12 +14,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-import com.xenoage.utils.jse.io.DesktopIO;
+import com.xenoage.utils.jse.io.JseIO;
 
 /**
  * Useful methods to work with images.
  * 
- * This class uses the {@link DesktopIO}, which must be initialized before.
+ * This class uses the {@link JseIO}, which must be initialized before.
  * 
  * @author Andreas Wenger
  */
@@ -43,7 +43,7 @@ public class ImageUtils {
 	 */
 	public static Image imageOrNull(String filepath) {
 		try {
-			File file = desktopIO().findFile(filepath);
+			File file = io().findFile(filepath);
 			if (file == null)
 				return null;
 			return ImageIO.read(file);

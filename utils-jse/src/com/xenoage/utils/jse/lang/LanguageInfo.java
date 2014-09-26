@@ -1,7 +1,7 @@
 package com.xenoage.utils.jse.lang;
 
 import static com.xenoage.utils.NullUtils.notNull;
-import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
+import static com.xenoage.utils.jse.JsePlatformUtils.io;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,7 +14,7 @@ import java.util.Locale;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.xenoage.utils.jse.io.DesktopIO;
+import com.xenoage.utils.jse.io.JseIO;
 import com.xenoage.utils.jse.xml.XMLReader;
 
 /**
@@ -23,7 +23,7 @@ import com.xenoage.utils.jse.xml.XMLReader;
  * For example, this may be needed in a desktop application for displaying
  * the available languages in a menu.
  * 
- * This class uses the {@link DesktopIO}, which must be initialized before.
+ * This class uses the {@link JseIO}, which must be initialized before.
  *
  * @author Andreas Wenger
  */
@@ -45,7 +45,7 @@ public class LanguageInfo {
 		throws Exception {
 		this.path = path;
 		this.id = id;
-		File file = desktopIO().findFile(path + "/" + id + "/id.xml");
+		File file = io().findFile(path + "/" + id + "/id.xml");
 		if (file == null)
 			throw new FileNotFoundException("id.xml not found for language " + id);
 		Document doc = XMLReader.readFile(new FileInputStream(file));
@@ -100,7 +100,7 @@ public class LanguageInfo {
 	public static List<LanguageInfo> getAvailableLanguages(String path)
 		throws Exception {
 		ArrayList<LanguageInfo> ret = new ArrayList<LanguageInfo>();
-		List<String> langs = desktopIO().listDirectories(path);
+		List<String> langs = io().listDirectories(path);
 		if (langs.size() < 1) {
 			throw new Exception("No language pack installed!");
 		}
@@ -140,7 +140,7 @@ public class LanguageInfo {
 	private void findFlagImage() {
 		String flagPath = path + "/" + id + "/flag16.png";
 		try {
-			flag16 = desktopIO().findFile(flagPath);
+			flag16 = io().findFile(flagPath);
 		} catch (IOException ex) {
 			flag16 = null;
 		}

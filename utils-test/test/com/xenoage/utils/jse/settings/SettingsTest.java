@@ -1,6 +1,6 @@
 package com.xenoage.utils.jse.settings;
 
-import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
+import static com.xenoage.utils.jse.JsePlatformUtils.io;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -91,16 +91,16 @@ public class SettingsTest {
 	 */
 	@Test public void save() {
 		String file = directory + "/temp.settings";
-		desktopIO().deleteFile(file, true);
+		io().deleteFile(file, true);
 		settings.setSetting("a.new.key", "temp", "a newly created value");
 		//file may not exist yet
-		assertFalse(desktopIO().existsFile(file));
+		assertFalse(io().existsFile(file));
 		settings.setSetting("a.new.key.2", "temp", "a second value");
 		//file may still not exist
-		assertFalse(desktopIO().existsFile(file));
+		assertFalse(io().existsFile(file));
 		settings.save("temp");
 		//file must exist now
-		assertTrue(desktopIO().existsFile(file));
+		assertTrue(io().existsFile(file));
 		//delete the temp file
 		new File(directory + "/temp.settings").delete();
 	}

@@ -1,6 +1,6 @@
 package com.xenoage.utils.jse;
 
-import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
+import static com.xenoage.utils.jse.JsePlatformUtils.io;
 import static com.xenoage.utils.log.Log.log;
 import static com.xenoage.utils.log.Report.warning;
 
@@ -12,13 +12,13 @@ import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-import com.xenoage.utils.jse.io.DesktopIO;
+import com.xenoage.utils.jse.io.JseIO;
 
 
 /**
  * This class loads icons from a given directory.
  * 
- * This class uses the {@link DesktopIO}, which must be initialized before.
+ * This class uses the {@link JseIO}, which must be initialized before.
  * 
  * @author Andreas Wenger
  */
@@ -57,7 +57,7 @@ public class IconReader {
 	 */
 	public static BufferedImage readImageFromPath(String path) {
 		try {
-			return ImageIO.read(desktopIO().findFile(path));
+			return ImageIO.read(io().findFile(path));
 		} catch (IOException ex) {
 			log(warning("Could not read icon", ex));
 			return null;

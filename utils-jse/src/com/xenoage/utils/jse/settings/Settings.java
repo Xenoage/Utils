@@ -1,6 +1,6 @@
 package com.xenoage.utils.jse.settings;
 
-import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
+import static com.xenoage.utils.jse.JsePlatformUtils.io;
 import static com.xenoage.utils.log.Log.log;
 import static com.xenoage.utils.log.Report.error;
 import static com.xenoage.utils.log.Report.warning;
@@ -19,7 +19,7 @@ import java.util.Properties;
 import com.xenoage.utils.Parser;
 import com.xenoage.utils.error.BasicErrorProcessing;
 import com.xenoage.utils.io.FileUtils;
-import com.xenoage.utils.jse.io.DesktopIO;
+import com.xenoage.utils.jse.io.JseIO;
 
 /**
  * This class manages simple configuration data, which is String values
@@ -28,7 +28,7 @@ import com.xenoage.utils.jse.io.DesktopIO;
  * The values are stored in .settings files, which are XML files in the format
  * described at http://java.sun.com/dtd/properties.dtd
  * 
- * This class uses the {@link DesktopIO}, which must be initialized before.
+ * This class uses the {@link JseIO}, which must be initialized before.
  * 
  * @author Andreas Wenger
  * @author Uli Teschemacher
@@ -80,7 +80,7 @@ public class Settings {
 		// load the settings from the .settings files
 		this.files = new Hashtable<String, Properties>();
 		List<String> fileList = null;
-			fileList = desktopIO().listFiles(directory);
+			fileList = io().listFiles(directory);
 		for (String file : fileList) {
 			String name = file;
 			if (name.endsWith(".settings")) {
@@ -151,7 +151,7 @@ public class Settings {
 		if (p != null) {
 			try {
 				OutputStream out = new FileOutputStream(
-					desktopIO().createFile(this.directory + "/" + file + ".settings"));
+					io().createFile(this.directory + "/" + file + ".settings"));
 				p.storeToXML(out, "Changed " + new Date());
 				out.close();
 			} catch (IOException ex) {
@@ -166,7 +166,7 @@ public class Settings {
 	public void reload(String file) {
 		try {
 			Properties p = new Properties();
-			p.loadFromXML(new FileInputStream(desktopIO().findFile(directory + "/" + file + ".settings")));
+			p.loadFromXML(new FileInputStream(io().findFile(directory + "/" + file + ".settings")));
 			files.put(file, p);
 		} catch (Exception ex) {
 			log(warning("Could not load settings from file \"" + file + "\"", ex));
