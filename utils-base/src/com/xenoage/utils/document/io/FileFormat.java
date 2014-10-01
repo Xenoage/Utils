@@ -1,7 +1,6 @@
 package com.xenoage.utils.document.io;
 
 import com.xenoage.utils.document.Document;
-import com.xenoage.utils.io.File;
 
 /**
  * General information on a file format for a document.
@@ -106,17 +105,6 @@ public final class FileFormat<T extends Document> {
 		}
 		ret.append(")");
 		return ret.toString();
-	}
-
-	/**
-	 * Returns true, if a file filter dialog would accept the given file.
-	 * By default, directories and files ending with the default extension
-	 * (case insensitive) are accepted.
-	 * @deprecated only needed for Swing
-	 */
-	@Deprecated public boolean isAccepted(File file) {
-		String name = file.getName().toLowerCase();
-		return file.isDirectory() || name.endsWith(defaultExtension);
 	}
 
 }

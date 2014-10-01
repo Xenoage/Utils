@@ -9,24 +9,12 @@ package com.xenoage.utils.io;
 public class FileFilters {
 
 	/**
-	 * A filter for directories.
-	 * Directories beginning with a "." are ignored
-	 * (e.g. ".svn").
-	 */
-	public static FileFilter directoriesFilter = new FileFilter() {
-
-		@Override public boolean accept(File file) {
-			return file.isDirectory() && !file.getName().startsWith(".");
-		}
-	};
-
-	/**
 	 * A filter for files with ".java" ending.
 	 */
 	public static FileFilter javaFilter = new FileFilter() {
 
-		@Override public boolean accept(File file) {
-			return file.getName().toLowerCase().endsWith(".java");
+		@Override public boolean accept(String filePath) {
+			return filePath.toLowerCase().endsWith(".java");
 		}
 	};
 
@@ -35,8 +23,8 @@ public class FileFilters {
 	 */
 	public static FileFilter poFilter = new FileFilter() {
 
-		@Override public boolean accept(File file) {
-			return file.getName().toLowerCase().endsWith(".po");
+		@Override public boolean accept(String filePath) {
+			return filePath.toLowerCase().endsWith(".po");
 		}
 	};
 
@@ -45,8 +33,8 @@ public class FileFilters {
 	 */
 	public static FileFilter xmlFilter = new FileFilter() {
 
-		@Override public boolean accept(File file) {
-			return file.getName().toLowerCase().endsWith(".xml");
+		@Override public boolean accept(String filePath) {
+			return filePath.toLowerCase().endsWith(".xml");
 		}
 	};
 
@@ -55,8 +43,8 @@ public class FileFilters {
 	 */
 	public static FileFilter svgFilter = new FileFilter() {
 
-		@Override public boolean accept(File file) {
-			return file.getName().toLowerCase().endsWith(".svg");
+		@Override public boolean accept(String filePath) {
+			return filePath.toLowerCase().endsWith(".svg");
 		}
 	};
 
@@ -65,8 +53,8 @@ public class FileFilters {
 	 */
 	public static FileFilter ttfFilter = new FileFilter() {
 
-		@Override public boolean accept(File file) {
-			return file.getName().toLowerCase().endsWith(".ttf");
+		@Override public boolean accept(String filePath) {
+			return filePath.toLowerCase().endsWith(".ttf");
 		}
 	};
 
@@ -78,8 +66,8 @@ public class FileFilters {
 	public static FileFilter extFilter(final String... extensions) {
 		FileFilter ret = new FileFilter() {
 
-			@Override public boolean accept(File file) {
-				String filename = file.getName().toLowerCase();
+			@Override public boolean accept(String filePath) {
+				String filename = filePath.toLowerCase();
 				for (String extension : extensions) {
 					if (filename.endsWith(extension))
 						return true;
@@ -96,9 +84,9 @@ public class FileFilters {
 	public static FileFilter orFilter(final FileFilter... filters) {
 		FileFilter ret = new FileFilter() {
 
-			@Override public boolean accept(File file) {
+			@Override public boolean accept(String filePath) {
 				for (FileFilter filter : filters) {
-					if (filter.accept(file))
+					if (filter.accept(filePath))
 						return true;
 				}
 				return false;

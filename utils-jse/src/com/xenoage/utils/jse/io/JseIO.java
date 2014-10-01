@@ -21,26 +21,34 @@ import com.xenoage.utils.io.InputStream;
 import com.xenoage.utils.jse.JsePlatformUtils;
 
 /**
- * Some useful input/output methods for a desktop application.
+ * Some useful input/output methods for a JSE based application.
  * 
- * A desktop application uses different directories:
+ * The following directories and resources are used:
  * <ul>
- *   <li>The directory where the program is installed (program directory),
+ *   <li>"System directory": The directory where the program is installed (program directory),
  *     also containing the provided data files</li>
- *   <li>The user's custom data and settings directory (user directory)</li>
- *   <li>Optional: a directory where to search for data, which is shared between
+ *   <li>"User directory": The user's custom data and settings directory (user directory)</li>
+ *   <li>"Shared directory": Optional: a directory where to search for data, which is shared between
  *     different programs (shared directory)</li>
+ *   <li>"Bundled resources": Files included in the JAR files on the classpath
  * </ul>
  * 
  * When listing files, all directories are listed sequentially,
- * beginning with the user directory, then the system directory
- * and finally the shared directory (if it exists).
- * When reading files, first the user's directory is read.
+ * beginning with the user directory, then the system directory,
+ * the shared directory (if it exists) and the bundled resources.
+ * 
+ * When reading files, first the user's directory is read,
+ * then the system directory, the shared directory and finally the bundled resources.
  * When writing files, always the user's directory is written to.
  * 
  * This allows files to be overwritten by individual users, e.g.
  * to replace some provided files with own ones, without destroying
  * the original installation.
+ * 
+ * Since the contents of the JAR files can not be listed out of the box, a UTF-8 text file
+ * ".index" on the classpath is required which lists all relative directory and file paths
+ * within the JAR file(s), one per line. If not existing, files from the
+ * JAR archives can not be listed or read.
  * 
  * Use {@link JsePlatformUtils#io()} to get an instance of this class.
  *

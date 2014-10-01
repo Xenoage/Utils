@@ -11,15 +11,6 @@ public class FileUtils {
 
 	/**
 	 * Gets the name of the file without any extensions
-	 * (ends before the first dot, but a dot on the very
-	 * first position is allowed)
-	 */
-	public static String getNameWithoutExt(File file) {
-		return getNameWithoutExt(file.getName());
-	}
-
-	/**
-	 * Gets the name of the file without any extensions
 	 * The returned name ends before the first dot, but a dot on the very
 	 * first position is allowed. It begins after the last "/" or "\".
 	 */
@@ -83,7 +74,6 @@ public class FileUtils {
 	 * <ul>
 	 * 	<li>replace all backslashes ("\") by forward slashes ("/")</li>
 	 * 	<li>replace double slashes ("//") by single slashes ("/")</li>
-	 * 	<li>removes trailing "/"</li>
 	 * </ul>
 	 */
 	public static String cleanPath(String path) {
@@ -91,9 +81,6 @@ public class FileUtils {
 		path = path.replaceAll("\\\\", "/");
 		//remove double slahes
 		path = path.replaceAll("//", "/");
-		//remove last "/"
-		if (true == path.endsWith("/"))
-			path = path.substring(0, path.length() - 1);
 		return path;
 	}
 }

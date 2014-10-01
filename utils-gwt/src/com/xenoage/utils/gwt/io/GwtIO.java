@@ -91,7 +91,7 @@ public class GwtIO
 	}
 
 	@Override public void listFilesAsync(String directory, AsyncResult<List<String>> files) {
-		String indexPath = FileUtils.cleanPath(directory) + "/" + fileIndex;
+		String indexPath = FileUtils.cleanPath(directory) + fileIndex;
 		indexAsync(indexPath, files);
 	}
 
@@ -104,7 +104,7 @@ public class GwtIO
 				List<String> result = new ArrayList<String>();
 				for (String item : index) {
 					String filename = dir + "/" + item;
-					if (filter.accept(new GwtFile(filename, false)))
+					if (filter.accept(filename))
 						result.add(item);
 				}
 				files.onSuccess(result);
@@ -118,7 +118,7 @@ public class GwtIO
 
 	@Override public void listDirectoriesAsync(String directory,
 		AsyncResult<List<String>> directories) {
-		String indexPath = FileUtils.cleanPath(directory) + "/" + dirIndex;
+		String indexPath = FileUtils.cleanPath(directory) + dirIndex;
 		indexAsync(indexPath, directories);
 	}
 
