@@ -1,11 +1,17 @@
-package com.xenoage.utils.io;
+package com.xenoage.utils.io.index;
 
+import static com.xenoage.utils.collections.CollectionUtils.alist;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
+
+import com.xenoage.utils.io.Directory;
+import com.xenoage.utils.io.File;
+import com.xenoage.utils.io.FilesystemItem;
 
 /**
  * Tests for {@link FilesystemIndex}.
@@ -14,15 +20,21 @@ import org.junit.Test;
  */
 public class FilesystemIndexTest {
 	
-	private FilesystemIndex index = new FilesystemIndex(
-		"rootfile1\n" +
-		"rootfile2\n" +
-		"/folder/\n" +
-		"/folder/file\n" +
-		"folder/subfolder/" +
-		"folder/subfolder/file1\n" +
-		"\\folder\\subfolder//file2\n" +
-		"/folder/secondsubfolder\\");
+	private FilesystemIndex index;
+	
+	@Before public void setup() {
+		List<FilesystemItem> items = alist();
+		IndexedDirectory folder, subfolder;
+		items.add(new IndexedFile("rootfile1", null));
+		items.add(new IndexedFile("rootfile2", null));
+		items.add(folder = new IndexedDirectory("folder"));
+		folder.addChild(new IndexedFile("file", null));
+		folder.addChild(subfolder = new IndexedDirectory("subfolder"));
+		subfolder.addChild(new IndexedFile("file1", null));
+		subfolder.addChild(new IndexedFile("file2", null));
+		folder.addChild(new IndexedDirectory("secondsubfolder"));
+		index = new FilesystemIndex(items);
+	}
 	
 	@Test public void existsFileTest() {
 		//test with and without leading "/"
@@ -56,41 +68,45 @@ public class FilesystemIndexTest {
 
 	@Test public void listFilesTest() {
 		//folder "/"
-		List<String> files = index.listFiles("/");
+		List<File> files = index.listFiles("/");
 		assertEquals(2, files.size());
-		assertTrue(files.contains("rootfile1"));
-		assertTrue(files.contains("rootfile2"));
+		assertTrue(containsItem(files, "rootfile1"));
+		assertTrue(containsItem(files, "rootfile2"));
 		//folder "folder/"
 		files = index.listFiles("folder/");
 		assertEquals(1, files.size());
-		assertTrue(files.contains("file"));
+		assertTrue(containsItem(files, "file"));
 		//folder "folder/subfolder"
 		files = index.listFiles("folder/subfolder/");
 		assertEquals(2, files.size());
-		assertTrue(files.contains("file1"));
-		assertTrue(files.contains("file2"));
+		assertTrue(containsItem(files, "file1"));
+		assertTrue(containsItem(files, "file2"));
 		//folder "folder/secondsubfolder/": empty
-		assertEquals(0, index.listFiles("folder/secondsubfolder/"));
+		assertEquals(0, index.listFiles("folder/secondsubfolder/").size());
 		//non existing folder: empty
-		assertEquals(0, index.listFiles("foo/"));
+		assertEquals(0, index.listFiles("foo/").size());
 	}
 	
 	@Test public void listDirectoriesTest() {
 		//folder "/"
-		List<String> dirs = index.listDirectories("/");
+		List<Directory> dirs = index.listDirectories("/");
 		assertEquals(1, dirs.size());
-		assertTrue(dirs.contains("folder"));
+		assertTrue(containsItem(dirs, "folder"));
 		//folder "folder/"
 		dirs = index.listDirectories("folder/");
 		assertEquals(2, dirs.size());
-		assertTrue(dirs.contains("subfolder"));
-		assertTrue(dirs.contains("secondsubfolder"));
+		assertTrue(containsItem(dirs, "subfolder"));
+		assertTrue(containsItem(dirs, "secondsubfolder"));
 		//folder "folder/subfolder": empty
-		assertEquals(0, index.listDirectories("folder/subfolder/"));
+		assertEquals(0, index.listDirectories("folder/subfolder/").size());
 		//folder "folder/secondsubfolder/": empty
-		assertEquals(0, index.listDirectories("folder/secondsubfolder/"));
+		assertEquals(0, index.listDirectories("folder/secondsubfolder/").size());
 		//non existing folder: empty
-		assertEquals(0, index.listDirectories("foo/"));
+		assertEquals(0, index.listDirectories("foo/").size());
+	}
+	
+	private boolean containsItem(List<? extends FilesystemItem> items, String name) {
+		return items.stream().anyMatch(i -> i.getName().equals(name));
 	}
 
 }

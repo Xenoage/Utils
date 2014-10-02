@@ -21,8 +21,8 @@ public class JseFile
 		return jseFile.getName();
 	}
 
-	@Override public boolean isDirectory() {
-		return jseFile.isDirectory();
+	@Override public Long getSizeInBytes() {
+		return jseFile.getTotalSpace();
 	}
 
 }

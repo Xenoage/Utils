@@ -13,8 +13,8 @@ public class FileFilters {
 	 */
 	public static FileFilter javaFilter = new FileFilter() {
 
-		@Override public boolean accept(String filePath) {
-			return filePath.toLowerCase().endsWith(".java");
+		@Override public boolean accept(File file) {
+			return file.getName().toLowerCase().endsWith(".java");
 		}
 	};
 
@@ -23,8 +23,8 @@ public class FileFilters {
 	 */
 	public static FileFilter poFilter = new FileFilter() {
 
-		@Override public boolean accept(String filePath) {
-			return filePath.toLowerCase().endsWith(".po");
+		@Override public boolean accept(File file) {
+			return file.getName().toLowerCase().endsWith(".po");
 		}
 	};
 
@@ -33,8 +33,8 @@ public class FileFilters {
 	 */
 	public static FileFilter xmlFilter = new FileFilter() {
 
-		@Override public boolean accept(String filePath) {
-			return filePath.toLowerCase().endsWith(".xml");
+		@Override public boolean accept(File file) {
+			return file.getName().toLowerCase().endsWith(".xml");
 		}
 	};
 
@@ -43,8 +43,8 @@ public class FileFilters {
 	 */
 	public static FileFilter svgFilter = new FileFilter() {
 
-		@Override public boolean accept(String filePath) {
-			return filePath.toLowerCase().endsWith(".svg");
+		@Override public boolean accept(File file) {
+			return file.getName().toLowerCase().endsWith(".svg");
 		}
 	};
 
@@ -53,8 +53,8 @@ public class FileFilters {
 	 */
 	public static FileFilter ttfFilter = new FileFilter() {
 
-		@Override public boolean accept(String filePath) {
-			return filePath.toLowerCase().endsWith(".ttf");
+		@Override public boolean accept(File file) {
+			return file.getName().toLowerCase().endsWith(".ttf");
 		}
 	};
 
@@ -66,8 +66,8 @@ public class FileFilters {
 	public static FileFilter extFilter(final String... extensions) {
 		FileFilter ret = new FileFilter() {
 
-			@Override public boolean accept(String filePath) {
-				String filename = filePath.toLowerCase();
+			@Override public boolean accept(File file) {
+				String filename = file.getName().toLowerCase();
 				for (String extension : extensions) {
 					if (filename.endsWith(extension))
 						return true;
@@ -84,9 +84,9 @@ public class FileFilters {
 	public static FileFilter orFilter(final FileFilter... filters) {
 		FileFilter ret = new FileFilter() {
 
-			@Override public boolean accept(String filePath) {
+			@Override public boolean accept(File file) {
 				for (FileFilter filter : filters) {
-					if (filter.accept(filePath))
+					if (filter.accept(file))
 						return true;
 				}
 				return false;

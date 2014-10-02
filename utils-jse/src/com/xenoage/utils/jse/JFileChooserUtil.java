@@ -6,7 +6,6 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 import com.xenoage.utils.document.io.FileFormat;
-import com.xenoage.utils.jse.io.JseFile;
 import com.xenoage.utils.jse.settings.Settings;
 
 /**
@@ -35,10 +34,20 @@ public class JFileChooserUtil {
 			}
 
 			@Override public boolean accept(File f) {
-				return fileFormat.isAccepted(new JseFile(f));
+				return isAccepted(fileFormat, f);
 			}
 		};
 		return ret;
+	}
+	
+	/**
+	 * Returns true, if a file filter dialog would accept the given file.
+	 * By default, directories and files ending with the default extension
+	 * (case insensitive) are accepted.
+	 */
+	private static boolean isAccepted(FileFormat<?> format, File file) {
+		String name = file.getName().toLowerCase();
+		return file.isDirectory() || name.endsWith(format.getDefaultExtension());
 	}
 
 	/**
