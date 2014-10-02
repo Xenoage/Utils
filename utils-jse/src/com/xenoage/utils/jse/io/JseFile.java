@@ -22,7 +22,7 @@ public class JseFile
 	}
 
 	@Override public Long getSizeInBytes() {
-		return jseFile.getTotalSpace();
+		return jseFile.length();
 	}
 
 }
