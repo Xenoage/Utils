@@ -35,6 +35,8 @@ public class FileUtils {
 	 */
 	public static Tuple2<String, String> splitDirectoryAndFilename(String path) {
 		String p = cleanPath(path);
+		if (p.endsWith("/")) //remove trailing "/"
+			p = p.substring(0, p.length() - 1);
 		int endPos = p.lastIndexOf('/');
 		if (endPos > -1) {
 			String dir = p.substring(0, endPos);

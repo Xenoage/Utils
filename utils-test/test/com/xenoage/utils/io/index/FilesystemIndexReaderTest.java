@@ -1,5 +1,7 @@
 package com.xenoage.utils.io.index;
 
+import static com.xenoage.utils.io.index.FilesystemIndexTest.containsItem;
+import static com.xenoage.utils.jse.JsePlatformUtils.jsePlatformUtils;
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.xenoage.utils.io.FilesystemItem;
+import com.xenoage.utils.jse.JsePlatformUtils;
 import com.xenoage.utils.jse.io.JseInputStream;
 
 /**
@@ -19,8 +22,8 @@ public class FilesystemIndexReaderTest {
 	@Test public void test()
 		throws Exception {
 		//read file
-		FilesystemIndex index = new FilesystemIndexReader("").parseFilesystemIndex(new JseInputStream(
-			getClass().getResourceAsStream(getClass().getSimpleName() + ".xml")));
+		FilesystemIndex index = new FilesystemIndexReader("").parseFilesystemIndex(
+			jsePlatformUtils().openFile("data/test/index/FilesystemIndexReaderTest.xml"));
 		//check content
 		List<? extends FilesystemItem> items;
 		assertEquals(0, index.listFiles("/").size());
@@ -37,10 +40,6 @@ public class FilesystemIndexReaderTest {
 		assertEquals(0, (items = index.listDirectories("/dir/deadend")).size());
 		assertEquals(0, index.listFiles("dirempty").size());
 		assertEquals(0, index.listDirectories("dirempty").size());
-	}
-	
-	private boolean containsItem(List<? extends FilesystemItem> items, String name) {
-		return items.stream().anyMatch(i -> i.getName().equals(name));
 	}
 
 }

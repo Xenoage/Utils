@@ -30,13 +30,13 @@ public class FileUtilsTest {
 		//test "1/2/3/"
 		s = "1/2/3/";
 		res = splitDirectoryAndFilename(s);
-		assertEquals("1/2/3/", res.get1());
-		assertEquals("", res.get2());
+		assertEquals("1/2", res.get1());
+		assertEquals("3", res.get2());
 		//test "1/2/3/"
-		s = "1/2/3/";
+		s = "1/2/3";
 		res = splitDirectoryAndFilename(s);
-		assertEquals("1/2/3/", res.get1());
-		assertEquals("", res.get2());
+		assertEquals("1/2", res.get1());
+		assertEquals("3", res.get2());
 		//test "1/2/"
 		s = "1/2/";
 		res = splitDirectoryAndFilename(s);

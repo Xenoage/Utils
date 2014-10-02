@@ -105,8 +105,11 @@ public class FilesystemIndexTest {
 		assertEquals(0, index.listDirectories("foo/").size());
 	}
 	
-	private boolean containsItem(List<? extends FilesystemItem> items, String name) {
-		return items.stream().anyMatch(i -> i.getName().equals(name));
+	public static boolean containsItem(List<? extends FilesystemItem> items, String name) {
+		for (FilesystemItem item : items)
+			if (item.getName().equals(name))
+				return true;
+		return false;
 	}
 
 }
