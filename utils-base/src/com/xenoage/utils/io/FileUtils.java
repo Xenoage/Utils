@@ -1,5 +1,9 @@
 package com.xenoage.utils.io;
 
+import static com.xenoage.utils.collections.CollectionUtils.alist;
+
+import java.util.List;
+
 import com.xenoage.utils.kernel.Tuple2;
 
 /**
@@ -85,4 +89,15 @@ public class FileUtils {
 		path = path.replaceAll("//", "/");
 		return path;
 	}
+	
+	/**
+	 * Gets the names of the given files or directories.
+	 */
+	public static List<String> getNames(List<? extends FilesystemItem> files) {
+		List<String> ret = alist(files.size());
+		for (FilesystemItem file : files)
+			ret.add(file.getName());
+		return ret;
+	}
+	
 }

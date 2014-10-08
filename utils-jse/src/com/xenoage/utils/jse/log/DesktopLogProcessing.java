@@ -7,7 +7,7 @@ import java.io.PrintStream;
 import java.text.DateFormat;
 import java.util.Date;
 
-import com.xenoage.utils.jse.io.JseIO;
+import com.xenoage.utils.jse.io.DesktopIO;
 import com.xenoage.utils.log.Level;
 import com.xenoage.utils.log.LogProcessing;
 import com.xenoage.utils.log.Report;
@@ -15,7 +15,7 @@ import com.xenoage.utils.log.Report;
 /**
  * Logging class for desktop applications.
  * 
- * This class uses the {@link JseIO}, which must be initialized before.
+ * This class uses the {@link DesktopIO}, which must be initialized before.
  * 
  * @author Andreas Wenger
  */

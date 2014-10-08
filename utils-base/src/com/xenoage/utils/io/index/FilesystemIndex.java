@@ -44,8 +44,8 @@ public class FilesystemIndex {
 	/**
 	 * Returns the file at the given path, or null if not found.
 	 */
-	public File findFile(String filepath) {
-		FilesystemItem item = findItem(filepath);
+	public File findFile(String filePath) {
+		FilesystemItem item = findItem(filePath);
 		if (item instanceof File)
 			return (File) item;
 		else
@@ -55,8 +55,8 @@ public class FilesystemIndex {
 	/**
 	 * Returns the directory at the given path, or null if not found.
 	 */
-	public Directory findDirectory(String dirpath) {
-		FilesystemItem item = findItem(dirpath);
+	public Directory findDirectory(String dirPath) {
+		FilesystemItem item = findItem(dirPath);
 		if (item instanceof Directory)
 			return (Directory) item;
 		else
@@ -118,9 +118,9 @@ public class FilesystemIndex {
 	 * Returns the files in the given directory.
 	 * If nothing is found, an empty list is returned.
 	 */
-	public List<File> listFiles(String dirpath) {
+	public List<File> listFiles(String dirPath) {
 		//find items
-		Directory dir = findDirectory(dirpath);
+		Directory dir = findDirectory(dirPath);
 		if (dir == null)
 			return emptyFileList;
 		//select only files
@@ -137,9 +137,9 @@ public class FilesystemIndex {
 	 * If nothing is found, an empty list is returned.
 	 * Only the file names are returned, not their complete paths.
 	 */
-	public List<File> listFiles(String dirpath, FileFilter filter) {
+	public List<File> listFiles(String dirPath, FileFilter filter) {
 		//retrieve unfiltered list
-		List<File> candidates = listFiles(dirpath);
+		List<File> candidates = listFiles(dirPath);
 		//select only files which match
 		List<File> ret = alist();
 		for (File candidate : candidates)
@@ -152,9 +152,9 @@ public class FilesystemIndex {
 	 * Returns the directories in the given directory.
 	 * If nothing is found, an empty list is returned.
 	 */
-	public List<Directory> listDirectories(String dirpath) {
+	public List<Directory> listDirectories(String dirPath) {
 		//find items
-		Directory dir = findDirectory(dirpath);
+		Directory dir = findDirectory(dirPath);
 		if (dir == null)
 			return emptyDirList;
 		//select only directories

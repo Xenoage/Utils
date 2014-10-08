@@ -2,6 +2,7 @@ package com.xenoage.utils.gwt.io;
 
 import static com.xenoage.utils.collections.CollectionUtils.alist;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.xenoage.utils.async.AsyncCallback;
@@ -112,11 +113,15 @@ public class GwtIO
 	}
 	
 	private void loadIndex(final AsyncCallback initialized) {
-		new FilesystemIndexReader(indexFile).produce(new AsyncResult<FilesystemIndex>() {
+		openFileAsync(FilesystemIndex.indexFile, new AsyncResult<InputStream>() {
 
-			@Override public void onSuccess(FilesystemIndex index) {
-				GwtIO.this.index = index;
-				initialized.onSuccess();
+			@Override public void onSuccess(InputStream indexStream) {
+				try {
+					GwtIO.this.index = FilesystemIndexReader.read(indexStream);
+					initialized.onSuccess();
+				} catch (IOException ex) {
+					initialized.onFailure(ex);
+				}
 			}
 
 			@Override public void onFailure(Exception ex) {

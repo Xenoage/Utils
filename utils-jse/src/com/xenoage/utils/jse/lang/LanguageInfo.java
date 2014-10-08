@@ -3,10 +3,7 @@ package com.xenoage.utils.jse.lang;
 import static com.xenoage.utils.NullUtils.notNull;
 import static com.xenoage.utils.jse.JsePlatformUtils.io;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -14,7 +11,7 @@ import java.util.Locale;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.xenoage.utils.jse.io.JseIO;
+import com.xenoage.utils.jse.io.DesktopIO;
 import com.xenoage.utils.jse.xml.XMLReader;
 
 /**
@@ -23,7 +20,7 @@ import com.xenoage.utils.jse.xml.XMLReader;
  * For example, this may be needed in a desktop application for displaying
  * the available languages in a menu.
  * 
- * This class uses the {@link JseIO}, which must be initialized before.
+ * This class uses the {@link DesktopIO}, which must be initialized before.
  *
  * @author Andreas Wenger
  */
@@ -33,22 +30,22 @@ public class LanguageInfo {
 	private String id;
 	private String localName;
 	private String internationalName;
-	private File flag16;
+	private String flag16Path;
 
 
 	/**
 	 * Loads information from the given language pack information file.
-	 * @param path  path to the language pack directory (without trailing slash)
-	 * @param id    id of the language pack
+	 * @param dirPath  path to the language pack directory (without trailing slash)
+	 * @param id       id of the language pack
 	 */
-	public LanguageInfo(String path, String id)
+	public LanguageInfo(String dirPath, String id)
 		throws Exception {
-		this.path = path;
+		this.path = dirPath;
 		this.id = id;
-		File file = io().findFile(path + "/" + id + "/id.xml");
-		if (file == null)
+		String filePath = dirPath + "/" + id + "/id.xml";
+		if (false == io().existsFile(filePath))
 			throw new FileNotFoundException("id.xml not found for language " + id);
-		Document doc = XMLReader.readFile(new FileInputStream(file));
+		Document doc = XMLReader.readFile(io().openFile(filePath));
 		Element root = XMLReader.root(doc);
 		Element intName = XMLReader.element(root, "intname");
 		Element localName = XMLReader.element(root, "localname");
@@ -87,10 +84,10 @@ public class LanguageInfo {
 	}
 
 	/**
-	 * Gets the 16px flag icon file of this language, or null.
+	 * Gets the file path of the 16px flag icon of this language, or null.
 	 */
-	public File getFlag16() {
-		return flag16;
+	public String getFlag16Path() {
+		return flag16Path;
 	}
 
 	/**
@@ -138,12 +135,8 @@ public class LanguageInfo {
 	 * Finds the 16px flag, if there.
 	 */
 	private void findFlagImage() {
-		String flagPath = path + "/" + id + "/flag16.png";
-		try {
-			flag16 = io().findFile(flagPath);
-		} catch (IOException ex) {
-			flag16 = null;
-		}
+		String filePath = path + "/" + id + "/flag16.png";
+		this.flag16Path = io().existsFile(filePath) ? filePath : null;
 	}
 
 }

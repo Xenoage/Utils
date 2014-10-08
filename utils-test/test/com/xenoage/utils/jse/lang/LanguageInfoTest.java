@@ -59,7 +59,7 @@ public class LanguageInfoTest {
 		String errorMsg = "flag16 must be set, because there is a flag16.png";
 		for (LanguageInfo lang : langs) {
 			if (new File(LangManager.defaultLangPath + "/" + lang.getID() + "/flag16.png").exists())
-				assertNotNull(errorMsg, lang.getFlag16());
+				assertNotNull(errorMsg, lang.getFlag16Path());
 		}
 	}
 

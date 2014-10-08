@@ -11,11 +11,9 @@ import static com.xenoage.utils.log.Report.remark;
 import static com.xenoage.utils.log.Report.warning;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +22,8 @@ import java.util.Map.Entry;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.xenoage.utils.jse.io.JseIO;
+import com.xenoage.utils.jse.io.DesktopIO;
+import com.xenoage.utils.jse.io.JseInputStream;
 import com.xenoage.utils.jse.xml.XMLReader;
 import com.xenoage.utils.kernel.Tuple2;
 import com.xenoage.utils.lang.Lang;
@@ -46,7 +45,7 @@ import com.xenoage.utils.lang.Language;
  * but requires the usage of <code>msgctxt</code> for each entry, which is used as the
  * vocabulary key. The <code>msgid</code> is ignored and is only useful for human translators.
  * 
- * This class uses the {@link JseIO}, which must be initialized before.
+ * This class uses the {@link DesktopIO}, which must be initialized before.
  * 
  * @author Andreas Wenger
  */
@@ -77,16 +76,16 @@ public class LanguageReader {
 		int entriesOverwrittenCount = 0;
 		
 		for (String langFileName : langFiles) {
-			File langFile = io().findFile(dir + "/" + langFileName);
+			JseInputStream langStream = io().openFile(dir + "/" + langFileName);
 			//read XML or PO file
 			HashMap<String, String> fileEntries = null;
-			if (langFile.getName().endsWith(".po")) {
-				log(remark("Reading PO language file \"" + langFile + "\""));
-				fileEntries = readPO(langFile);
+			if (langFileName.endsWith(".po")) {
+				log(remark("Reading PO language file \"" + langFileName + "\""));
+				fileEntries = readPO(langStream);
 			}
 			else {
-				log(remark("Reading XML language file \"" + langFile + "\""));
-				fileEntries = readXML(langFile);
+				log(remark("Reading XML language file \"" + langFileName + "\""));
+				fileEntries = readXML(langStream);
 			}
 
 			//insert vocabulary data
@@ -117,10 +116,10 @@ public class LanguageReader {
 	/**
 	 * Returns all key-value pairs from the given XML language file.
 	 */
-	private static HashMap<String, String> readXML(File file)
+	private static HashMap<String, String> readXML(JseInputStream inputStream)
 		throws IOException {
 		Document doc = null;
-		doc = XMLReader.readFile(new FileInputStream(file));
+		doc = XMLReader.readFile(inputStream);
 
 		//check root element
 		Element root = XMLReader.root(doc);
@@ -147,9 +146,9 @@ public class LanguageReader {
 	/**
 	 * Returns all key-value pairs from the given PO language file.
 	 */
-	private static HashMap<String, String> readPO(File file)
+	private static HashMap<String, String> readPO(JseInputStream inputStream)
 		throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader(file));
+		BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 
 		//read vocabulary data
 		HashMap<String, String> entries = map();

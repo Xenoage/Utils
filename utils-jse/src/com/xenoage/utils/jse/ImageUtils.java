@@ -8,18 +8,17 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-import com.xenoage.utils.jse.io.JseIO;
+import com.xenoage.utils.jse.io.DesktopIO;
 
 /**
  * Useful methods to work with images.
  * 
- * This class uses the {@link JseIO}, which must be initialized before.
+ * This class uses the {@link DesktopIO}, which must be initialized before.
  * 
  * @author Andreas Wenger
  */
@@ -43,10 +42,7 @@ public class ImageUtils {
 	 */
 	public static Image imageOrNull(String filepath) {
 		try {
-			File file = io().findFile(filepath);
-			if (file == null)
-				return null;
-			return ImageIO.read(file);
+			return ImageIO.read(io().openFile(filepath));
 		} catch (IOException ex) {
 			return null;
 		}

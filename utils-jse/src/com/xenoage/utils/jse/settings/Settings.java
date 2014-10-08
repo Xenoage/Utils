@@ -5,7 +5,6 @@ import static com.xenoage.utils.log.Log.log;
 import static com.xenoage.utils.log.Report.error;
 import static com.xenoage.utils.log.Report.warning;
 
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -19,7 +18,7 @@ import java.util.Properties;
 import com.xenoage.utils.Parser;
 import com.xenoage.utils.error.BasicErrorProcessing;
 import com.xenoage.utils.io.FileUtils;
-import com.xenoage.utils.jse.io.JseIO;
+import com.xenoage.utils.jse.io.DesktopIO;
 
 /**
  * This class manages simple configuration data, which is String values
@@ -28,7 +27,7 @@ import com.xenoage.utils.jse.io.JseIO;
  * The values are stored in .settings files, which are XML files in the format
  * described at http://java.sun.com/dtd/properties.dtd
  * 
- * This class uses the {@link JseIO}, which must be initialized before.
+ * This class uses the {@link DesktopIO}, which must be initialized before.
  * 
  * @author Andreas Wenger
  * @author Uli Teschemacher
@@ -166,7 +165,8 @@ public class Settings {
 	public void reload(String file) {
 		try {
 			Properties p = new Properties();
-			p.loadFromXML(new FileInputStream(io().findFile(directory + "/" + file + ".settings")));
+			String filePath = directory + "/" + file + ".settings";
+			p.loadFromXML(io().openFile(filePath));
 			files.put(file, p);
 		} catch (Exception ex) {
 			log(warning("Could not load settings from file \"" + file + "\"", ex));

@@ -11,8 +11,8 @@ import java.io.Writer;
 import java.util.ArrayList;
 
 import com.xenoage.utils.jse.collections.WeakList;
-import com.xenoage.utils.jse.io.JseIO;
-import com.xenoage.utils.jse.io.JseFileUtils;
+import com.xenoage.utils.jse.io.DesktopIO;
+import com.xenoage.utils.jse.io.JseStreamUtils;
 
 /**
  * Manages a list of the recently opened files.
@@ -21,7 +21,7 @@ import com.xenoage.utils.jse.io.JseFileUtils;
  * are listed, other ones are automatically removed.
  * 
  * Listeners can be registered that are notified when the list changes.
- * This class uses the {@link JseIO}, which must be initialized before.
+ * This class uses the {@link DesktopIO}, which must be initialized before.
  * 
  * @author Andreas Wenger
  */
@@ -39,21 +39,19 @@ public class RecentFiles {
 	 */
 	public static ArrayList<File> getRecentFiles() {
 		ArrayList<File> ret = new ArrayList<File>(maxEntries);
-		File file = null;
-		try {
-			file = io().findFile(filePath);
-		} catch (IOException ex) {
-			log(warning(ex));
-		}
-		if (file == null)
-			return ret; //file not existing yet
-		String list = JseFileUtils.readFile(file);
-		if (list != null) {
-			String[] files = list.split("\n");
-			for (int i = 0; i < maxEntries && i < files.length; i++) {
-				File entryFile = new File(files[i]);
-				if (entryFile.exists())
-					ret.add(entryFile);
+		if (io().existsFile(filePath)) {
+			try {
+				String list = JseStreamUtils.readToString(io().openFile(filePath));
+				if (list != null) {
+					String[] files = list.split("\n");
+					for (int i = 0; i < maxEntries && i < files.length; i++) {
+						File entryFile = new File(files[i]);
+						if (entryFile.exists())
+							ret.add(entryFile);
+					}
+				}
+			} catch (IOException ex) {
+				log(warning(ex));
 			}
 		}
 		return ret;

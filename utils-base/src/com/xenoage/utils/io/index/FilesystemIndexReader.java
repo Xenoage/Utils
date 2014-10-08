@@ -2,8 +2,8 @@ package com.xenoage.utils.io.index;
 
 import static com.xenoage.utils.PlatformUtils.platformUtils;
 
-import com.xenoage.utils.async.AsyncProducer;
-import com.xenoage.utils.async.AsyncResult;
+import java.io.IOException;
+
 import com.xenoage.utils.io.InputStream;
 import com.xenoage.utils.xml.XmlReader;
 
@@ -23,39 +23,21 @@ import com.xenoage.utils.xml.XmlReader;
  * 
  * @author Andreas Wenger
  */
-public class FilesystemIndexReader
-	implements AsyncProducer<FilesystemIndex> {
-	
-	private final String indexFilePath;
+public class FilesystemIndexReader {
 	
 	private XmlReader xmlReader;
 	
 	
-	public FilesystemIndexReader(String indexFilePath) {
-		this.indexFilePath = indexFilePath;
+	public static FilesystemIndex read(InputStream indexStream)
+		throws IOException {
+		try {
+			return new FilesystemIndexReader().parseFilesystemIndex(indexStream);
+		} catch (Exception ex) {
+			throw new IOException("Could not read index file", ex);
+		}
 	}
 	
-
-	@Override public void produce(final AsyncResult<FilesystemIndex> result) {
-		platformUtils().openFileAsync(indexFilePath, new AsyncResult<InputStream>() {
-
-			@Override public void onSuccess(InputStream xmlStream) {
-				try {
-					FilesystemIndex index = parseFilesystemIndex(xmlStream);
-					result.onSuccess(index);
-				} catch (Exception ex) {
-					result.onFailure(new Exception("Could not read index file", ex));
-				}
-			}
-
-			@Override public void onFailure(Exception ex) {
-				result.onFailure(new Exception("Could not open index file", ex));
-			}
-			
-		});
-	}
-	
-	FilesystemIndex parseFilesystemIndex(InputStream stream)
+	private FilesystemIndex parseFilesystemIndex(InputStream stream)
 		throws Exception {
 		try {
 			xmlReader = platformUtils().createXmlReader(stream);

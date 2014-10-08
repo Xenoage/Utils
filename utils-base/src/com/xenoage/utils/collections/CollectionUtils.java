@@ -186,5 +186,18 @@ public final class CollectionUtils {
 		list.set(index, element);
 		return list;
 	}
+	
+	/**
+	 * Merges the given two lists in a new list, but without duplicates.
+	 */
+	public static <T> List<T> mergeNoDuplicates(List<T> sourceList1, List<T> sourceList2) {
+		List<T> ret = alist(sourceList1.size() + sourceList2.size());
+		ret.addAll(sourceList1);
+		for (T e : sourceList2) {
+			if (false == ret.contains(e))
+				ret.add(e);
+		}
+		return ret;
+	}
 
 }

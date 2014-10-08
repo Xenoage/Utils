@@ -16,7 +16,7 @@ import com.xenoage.utils.io.InputStream;
 import com.xenoage.utils.io.OutputStream;
 import com.xenoage.utils.io.ZipReader;
 import com.xenoage.utils.jse.font.AwtTextMeasurer;
-import com.xenoage.utils.jse.io.JseIO;
+import com.xenoage.utils.jse.io.DesktopIO;
 import com.xenoage.utils.jse.io.JseInputStream;
 import com.xenoage.utils.jse.io.JseOutputStream;
 import com.xenoage.utils.jse.io.JseZipReader;
@@ -35,7 +35,7 @@ public class JsePlatformUtils
 
 	private static JsePlatformUtils instance = null;
 
-	private JseIO io = null;
+	private DesktopIO io = null;
 	private AwtTextMeasurer textMeasurer = new AwtTextMeasurer();
 	
 	/**
@@ -55,27 +55,27 @@ public class JsePlatformUtils
 	 */
 	public static void init(String programName) {
 		instance = new JsePlatformUtils();
-		instance.io = new JseIO(programName);
+		instance.io = new DesktopIO(programName);
 		PlatformUtils.init(instance);
 	}
 	
 	/**
 	 * Initializes the {@link PlatformUtils} class with an instance of {@link JsePlatformUtils}
 	 * for testing (e.g. unit tests).
-	 * See {@link JseIO#createTestIO()} for details about the filesystem.
+	 * See {@link DesktopIO#createTestIO()} for details about the filesystem.
 	 */
 	public static void initForTest() {
 		instance = new JsePlatformUtils();
-		instance.io = JseIO.createTestIO();
+		instance.io = DesktopIO.createTestIO();
 		PlatformUtils.init(instance);
 	}
 	
 	/**
-	 * Gets the {@link JseIO} instance.
+	 * Gets the {@link DesktopIO} instance.
 	 * If the {@link JsePlatformUtils} are not initialized yet,
 	 * they are initialized for testing (e.g. unit tests).
 	 */
-	public static JseIO io() {
+	public static DesktopIO io() {
 		if (instance == null)
 			initForTest();
 		return instance.io;
@@ -104,7 +104,7 @@ public class JsePlatformUtils
 		return textMeasurer;
 	}
 	
-	@Override public JseIO getFilesystemInput() {
+	@Override public DesktopIO getFilesystemInput() {
 		return io;
 	}
 
