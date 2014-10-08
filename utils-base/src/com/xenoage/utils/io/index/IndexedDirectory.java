@@ -36,7 +36,7 @@ public class IndexedDirectory
 		return children;
 	}
 	
-	void addChild(FilesystemItem child) {
+	public void addChild(FilesystemItem child) {
 		assertNoDuplicate(child.getName());
 		children.add(child);
 	}

@@ -41,15 +41,17 @@ public class BundledIO
 			return null;
 	}
 	
-	private BundledIO(FilesystemIndex index) {
+	public BundledIO(FilesystemIndex index) {
 		this.index = index;
 	}
 	
 	private static FilesystemIndex readIndex() {
-		InputStream indexStream = openFileUnchecked(FilesystemIndex.indexFile);
 		try {
-			if (indexStream != null)
-				return FilesystemIndexReader.read(indexStream);
+			InputStream indexStream = openFileUnchecked(FilesystemIndex.indexFile);
+			return FilesystemIndexReader.read(indexStream);
+		}
+		catch (FileNotFoundException ex) {
+			//normal. index just does not exist.
 		}
 		catch (IOException ex) {
 			//logging or error handling is not initialized at this point
@@ -127,7 +129,7 @@ public class BundledIO
 	 * Like {@link #openFileAsync(String)}, but with direct return.
 	 * Returns an input stream for the given bundled resource file, but only if that
 	 * file is listed in the {@link FilesystemIndex}. Otherwise, or if the file
-	 * can not be found, null is returned.
+	 * can not be found, a {@link FileNotFoundException} is thrown.
 	 */
 	public JseInputStream openFile(String filePath)
 		throws IOException {
@@ -141,9 +143,13 @@ public class BundledIO
 	 * without checking if it exists in the index.
 	 * If the file can not be found, null is returned.
 	 */
-	private static JseInputStream openFileUnchecked(String filePath) {
+	private static JseInputStream openFileUnchecked(String filePath)
+		throws IOException {
 		java.io.InputStream stream = BundledIO.class.getClassLoader().getResourceAsStream(filePath);
-		return (stream != null ? new JseInputStream(stream) : null);
+		if (stream != null)
+			return new JseInputStream(stream);
+		else
+			throw new FileNotFoundException(filePath);
 	}
 
 }
