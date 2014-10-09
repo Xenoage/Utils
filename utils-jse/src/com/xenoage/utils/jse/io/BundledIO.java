@@ -11,6 +11,7 @@ import com.xenoage.utils.io.FilesystemInput;
 import com.xenoage.utils.io.InputStream;
 import com.xenoage.utils.io.index.FilesystemIndex;
 import com.xenoage.utils.io.index.FilesystemIndexReader;
+import com.xenoage.utils.jse.xml.JseXmlReader;
 
 /**
  * Some useful input/output methods for JAR bundled resource files
@@ -47,8 +48,8 @@ public class BundledIO
 	
 	private static FilesystemIndex readIndex() {
 		try {
-			InputStream indexStream = openFileUnchecked(FilesystemIndex.indexFile);
-			return FilesystemIndexReader.read(indexStream);
+			JseInputStream indexStream = openFileUnchecked(FilesystemIndex.indexFile);
+			return FilesystemIndexReader.read(new JseXmlReader(indexStream));
 		}
 		catch (FileNotFoundException ex) {
 			//normal. index just does not exist.

@@ -8,6 +8,7 @@ import java.util.List;
 import com.xenoage.utils.async.AsyncCallback;
 import com.xenoage.utils.async.AsyncResult;
 import com.xenoage.utils.gwt.GwtPlatformUtils;
+import com.xenoage.utils.gwt.xml.GwtXmlReader;
 import com.xenoage.utils.io.FileFilter;
 import com.xenoage.utils.io.FilesystemInput;
 import com.xenoage.utils.io.FilesystemItem;
@@ -117,7 +118,8 @@ public class GwtIO
 
 			@Override public void onSuccess(InputStream indexStream) {
 				try {
-					GwtIO.this.index = FilesystemIndexReader.read(indexStream);
+					GwtInputStream gwtStream = (GwtInputStream) indexStream;
+					GwtIO.this.index = FilesystemIndexReader.read(new GwtXmlReader(gwtStream.getData()));
 					initialized.onSuccess();
 				} catch (IOException ex) {
 					initialized.onFailure(ex);

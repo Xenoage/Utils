@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.xenoage.utils.io.FilesystemItem;
+import com.xenoage.utils.jse.xml.JseXmlReader;
 
 /**
  * Tests for {@link FilesystemIndexReader}.
@@ -21,7 +22,7 @@ public class FilesystemIndexReaderTest {
 		throws Exception {
 		//read file
 		FilesystemIndex index = FilesystemIndexReader.read(
-			jsePlatformUtils().openFile("data/test/index/FilesystemIndexReaderTest.xml"));
+			new JseXmlReader(jsePlatformUtils().openFile("data/test/index/FilesystemIndexReaderTest.xml")));
 		//check content
 		List<? extends FilesystemItem> items;
 		assertEquals(0, index.listFiles("/").size());

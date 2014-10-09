@@ -148,7 +148,7 @@ public class LanguageReader {
 	 */
 	private static HashMap<String, String> readPO(JseInputStream inputStream)
 		throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+		BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
 
 		//read vocabulary data
 		HashMap<String, String> entries = map();

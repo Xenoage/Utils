@@ -1,10 +1,7 @@
 package com.xenoage.utils.io.index;
 
-import static com.xenoage.utils.PlatformUtils.platformUtils;
-
 import java.io.IOException;
 
-import com.xenoage.utils.io.InputStream;
 import com.xenoage.utils.xml.XmlReader;
 
 /**
@@ -28,19 +25,19 @@ public class FilesystemIndexReader {
 	private XmlReader xmlReader;
 	
 	
-	public static FilesystemIndex read(InputStream indexStream)
+	public static FilesystemIndex read(XmlReader xmlReader)
 		throws IOException {
 		try {
-			return new FilesystemIndexReader().parseFilesystemIndex(indexStream);
+			return new FilesystemIndexReader().parseFilesystemIndex(xmlReader);
 		} catch (Exception ex) {
 			throw new IOException("Could not read index file", ex);
 		}
 	}
 	
-	private FilesystemIndex parseFilesystemIndex(InputStream stream)
+	private FilesystemIndex parseFilesystemIndex(XmlReader xmlReader)
 		throws Exception {
 		try {
-			xmlReader = platformUtils().createXmlReader(stream);
+			this.xmlReader = xmlReader;
 			checkFileFormat();
 			IndexedDirectory root = new IndexedDirectory("");
 			readDirectoryChildren(root);
