@@ -1,5 +1,6 @@
 package com.xenoage.utils.jse.files;
 
+import static com.xenoage.utils.collections.CollectionUtils.alist;
 import static com.xenoage.utils.jse.JsePlatformUtils.io;
 import static com.xenoage.utils.log.Log.log;
 import static com.xenoage.utils.log.Report.warning;
@@ -9,8 +10,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.List;
 
-import com.xenoage.utils.jse.collections.WeakList;
 import com.xenoage.utils.jse.io.DesktopIO;
 import com.xenoage.utils.jse.io.JseStreamUtils;
 
@@ -30,7 +31,7 @@ public class RecentFiles {
 	static final String filePath = "data/recentfiles";
 	static final int maxEntries = 5;
 
-	private static WeakList<RecentFilesListener> listeners = new WeakList<RecentFilesListener>();
+	private static List<RecentFilesListener> listeners = alist();
 
 
 	/**
@@ -83,17 +84,13 @@ public class RecentFiles {
 		} catch (IOException ex) {
 		}
 		//notify listeners
-		for (RecentFilesListener listener : listeners.getAll()) {
+		for (RecentFilesListener listener : listeners) {
 			listener.recentFilesChanged();
 		}
 	}
 
 	/**
 	 * Adds the given {@link RecentFilesListener}.
-	 * 
-	 * Unregistering is not necessary. This class stores only weak
-	 * references of the components, so they can be removed by the
-	 * garbage collector when they are not used any more.
 	 */
 	public static void addListener(RecentFilesListener listener) {
 		listeners.add(listener);
