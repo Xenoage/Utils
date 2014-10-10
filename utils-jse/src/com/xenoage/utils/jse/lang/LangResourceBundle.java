@@ -20,6 +20,9 @@ import com.xenoage.utils.lang.VocID;
  *   <li>if the resource ID ends with "...", {@link Lang#getWithEllipsis(VocID)} is used</li>
  * </ul>
  * 
+ * If an unknown resource is queried, its key is returned. It is better
+ * to have at least the vocabulary ID instead of nothing.
+ * 
  * @author Andreas Wenger
  */
 public class LangResourceBundle
@@ -60,7 +63,7 @@ public class LangResourceBundle
 			//normal case
 			VocID vocID = vocIDs.get(key);
 			if (vocID == null)
-				return null;
+				return key;
 			return Lang.get(vocID);
 		}
 	}
@@ -69,13 +72,12 @@ public class LangResourceBundle
 		return vocIDStrings;
 	}
 
-	//overridden to support special cases
+	/**
+	 * Returns true, since we support each key to avoid
+	 * problems with missing vocabulary.
+	 */
 	@Override public boolean containsKey(String key) {
-		if (key.endsWith(":"))
-			key = key.substring(0, key.length() - 1);
-		else if (key.endsWith("..."))
-			key = key.substring(0, key.length() - 3);
-		return super.containsKey(key);
+		return true;
 	}
 
 }
