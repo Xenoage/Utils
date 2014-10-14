@@ -26,10 +26,12 @@ allprojects {
 	sourceSets {
 		main {
 			java { srcDir 'src' }
+			resources { srcDir 'src' }
 			compileClasspath += configurations.compileOnly
 		}
 		test {
 			java { srcDir 'test' }
+			resources { srcDir 'test' }
 			compileClasspath += configurations.compileOnly + configurations.testCompileOnly
 		}
 	}
