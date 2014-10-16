@@ -2,6 +2,7 @@ package com.xenoage.utils.collections;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -198,6 +199,34 @@ public final class CollectionUtils {
 				ret.add(e);
 		}
 		return ret;
+	}
+	
+	/**
+	 * Returns the given list with the given element added at the end.
+	 * If it is an empty list, a new list is created. Otherwise, the given list is reused. 
+	 * This method is especially useful for dealing with immutable empty lists,
+	 * which are used to save memory.
+	 */
+	public static <T> List<T> addOrNew(List<T> list, T element) {
+		if (list.size() == 0)
+			list = new ArrayList<T>(1);
+		list.add(element);
+		return list;
+	}
+	
+	/**
+	 * Returns the given list, but without the given element.
+	 * If the list is empty then, an immutable empty list is returned.
+	 * This method is especially useful for dealing with immutable empty lists,
+	 * which are used to save memory.
+	 */
+	public static <T> List<T> removeOrEmpty(List<T> list, T element) {
+		if (list.size() == 0)
+			return Collections.emptyList();
+		list.remove(element);
+		if (list.size() == 0)
+			list = Collections.emptyList();
+		return list;
 	}
 
 }

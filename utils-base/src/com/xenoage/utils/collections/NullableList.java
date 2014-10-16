@@ -19,8 +19,11 @@ import java.util.List;
  * 
  * When a new list is created, the {@link ArrayList} class is used.
  * 
+ * @deprecated: Nice hack, but we should prefer empty lists instead of null (e.g. Collections.emptyList()
+ * 
  * @author Andreas Wenger
  */
+@Deprecated
 public class NullableList {
 
 	private static final List<?> emptyList = Collections.emptyList();
