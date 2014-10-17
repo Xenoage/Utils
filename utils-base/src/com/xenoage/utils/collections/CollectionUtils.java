@@ -101,6 +101,14 @@ public final class CollectionUtils {
 			ret.add(v);
 		return ret;
 	}
+	
+	/**
+	 * Creates a new {@link Set} with the inferred type
+	 * using the given elements.
+	 */
+	@SafeVarargs public static <T> Set<T> set(Collection<T> vals) {
+		return new HashSet<T>(vals);
+	}
 
 	/**
 	 * Returns the first maximum value of the given collection.
