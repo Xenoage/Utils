@@ -58,5 +58,27 @@ import com.xenoage.utils.annotations.Const;
 	public boolean isSet(int flag) {
 		return (style & flag) > 0;
 	}
+	
+	@Override public int hashCode() {
+		return style;
+	}
+
+	@Override public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		FontStyle other = (FontStyle) obj;
+		if (style != other.style)
+			return false;
+		return true;
+	}
+
+	@Override public String toString() {
+		return (isSet(Bold) ? "B" : "b") + (isSet(Italic) ? "I" : "i") +
+			(isSet(Underline) ? "U" : "u") + (isSet(Strikethrough) ? "S" : "s");
+	}
 
 }

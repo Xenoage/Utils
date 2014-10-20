@@ -27,10 +27,10 @@ import com.xenoage.utils.collections.IList;
 	private final Float size;
 	private final FontStyle style;
 
-	private static final IList<String> defaultFamilies = ilist("Times New Roman", "Linux Libertine",
+	public static final IList<String> defaultFamilies = ilist("Times New Roman", "Linux Libertine",
 		"Times");
-	private static final float defaultSize = 12;
-	private static final FontStyle defaultFontStyle = FontStyle.normal;
+	public static final float defaultSize = 12;
+	public static final FontStyle defaultFontStyle = FontStyle.normal;
 	public static final FontInfo defaultValue = new FontInfo(defaultFamilies, defaultSize, defaultFontStyle);
 
 
