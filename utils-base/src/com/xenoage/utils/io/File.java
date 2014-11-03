@@ -7,18 +7,12 @@ package com.xenoage.utils.io;
  * 
  * @author Andreas Wenger
  */
-public interface File {
-	
-	//TODO: add more methods
+public interface File
+	extends FilesystemItem {
 
 	/**
-	 * Returns the name of the file or directory denoted by this abstract pathname.
-	 * This is just the last name in the pathname's name sequence.
+	 * Gets the size of this file in bytes, or null if unknown or not specified.
 	 */
-	public String getName();
+	public Long getSizeInBytes();
 
-	/**
-	 * Tests whether the file denoted by this abstract pathname is a directory.
-	 */
-	public boolean isDirectory();
 }

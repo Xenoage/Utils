@@ -1,333 +1,184 @@
 package com.xenoage.utils.jse.io;
 
-import static com.xenoage.utils.PlatformUtils.platformUtils;
-import static com.xenoage.utils.collections.CollectionUtils.alist;
+import static com.xenoage.utils.collections.CollectionUtils.mergeNoDuplicates;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import com.xenoage.utils.async.AsyncCallback;
+import com.xenoage.utils.async.AsyncResult;
 import com.xenoage.utils.io.FileFilter;
 import com.xenoage.utils.io.FilesystemInput;
 import com.xenoage.utils.io.InputStream;
 import com.xenoage.utils.jse.JsePlatformUtils;
 
 /**
- * Some useful input/output methods for a desktop application.
+ * Some useful input/output methods for a JSE based desktop
+ * or WebStart application.
  * 
- * A desktop application uses different directories:
- * <ul>
- *   <li>The directory where the program is installed (program directory),
- *     also containing the provided data files</li>
- *   <li>The user's custom data and settings directory (user directory)</li>
- *   <li>Optional: a directory where to search for data, which is shared between
- *     different programs (shared directory)</li>
- * </ul>
+ * This class supports both files on the normal filesystem (using
+ * {@link FilesIO}) and files bundled in JARs (using {@link BundledIO}).
  * 
- * When listing files, all directories are listed sequentially,
- * beginning with the user directory, then the system directory
- * and finally the shared directory (if it exists).
- * When reading files, first the user's directory is read.
- * When writing files, always the user's directory is written to.
+ * The filesystem has a higher priority when reading files, i.e.
+ * a file in a JAR is only opened if it can not be found on the
+ * normal filesystem.
  * 
- * This allows files to be overwritten by individual users, e.g.
- * to replace some provided files with own ones, without destroying
- * the original installation.
+ * Creating and deleting files can only be done on the normal filesystem.
  * 
- * Use {@link JsePlatformUtils#desktopIO()} to get an instance of this class.
+ * When files and directories are listed, both the contents of the
+ * filesystem and the JARs are used.
+ * 
+ * Use {@link JsePlatformUtils#io()} to get an instance of this class.
  *
  * @author Andreas Wenger
  */
 public class DesktopIO
 	implements FilesystemInput {
 
-	private File userDir;
-	private File systemDir;
-	private File sharedDir;
+	private FilesIO filesIO;
+	private BundledIO bundledIO;
 
 	
-	/**
-	 * Creates a {@link DesktopIO}.
-	 * When the directory "../shared" or "shared" exists, it is used as the shared directory.
-	 * @param programName  Name of the program. An user directory for this program
-	 *                     will be created if there is none. If null, no directory is
-	 *                     created and the working directory is used as the user directory.
-	 */
 	public DesktopIO(String programName) {
-		sharedDir = new File("../shared");
-		if (!sharedDir.exists())
-			sharedDir = new File("shared");
-		if (!sharedDir.exists())
-			sharedDir = null;
-		init(programName, null, sharedDir);
+		this(new FilesIO(programName), BundledIO.createIfIndexAvailable());
 	}
-
-	/**
-	 * Creates a {@link DesktopIO}.
-	 * @param programName  Name of the program. An user directory for this program
-	 *                     will be created if there is none. If null, no directory is
-	 *                     created and the working directory is used as the user directory.
-	 * @param systemDir    The custom system directory. If null, the working directory is used
-	 * @param sharedDir    An additional directory with shared files. may be null.
-	 */
-	public DesktopIO(String programName, File systemDir, File sharedDir) {
-		init(programName, systemDir, sharedDir);
-	}
-
-	private void init(String programName, File systemDir, File sharedDir) {
-		this.systemDir = systemDir != null ? systemDir : new File(System.getProperty("user.dir"));
-		if (programName != null) {
-			userDir = JseFileUtils.getUserAppDataDirectory(programName);
-			if (!userDir.exists()) {
-				userDir.mkdirs();
-			}
-		}
-		else {
-			userDir = systemDir;
-		}
-		this.sharedDir = sharedDir;
-	}
-
+	
 	/**
 	 * Creates a {@link DesktopIO} for testing (e.g. unit tests).
-	 * The program name is composed of "xenoage" and the name of the latest calling class
-	 * ending with "Test" or "Try" (otherwise "unknown").
-	 * When the directory "../shared" exists, it is used as the shared directory.
+	 * See {@link FilesIO#createTestIO()}. Bundled files are also supported.
 	 */
 	public static DesktopIO createTestIO() {
-		File sharedDir = new File("../shared");
-		if (!sharedDir.exists())
-			sharedDir = null;
-		//get first test class name
-		String s = "unknown";
-		int i = 2;
-		try {
-			while (s != null) {
-				s = platformUtils().getCaller(i).getClassName();
-				if (s.endsWith("Test") || s.endsWith("Tests") || s.endsWith("Try"))
-					break;
-				i++;
-			}
-		} catch (Exception ex) {
-			s = "unknown";
-		}
-		return new DesktopIO("xenoage/" + s, null, sharedDir);
+		return new DesktopIO(FilesIO.createTestIO(), BundledIO.createIfIndexAvailable());
+	}
+	
+	private DesktopIO(FilesIO filesIO, BundledIO bundledIO) {
+		this.filesIO = filesIO;
+		this.bundledIO = bundledIO;
+	}
+	
+	@Override public void existsFileAsync(String filePath, AsyncResult<Boolean> exists) {
+		exists.onSuccess(existsFile(filePath));
 	}
 
 	/**
-	 * Like {@link #existsFileAsync(String, AsyncCallback)}, but with direct return.
+	 * Like {@link #existsFileAsync(String, AsyncResult)}, but with direct return.
 	 */
-	public boolean existsFile(String filepath) {
-		return new File(userDir, filepath).exists() || new File(systemDir, filepath).exists() ||
-			(sharedDir != null ? new File(sharedDir, filepath).exists() : false);
+	public boolean existsFile(String filePath) {
+		return filesIO.existsFile(filePath) ||
+			(bundledIO != null && bundledIO.existsFile(filePath));
+	}
+	
+	@Override public void existsDirectoryAsync(String dirPath, AsyncResult<Boolean> exists) {
+		exists.onSuccess(existsDirectory(dirPath));
 	}
 
 	/**
 	 * Like {@link #existsDirectory(String)}, but with direct return.
 	 */
 	public boolean existsDirectory(String directory) {
-		File userFile = new File(userDir, directory);
-		if (userFile.exists() && userFile.isDirectory())
-			return true;
-		File systemFile = new File(systemDir, directory);
-		if (systemFile.exists() && systemFile.isDirectory())
-			return true;
-		if (sharedDir != null) {
-			File sharedFile = new File(sharedDir, directory);
-			if (sharedFile.exists() && sharedFile.isDirectory())
-				return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Gets the modification date of the given file, or null, if the date is unavailable.
-	 */
-	public Date getFileModificationDate(String filepath) {
-		File file = new File(userDir, filepath);
-		if (!file.exists()) {
-			file = new File(systemDir, filepath);
-		}
-		if (!file.exists() && sharedDir != null) {
-			file = new File(sharedDir, filepath);
-		}
-		if (file.exists()) {
-			return new Date(file.lastModified());
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Gets the data file at the given relative path. The file is searched in the user's
-	 * application settings directory first, and if not found, in the directory where the
-	 * program was installed. If still not found, null is returned.
-	 */
-	public File findFile(String filepath)
-		throws IOException {
-		File file = new File(userDir, filepath);
-		if (!file.exists()) {
-			file = new File(systemDir, filepath);
-		}
-		if (!file.exists() && sharedDir != null) {
-			file = new File(sharedDir, filepath);
-		}
-		if (file.exists()) {
-			return file;
-		}
-		else {
-			return null;
-		}
+		return filesIO.existsDirectory(directory) ||
+			(bundledIO != null && bundledIO.existsDirectory(directory));
 	}
 	
-	/**
-	 * Like {@link #openFile(String)}, but with direct return.
-	 */
-	public InputStream openFile(String filePath)
-		throws IOException {
-		File file = findFile(filePath);
-		if (file == null)
-			throw new FileNotFoundException(filePath);
-		return new JseInputStream(new FileInputStream(file));
-	}
-
-	/**
-	 * Gets the data file for writing at the given relative path.
-	 * It is always located in the user's application settings folder.
-	 * If not existing, the parent directories are created.
-	 */
-	public File createFile(String filepath) {
-		File file = new File(userDir, filepath);
-		//create the parent directory on demand
-		File parent = file.getParentFile();
-		if (parent != null && !parent.exists()) {
-			parent.mkdirs();
-		}
-		//open output stream
-		return file;
-	}
-
-	/**
-	 * Removes the data file at the given relative path.
-	 * @param system  If true, not only the user's private data file is deleted,
-	 *                but also the system data file.
-	 *                Files in the shared folder are never deleted.
-	 */
-	public void deleteFile(String filepath, boolean system) {
-		File file = new File(userDir, filepath);
-		if (file.exists())
-			file.delete();
-		if (system) {
-			file = new File(systemDir, filepath);
-			if (file.exists())
-				file.delete();
-		}
+	@Override public void listFilesAsync(String dirPath, AsyncResult<List<String>> fileNames) {
+		fileNames.onSuccess(listFiles(dirPath));
 	}
 
 	/**
 	 * Like {@link #listFilesAsync(String)}, but with direct return.
 	 */
-	public List<String> listFiles(String directory) {
-		return listFiles(directory, null);
+	public List<String> listFiles(String dirPath) {
+		List<String> fileNames = filesIO.listFiles(dirPath);
+		if (bundledIO == null)
+			return fileNames;
+		else
+			return mergeNoDuplicates(bundledIO.listFiles(dirPath), fileNames);
+	}
+	
+	@Override public void listFilesAsync(String dirPath, FileFilter filter,
+		AsyncResult<List<String>> fileNames) {
+		fileNames.onSuccess(listFiles(dirPath, filter));
 	}
 
 	/**
-	 * Like {@link #listFilesAsync(String, FileFilter, AsyncCallback)}, but with direct return.
+	 * Like {@link #listFilesAsync(String, FileFilter, AsyncResult)}, but with direct return.
 	 */
-	public List<String> listFiles(String directory, FileFilter filter) {
-		FilenameFilter jseFilenameFilter = JseFileUtils.getFilter(filter);
-		Set<String> ret = new HashSet<String>();
-		for (int iDir = 0; iDir < 3; iDir++) {
-			File baseDir = null;
-			switch (iDir) {
-				case 0:
-					baseDir = userDir;
-					break;
-				case 1:
-					baseDir = systemDir;
-					break;
-				case 2:
-					baseDir = sharedDir;
-					break;
-			}
-			if (baseDir != null) {
-				File dir = new File(baseDir, directory);
-				String[] files = (filter != null ? dir.list(jseFilenameFilter) : dir.list());
-				if (files != null) {
-					ret.addAll(Arrays.asList(files));
-				}
-			}
-		}
-		return alist(ret);
+	public List<String> listFiles(String dirPath, FileFilter filter) {
+		List<String> fileNames = filesIO.listFiles(dirPath, filter);
+		if (bundledIO == null)
+			return fileNames;
+		else
+			return mergeNoDuplicates(bundledIO.listFiles(dirPath, filter), fileNames);
+	}
+	
+	@Override public void listDirectoriesAsync(String dirPath,
+		AsyncResult<List<String>> dirNames) {
+		dirNames.onSuccess(listDirectories(dirPath));
 	}
 
 	/**
-	 * Like {@link #listDirectoriesAsync(String, AsyncCallback)}, but with direct return.
+	 * Like {@link #listDirectoriesAsync(String, AsyncResult)}, but with direct return.
 	 */
-	public List<String> listDirectories(String directory) {
-		Set<String> ret = new HashSet<String>();
-		for (int iDir = 0; iDir < 3; iDir++) {
-			File baseDir = null;
-			switch (iDir) {
-				case 0:
-					baseDir = userDir;
-					break;
-				case 1:
-					baseDir = systemDir;
-					break;
-				case 2:
-					baseDir = sharedDir;
-					break;
-			}
-			if (baseDir != null) {
-				File[] dirs = new File(baseDir, directory).listFiles(JseFileUtils.getDirectoriesFilter());
-				if (dirs != null) {
-					for (int i = 0; i < dirs.length; i++) {
-						ret.add(dirs[i].getName());
-					}
-				}
-			}
-		}
-		return alist(ret);
+	public List<String> listDirectories(String dirPath) {
+		List<String> dirNames = filesIO.listDirectories(dirPath);
+		if (bundledIO == null)
+			return dirNames;
+		else
+			return mergeNoDuplicates(bundledIO.listDirectories(dirPath), dirNames);
 	}
 
-	@Override public void existsFileAsync(String filepath, AsyncCallback<Boolean> exists) {
-		exists.onSuccess(existsFile(filepath));
-	}
-
-	@Override public void existsDirectoryAsync(String directory, AsyncCallback<Boolean> exists) {
-		exists.onSuccess(existsDirectory(directory));
-	}
-
-	@Override public void listFilesAsync(String directory, AsyncCallback<List<String>> files) {
-		files.onSuccess(listFiles(directory));
-	}
-
-	@Override public void listFilesAsync(String directory, FileFilter filter,
-		AsyncCallback<List<String>> files) {
-		files.onSuccess(listFiles(directory, filter));
-	}
-
-	@Override public void listDirectoriesAsync(String directory,
-		AsyncCallback<List<String>> directories) {
-		directories.onSuccess(listDirectories(directory));
-	}
-
-	@Override public void openFileAsync(String filepath, AsyncCallback<InputStream> inputStream) {
+	@Override public void openFileAsync(String filePath, AsyncResult<InputStream> inputStream) {
 		try {
-			inputStream.onSuccess(openFile(filepath));
+			inputStream.onSuccess(openFile(filePath));
 		} catch (IOException ex) {
 			inputStream.onFailure(ex);
 		}
+	}
+	
+	/**
+	 * Like {@link #openFileAsync(String, AsyncResult)}, but with direct return.
+	 */
+	public JseInputStream openFile(String filePath)
+		throws IOException {
+		if (filesIO.existsFile(filePath))
+			return filesIO.openFile(filePath);
+		else if (bundledIO != null && bundledIO.existsFile(filePath))
+			return bundledIO.openFile(filePath);
+		else
+			throw new FileNotFoundException(filePath);
+	}
+	
+	/**
+	 * See {@link FilesIO#findFile(String)}.
+	 * Finds only normal files, not bundled files.
+	 */
+	public File findNormalFile(String filePath)
+		throws IOException {
+		return filesIO.findFile(filePath);
+	}
+	
+	/**
+	 * Gets the modification date of the given file, or null, if the date is unavailable.
+	 * For bundled files, the date is not available.
+	 */
+	public Date getFileModificationDate(String filePath) {
+		return filesIO.getFileModificationDate(filePath);
+	}
+	
+	/**
+	 * See {@link FilesIO#createFile(String)}.
+	 */
+	public File createFile(String filePath) {
+		return filesIO.createFile(filePath);
+	}
+	
+	/**
+	 * See {@link FilesIO#deleteFile(String, boolean)}.
+	 */
+	public void deleteFile(String filePath, boolean system) {
+		filesIO.deleteFile(filePath, system);
 	}
 
 }

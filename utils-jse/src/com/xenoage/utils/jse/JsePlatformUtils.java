@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.xenoage.utils.PlatformUtils;
 import com.xenoage.utils.annotations.NonNull;
-import com.xenoage.utils.async.AsyncCallback;
+import com.xenoage.utils.async.AsyncResult;
 import com.xenoage.utils.font.TextMeasurer;
 import com.xenoage.utils.io.InputStream;
 import com.xenoage.utils.io.OutputStream;
@@ -35,7 +35,7 @@ public class JsePlatformUtils
 
 	private static JsePlatformUtils instance = null;
 
-	private DesktopIO desktopIO = null;
+	private DesktopIO io = null;
 	private AwtTextMeasurer textMeasurer = new AwtTextMeasurer();
 	
 	/**
@@ -55,7 +55,7 @@ public class JsePlatformUtils
 	 */
 	public static void init(String programName) {
 		instance = new JsePlatformUtils();
-		instance.desktopIO = new DesktopIO(programName);
+		instance.io = new DesktopIO(programName);
 		PlatformUtils.init(instance);
 	}
 	
@@ -66,7 +66,7 @@ public class JsePlatformUtils
 	 */
 	public static void initForTest() {
 		instance = new JsePlatformUtils();
-		instance.desktopIO = DesktopIO.createTestIO();
+		instance.io = DesktopIO.createTestIO();
 		PlatformUtils.init(instance);
 	}
 	
@@ -75,10 +75,10 @@ public class JsePlatformUtils
 	 * If the {@link JsePlatformUtils} are not initialized yet,
 	 * they are initialized for testing (e.g. unit tests).
 	 */
-	public static DesktopIO desktopIO() {
+	public static DesktopIO io() {
 		if (instance == null)
 			initForTest();
-		return instance.desktopIO;
+		return instance.io;
 	}
 
 	@Override public List<StackTraceElement> getCurrentStackTrace() {
@@ -105,10 +105,10 @@ public class JsePlatformUtils
 	}
 	
 	@Override public DesktopIO getFilesystemInput() {
-		return desktopIO;
+		return io;
 	}
 
-	@Override public void openFileAsync(String filePath, AsyncCallback<InputStream> callback) {
+	@Override public void openFileAsync(String filePath, AsyncResult<InputStream> callback) {
 		try {
 			InputStream stream = openFile(filePath);
 			callback.onSuccess(stream);
@@ -121,9 +121,9 @@ public class JsePlatformUtils
 	 * Convenience method for opening an {@link InputStream} for the file at the given relative path.
 	 * This method is blocking.
 	 */
-	@NonNull public InputStream openFile(String filePath)
+	@NonNull public JseInputStream openFile(String filePath)
 		throws IOException {
-		return desktopIO().openFile(filePath);
+		return io().openFile(filePath);
 	}
 
 	@Override public XmlReader createXmlReader(InputStream inputStream) {
@@ -137,6 +137,10 @@ public class JsePlatformUtils
 	@Override public ZipReader createZipReader(InputStream inputStream)
 		throws IOException {
 		return new JseZipReader(inputStream);
+	}
+
+	@Override public void exit(Throwable ex) {
+		System.exit(1);
 	}
 
 }

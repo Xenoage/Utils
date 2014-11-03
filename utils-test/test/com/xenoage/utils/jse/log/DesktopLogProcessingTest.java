@@ -1,6 +1,6 @@
 package com.xenoage.utils.jse.log;
 
-import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
+import static com.xenoage.utils.jse.JsePlatformUtils.io;
 import static com.xenoage.utils.log.Log.log;
 import static com.xenoage.utils.log.Report.remark;
 import static com.xenoage.utils.log.Report.warning;
@@ -13,7 +13,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.xenoage.utils.jse.io.JseFileUtils;
+import com.xenoage.utils.jse.io.JseStreamUtils;
 import com.xenoage.utils.log.Log;
 
 /**
@@ -32,7 +32,7 @@ public class DesktopLogProcessingTest {
 
 	@Test public void testLogging()
 		throws IOException {
-		desktopIO().deleteFile(logFilename, true);
+		io().deleteFile(logFilename, true);
 
 		//create log file
 		Log.init(new DesktopLogProcessing(logFilename, "test"));
@@ -44,8 +44,8 @@ public class DesktopLogProcessingTest {
 		log(warning(warning));
 
 		//check logfile
-		assertTrue(desktopIO().existsFile(logFilename));
-		String logText = JseFileUtils.readFile(desktopIO().findFile(logFilename));
+		assertTrue(io().existsFile(logFilename));
+		String logText = JseStreamUtils.readToString(io().openFile(logFilename));
 		assertNotNull(logText);
 		assertTrue(logText.contains(message));
 		assertTrue(logText.contains(warning));

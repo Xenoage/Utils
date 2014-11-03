@@ -1,18 +1,12 @@
 package com.xenoage.utils.jse.lang;
 
-import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
+import static com.xenoage.utils.NullUtils.notNull;
+import static com.xenoage.utils.jse.JsePlatformUtils.io;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -36,22 +30,22 @@ public class LanguageInfo {
 	private String id;
 	private String localName;
 	private String internationalName;
-	private ImageIcon flag16;
+	private String flag16Path;
 
 
 	/**
 	 * Loads information from the given language pack information file.
-	 * @param path  path to the language pack directory (without trailing slash)
-	 * @param id    id of the language pack
+	 * @param dirPath  path to the language pack directory (without trailing slash)
+	 * @param id       id of the language pack
 	 */
-	public LanguageInfo(String path, String id)
+	public LanguageInfo(String dirPath, String id)
 		throws Exception {
-		this.path = path;
+		this.path = dirPath;
 		this.id = id;
-		File file = desktopIO().findFile(path + "/" + id + "/id.xml");
-		if (file == null)
+		String filePath = dirPath + "/" + id + "/id.xml";
+		if (false == io().existsFile(filePath))
 			throw new FileNotFoundException("id.xml not found for language " + id);
-		Document doc = XMLReader.readFile(new FileInputStream(file));
+		Document doc = XMLReader.readFile(io().openFile(filePath));
 		Element root = XMLReader.root(doc);
 		Element intName = XMLReader.element(root, "intname");
 		Element localName = XMLReader.element(root, "localname");
@@ -63,7 +57,7 @@ public class LanguageInfo {
 			this.localName = XMLReader.text(localName);
 		else
 			this.localName = null;
-		loadFlagImage();
+		findFlagImage();
 	}
 
 	/**
@@ -83,20 +77,17 @@ public class LanguageInfo {
 
 	/**
 	 * Gets the local name of this language file,
-	 * e.g. "Deutsch" or "Français". If not set, null
-	 * is returned. This may be the case if the local
-	 * name and the international name is the same
-	 * (like "English").
+	 * e.g. "Deutsch" or "Français". If not set, the international name is returned.
 	 */
 	public String getLocalName() {
-		return localName;
+		return notNull(localName, internationalName);
 	}
 
 	/**
-	 * Gets the 16px flag icon of this language, or null.
+	 * Gets the file path of the 16px flag icon of this language, or null.
 	 */
-	public Icon getFlag16() {
-		return flag16;
+	public String getFlag16Path() {
+		return flag16Path;
 	}
 
 	/**
@@ -106,7 +97,7 @@ public class LanguageInfo {
 	public static List<LanguageInfo> getAvailableLanguages(String path)
 		throws Exception {
 		ArrayList<LanguageInfo> ret = new ArrayList<LanguageInfo>();
-		List<String> langs = desktopIO().listDirectories(path);
+		List<String> langs = io().listDirectories(path);
 		if (langs.size() < 1) {
 			throw new Exception("No language pack installed!");
 		}
@@ -141,19 +132,11 @@ public class LanguageInfo {
 	}
 
 	/**
-	 * Loads the 16px flag, if there.
+	 * Finds the 16px flag, if there.
 	 */
-	private void loadFlagImage() {
-		String flagPath = path + "/" + id + "/flag16.png";
-		try {
-			File iconFile = desktopIO().findFile(flagPath);
-			if (iconFile != null)
-				flag16 = new ImageIcon(ImageIO.read(iconFile));
-			else
-				flag16 = null;
-		} catch (IOException ex) {
-			flag16 = null;
-		}
+	private void findFlagImage() {
+		String filePath = path + "/" + id + "/flag16.png";
+		this.flag16Path = io().existsFile(filePath) ? filePath : null;
 	}
 
 }

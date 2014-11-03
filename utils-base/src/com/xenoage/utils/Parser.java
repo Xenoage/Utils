@@ -1,7 +1,5 @@
 package com.xenoage.utils;
 
-import java.text.*;
-import java.util.Date;
 
 /**
  * Some useful methods for parsing.
@@ -147,22 +145,6 @@ public class Parser {
 			return false;
 		else
 			return parseBooleanNull(value);
-	}
-
-	/**
-	 * Returns the Date value of the given String,
-	 * parsed with the given pattern, or null
-	 * is the conversion is impossible.
-	 */
-	public static Date parseDate(String value, String pattern) {
-		if (value == null)
-			return null;
-		try {
-			DateFormat fmt = new SimpleDateFormat(pattern);
-			return fmt.parse(value);
-		} catch (ParseException ex) {
-			return null;
-		}
 	}
 
 	/**

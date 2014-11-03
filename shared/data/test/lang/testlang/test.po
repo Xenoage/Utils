@@ -1,4 +1,4 @@
-# Xenoage Utils Language Test
+﻿# Xenoage Utils Language Test
 # Copyright © 2013 by Andreas Wenger, Xenoage Software
 msgid ""
 msgstr ""

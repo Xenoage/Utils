@@ -1,5 +1,9 @@
 package com.xenoage.utils.io;
 
+import static com.xenoage.utils.collections.CollectionUtils.alist;
+
+import java.util.List;
+
 import com.xenoage.utils.kernel.Tuple2;
 
 /**
@@ -8,15 +12,6 @@ import com.xenoage.utils.kernel.Tuple2;
  * @author Andreas Wenger
  */
 public class FileUtils {
-
-	/**
-	 * Gets the name of the file without any extensions
-	 * (ends before the first dot, but a dot on the very
-	 * first position is allowed)
-	 */
-	public static String getNameWithoutExt(File file) {
-		return getNameWithoutExt(file.getName());
-	}
 
 	/**
 	 * Gets the name of the file without any extensions
@@ -39,9 +34,13 @@ public class FileUtils {
 	 * Gets the directory and the filename of the given path.
 	 * For example, when "1/2/3.pdf" is given, "1/2" and "3.pdf"
 	 * is returned. For "4.xml", "" and "4.xml" is returned.
+	 * When a directory is given (e.g. "1/2/3/"), the last directory
+	 * is split off ("1/2" and "3").
 	 */
 	public static Tuple2<String, String> splitDirectoryAndFilename(String path) {
-		String p = path.replaceAll("\\\\", "/"); //use only / for the moment
+		String p = cleanPath(path);
+		if (p.endsWith("/")) //remove trailing "/"
+			p = p.substring(0, p.length() - 1);
 		int endPos = p.lastIndexOf('/');
 		if (endPos > -1) {
 			String dir = p.substring(0, endPos);
@@ -58,6 +57,8 @@ public class FileUtils {
 	 * Gets the directory name of the given path.
 	 * For example, when "1/2/3.pdf" is given, "1/2"
 	 * is returned. For "4.xml", "" is returned.
+	 * When a directory is given (e.g. "1/2/3/"), the path without
+	 * the last directory is returned ("1/2").
 	 */
 	public static String getDirectoryName(String path) {
 		return splitDirectoryAndFilename(path).get1();
@@ -67,9 +68,36 @@ public class FileUtils {
 	 * Gets the filename of the given path.
 	 * For example, when "1/2/3.pdf" is given, "3.pdf"
 	 * is returned. For "4.xml", "4.xml" is returned.
+	 * When a directory is given (e.g. "1/2/3/"), the
+	 * last directory is returned ("3").
 	 */
 	public static String getFileName(String path) {
 		return splitDirectoryAndFilename(path).get2();
 	}
 
+	/**
+	 * Cleans the given path.
+	 * <ul>
+	 * 	<li>replace all backslashes ("\") by forward slashes ("/")</li>
+	 * 	<li>replace double slashes ("//") by single slashes ("/")</li>
+	 * </ul>
+	 */
+	public static String cleanPath(String path) {
+		//use only "/" as delimiter
+		path = path.replaceAll("\\\\", "/");
+		//remove double slahes
+		path = path.replaceAll("//", "/");
+		return path;
+	}
+	
+	/**
+	 * Gets the names of the given files or directories.
+	 */
+	public static List<String> getNames(List<? extends FilesystemItem> files) {
+		List<String> ret = alist(files.size());
+		for (FilesystemItem file : files)
+			ret.add(file.getName());
+		return ret;
+	}
+	
 }

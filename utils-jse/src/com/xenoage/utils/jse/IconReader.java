@@ -1,6 +1,6 @@
 package com.xenoage.utils.jse;
 
-import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
+import static com.xenoage.utils.jse.JsePlatformUtils.io;
 import static com.xenoage.utils.log.Log.log;
 import static com.xenoage.utils.log.Report.warning;
 
@@ -57,7 +57,7 @@ public class IconReader {
 	 */
 	public static BufferedImage readImageFromPath(String path) {
 		try {
-			return ImageIO.read(desktopIO().findFile(path));
+			return ImageIO.read(io().openFile(path));
 		} catch (IOException ex) {
 			log(warning("Could not read icon", ex));
 			return null;

@@ -3,7 +3,7 @@ package com.xenoage.utils.gwt;
 import java.util.List;
 
 import com.xenoage.utils.PlatformUtils;
-import com.xenoage.utils.async.AsyncCallback;
+import com.xenoage.utils.async.AsyncResult;
 import com.xenoage.utils.font.TextMeasurer;
 import com.xenoage.utils.gwt.font.GwtTextMeasurer;
 import com.xenoage.utils.gwt.io.GwtIO;
@@ -79,7 +79,7 @@ public class GwtPlatformUtils
 		return gwtIO;
 	}
 
-	@Override public void openFileAsync(String filePath, AsyncCallback<InputStream> callback) {
+	@Override public void openFileAsync(String filePath, AsyncResult<InputStream> callback) {
 		gwtIO().openFileAsync(filePath, callback); 
 	}
 
@@ -101,6 +101,11 @@ public class GwtPlatformUtils
 	 */
 	@Override public ZipReader createZipReader(InputStream inputStream) {
 		return null;
+	}
+
+	@Override public void exit(Throwable ex) {
+		//we throw an error, to stop further execution immediately
+		throw new Error("Fatal error", ex);
 	}
 
 }

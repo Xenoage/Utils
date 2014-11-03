@@ -80,7 +80,7 @@ public class NullableListTest {
 		}
 	}
 
-	private <T> ArrayList<T> list(T... vals) {
+	private <T> ArrayList<T> list(@SuppressWarnings("unchecked") T... vals) {
 		ArrayList<T> ret = new ArrayList<T>();
 		for (T val : vals)
 			ret.add(val);

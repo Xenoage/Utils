@@ -1,6 +1,7 @@
 package com.xenoage.utils.jse.files;
 
-import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
+import static com.xenoage.utils.collections.CollectionUtils.alist;
+import static com.xenoage.utils.jse.JsePlatformUtils.io;
 import static com.xenoage.utils.log.Log.log;
 import static com.xenoage.utils.log.Report.warning;
 
@@ -9,10 +10,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.List;
 
-import com.xenoage.utils.jse.collections.WeakList;
 import com.xenoage.utils.jse.io.DesktopIO;
-import com.xenoage.utils.jse.io.JseFileUtils;
+import com.xenoage.utils.jse.io.JseStreamUtils;
 
 /**
  * Manages a list of the recently opened files.
@@ -30,7 +31,7 @@ public class RecentFiles {
 	static final String filePath = "data/recentfiles";
 	static final int maxEntries = 5;
 
-	private static WeakList<RecentFilesListener> listeners = new WeakList<RecentFilesListener>();
+	private static List<RecentFilesListener> listeners = alist();
 
 
 	/**
@@ -39,21 +40,19 @@ public class RecentFiles {
 	 */
 	public static ArrayList<File> getRecentFiles() {
 		ArrayList<File> ret = new ArrayList<File>(maxEntries);
-		File file = null;
-		try {
-			file = desktopIO().findFile(filePath);
-		} catch (IOException ex) {
-			log(warning(ex));
-		}
-		if (file == null)
-			return ret; //file not existing yet
-		String list = JseFileUtils.readFile(file);
-		if (list != null) {
-			String[] files = list.split("\n");
-			for (int i = 0; i < maxEntries && i < files.length; i++) {
-				File entryFile = new File(files[i]);
-				if (entryFile.exists())
-					ret.add(entryFile);
+		if (io().existsFile(filePath)) {
+			try {
+				String list = JseStreamUtils.readToString(io().openFile(filePath));
+				if (list != null) {
+					String[] files = list.split("\n");
+					for (int i = 0; i < maxEntries && i < files.length; i++) {
+						File entryFile = new File(files[i]);
+						if (entryFile.exists())
+							ret.add(entryFile);
+					}
+				}
+			} catch (IOException ex) {
+				log(warning(ex));
 			}
 		}
 		return ret;
@@ -77,7 +76,7 @@ public class RecentFiles {
 			files.remove(files.size() - 1);
 		//save list
 		try {
-			Writer writer = new FileWriter(desktopIO().createFile(filePath));
+			Writer writer = new FileWriter(io().createFile(filePath));
 			for (File f : files) {
 				writer.append(f.getAbsolutePath() + "\n");
 			}
@@ -85,17 +84,13 @@ public class RecentFiles {
 		} catch (IOException ex) {
 		}
 		//notify listeners
-		for (RecentFilesListener listener : listeners.getAll()) {
+		for (RecentFilesListener listener : listeners) {
 			listener.recentFilesChanged();
 		}
 	}
 
 	/**
 	 * Adds the given {@link RecentFilesListener}.
-	 * 
-	 * Unregistering is not necessary. This class stores only weak
-	 * references of the components, so they can be removed by the
-	 * garbage collector when they are not used any more.
 	 */
 	public static void addListener(RecentFilesListener listener) {
 		listeners.add(listener);

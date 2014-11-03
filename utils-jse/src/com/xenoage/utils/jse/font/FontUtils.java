@@ -1,7 +1,7 @@
 package com.xenoage.utils.jse.font;
 
 import static com.xenoage.utils.io.FileFilters.ttfFilter;
-import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
+import static com.xenoage.utils.jse.JsePlatformUtils.io;
 import static com.xenoage.utils.log.Log.log;
 import static com.xenoage.utils.log.Report.remark;
 
@@ -58,9 +58,9 @@ public class FontUtils {
 	public void loadShippedFonts()
 		throws Exception {
 		String fontPath = "data/fonts";
-		List<String> ttfFiles = desktopIO().listFiles(fontPath, ttfFilter);
+		List<String> ttfFiles = io().listFiles(fontPath, ttfFilter);
 		for (String file : ttfFiles) {
-			Font font = Font.createFont(Font.TRUETYPE_FONT, desktopIO().findFile(fontPath + "/" + file));
+			Font font = Font.createFont(Font.TRUETYPE_FONT, io().openFile(fontPath + "/" + file));
 			String fontName = font.getFamily();
 			if (!isFontFamilySupported(fontName)) {
 				log(remark("Registering font: " + fontName));

@@ -1,11 +1,15 @@
 package com.xenoage.utils.jse.files;
 
+import static com.xenoage.utils.jse.JsePlatformUtils.io;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.util.ArrayList;
 
 import org.junit.Test;
+
+import com.xenoage.utils.PlatformUtils;
+import com.xenoage.utils.jse.JsePlatformUtils;
 
 /**
  * Test cases for the {@link RecentFiles} class.
@@ -17,7 +21,7 @@ public class RecentFilesTest {
 	@Test public void test() {
 		assertEquals("Test was written for 5 entries", 5, RecentFiles.maxEntries);
 		//delete file
-		new File(RecentFiles.filePath).delete();
+		io().deleteFile(RecentFiles.filePath, false);
 		//save 7 files (2 are non-existing)
 		RecentFiles.addRecentFile(new File("data/test/RecentFilesTest/1.txt"));
 		RecentFiles.addRecentFile(new File("data/test/RecentFilesTest/2.txt"));

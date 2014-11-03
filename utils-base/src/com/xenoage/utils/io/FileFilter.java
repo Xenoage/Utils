@@ -1,7 +1,7 @@
 package com.xenoage.utils.io;
 
 /**
- * A filter for {@link File}s.
+ * A filter for files.
  *
  * @author Andreas Wenger
  */

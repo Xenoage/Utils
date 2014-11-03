@@ -97,10 +97,12 @@ public class JseFileUtils {
 	 */
 	public static void writeFile(String content, String filepath) {
 		try {
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filepath)));
+			BufferedWriter bw = new BufferedWriter(
+				new OutputStreamWriter(new FileOutputStream(filepath), "UTF-8"));
 			bw.write(content);
 			bw.close();
 		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 

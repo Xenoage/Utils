@@ -1,11 +1,10 @@
 package com.xenoage.utils.jse.settings;
 
-import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
+import static com.xenoage.utils.jse.JsePlatformUtils.io;
 import static com.xenoage.utils.log.Log.log;
 import static com.xenoage.utils.log.Report.error;
 import static com.xenoage.utils.log.Report.warning;
 
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -80,7 +79,7 @@ public class Settings {
 		// load the settings from the .settings files
 		this.files = new Hashtable<String, Properties>();
 		List<String> fileList = null;
-			fileList = desktopIO().listFiles(directory);
+			fileList = io().listFiles(directory);
 		for (String file : fileList) {
 			String name = file;
 			if (name.endsWith(".settings")) {
@@ -151,7 +150,7 @@ public class Settings {
 		if (p != null) {
 			try {
 				OutputStream out = new FileOutputStream(
-					desktopIO().createFile(this.directory + "/" + file + ".settings"));
+					io().createFile(this.directory + "/" + file + ".settings"));
 				p.storeToXML(out, "Changed " + new Date());
 				out.close();
 			} catch (IOException ex) {
@@ -166,7 +165,8 @@ public class Settings {
 	public void reload(String file) {
 		try {
 			Properties p = new Properties();
-			p.loadFromXML(new FileInputStream(desktopIO().findFile(directory + "/" + file + ".settings")));
+			String filePath = directory + "/" + file + ".settings";
+			p.loadFromXML(io().openFile(filePath));
 			files.put(file, p);
 		} catch (Exception ex) {
 			log(warning("Could not load settings from file \"" + file + "\"", ex));

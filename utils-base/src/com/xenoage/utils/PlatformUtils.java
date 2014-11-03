@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.xenoage.utils.annotations.NonNull;
-import com.xenoage.utils.async.AsyncCallback;
+import com.xenoage.utils.async.AsyncResult;
 import com.xenoage.utils.font.TextMeasurer;
 import com.xenoage.utils.io.FilesystemInput;
 import com.xenoage.utils.io.InputStream;
@@ -90,7 +90,7 @@ public abstract class PlatformUtils {
 	 * Only asynchronous file reading is supported by all platforms. Specific platform implementations
 	 * may provide also blocking methods for file reading.
 	 */
-	@NonNull public abstract void openFileAsync(String filePath, AsyncCallback<InputStream> callback);
+	@NonNull public abstract void openFileAsync(String filePath, AsyncResult<InputStream> result);
 	
 	/**
 	 * Returns an {@link XmlReader} for the given {@link InputStream} for this platform.
@@ -109,5 +109,11 @@ public abstract class PlatformUtils {
 	 */
 	@NonNull public abstract ZipReader createZipReader(InputStream inputStream)
 		throws IOException;
+	
+	/**
+	 * Exits the program immediately because of an error (like System.exit(1) in the JRE).
+	 * @param error  the error with more information, or null
+	 */
+	public abstract void exit(Throwable error);
 	
 }

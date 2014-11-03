@@ -1,6 +1,6 @@
 package com.xenoage.utils.jse;
 
-import static com.xenoage.utils.jse.JsePlatformUtils.desktopIO;
+import static com.xenoage.utils.jse.JsePlatformUtils.io;
 
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
@@ -8,7 +8,6 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -43,10 +42,7 @@ public class ImageUtils {
 	 */
 	public static Image imageOrNull(String filepath) {
 		try {
-			File file = desktopIO().findFile(filepath);
-			if (file == null)
-				return null;
-			return ImageIO.read(file);
+			return ImageIO.read(io().openFile(filepath));
 		} catch (IOException ex) {
 			return null;
 		}

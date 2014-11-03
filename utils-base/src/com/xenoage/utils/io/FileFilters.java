@@ -9,18 +9,6 @@ package com.xenoage.utils.io;
 public class FileFilters {
 
 	/**
-	 * A filter for directories.
-	 * Directories beginning with a "." are ignored
-	 * (e.g. ".svn").
-	 */
-	public static FileFilter directoriesFilter = new FileFilter() {
-
-		@Override public boolean accept(File file) {
-			return file.isDirectory() && !file.getName().startsWith(".");
-		}
-	};
-
-	/**
 	 * A filter for files with ".java" ending.
 	 */
 	public static FileFilter javaFilter = new FileFilter() {
