@@ -148,6 +148,22 @@ public abstract class XmlReader {
 			return null;
 		return Parser.parseIntegerNull(v);
 	}
+	
+	/**
+	 * Like {@link #getAttributeInt(String)}, but throws an {@link XmlDataException} if the
+	 * attribute is not set.
+	 */
+	public int getAttributeIntNotNull(String name) {
+		String v = getAttribute(name);
+		if (v == null)
+			throw dataException(name + " unknown");
+		try {
+			return Integer.parseInt(v);
+		}
+		catch (NumberFormatException ex) {
+			throw dataException(name + " is no int");
+		}
+	}
 
 	/**
 	 * Gets the value of the attribute with the given name at this element
