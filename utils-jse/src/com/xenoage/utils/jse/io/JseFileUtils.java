@@ -237,6 +237,9 @@ public class JseFileUtils {
 	/**
 	 * Copies the given file into the given {@link OutputStream},
 	 * which is closed at the end.
+	 * @deprecated Closing the output stream at the end is bad. Use
+	 * {@link #copyFileToStream(String, OutputStream)} instead and close
+	 * the stream when finished.
 	 */
 	public static void copyFile(String filepath, OutputStream out)
 		throws IOException {
@@ -248,6 +251,20 @@ public class JseFileUtils {
 		}
 		fis.close();
 		out.close();
+	}
+	
+	/**
+	 * Copies the given file into the given {@link OutputStream}.
+	 */
+	public static void copyFileToStream(File file, OutputStream out)
+		throws IOException {
+		FileInputStream fis = new FileInputStream(file);
+		byte[] buf = new byte[1024];
+		int i = 0;
+		while ((i = fis.read(buf)) != -1) {
+			out.write(buf, 0, i);
+		}
+		fis.close();
 	}
 
 	/**
