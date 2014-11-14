@@ -49,14 +49,14 @@ public class LangResourceBundle
 			//read as label (usually the text, followed by ":")
 			VocID vocID = vocIDs.get(key.substring(0, key.length() - 1));
 			if (vocID == null)
-				return null;
+				return key;
 			return Lang.getLabel(vocID);
 		}
 		else if (key.endsWith("...")) {
 			//read with ellipsis (text followed by "...")
 			VocID vocID = vocIDs.get(key.substring(0, key.length() - 3));
 			if (vocID == null)
-				return null;
+				return key;
 			return Lang.getWithEllipsis(vocID);
 		}
 		else {
