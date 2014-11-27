@@ -7,8 +7,8 @@ package com.xenoage.utils.math;
  */
 public class RandomUtils {
 
-	public static int randomInt(int min, int max) {
-		return min + (int) (Math.random() * (max - min));
+	public static int randomInt(int minInclusive, int maxInclusive) {
+		return minInclusive + (int) (Math.random() * (maxInclusive + 1 - minInclusive));
 	}
 
 }
