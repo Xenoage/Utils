@@ -51,7 +51,11 @@ public class Lang {
 		if (id == null)
 			return "";
 		String s = getWithNull(id);
-		return (s != null ? s : id.getDefaultValue());
+		if (s == null)
+			return id.getDefaultValue();
+		for (Tuple2<String, String> token : tokens)
+			s = s.replace(token.get1(), token.get2());
+		return s;
 	}
 
 	/**
