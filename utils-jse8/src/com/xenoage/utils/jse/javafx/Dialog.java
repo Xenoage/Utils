@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import com.xenoage.utils.jse.lang.LangResourceBundle;
-import com.xenoage.utils.lang.VocID;
 
 /**
  * A base class for dialog controllers based on JavaFX.
