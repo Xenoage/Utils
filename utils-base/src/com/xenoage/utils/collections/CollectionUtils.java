@@ -220,6 +220,16 @@ public final class CollectionUtils {
 	}
 	
 	/**
+	 * Adds the given element to the given list, if it is not null.
+	 * The modified list is returned for convenience.
+	 */
+	public static <T> List<T> addNotNull(List<T> list, T element) {
+		if (list != null && element != null)
+			list.add(element);
+		return list;
+	}
+	
+	/**
 	 * Returns the given list with the given element added at the end.
 	 * If it is an empty list, a new list is created. Otherwise, the given list is reused. 
 	 * This method is especially useful for dealing with immutable empty lists,

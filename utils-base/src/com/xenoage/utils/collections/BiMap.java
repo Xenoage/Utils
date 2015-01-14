@@ -9,6 +9,7 @@ import com.xenoage.utils.annotations.NonNull;
 
 /**
  * A bidirectional map, with constant lookup time in both directions.
+ * A default value for non-existent entries may be provided, otherwise it is null.
  * 
  * @author Andreas Wenger
  */
@@ -16,6 +17,8 @@ public class BiMap<T1, T2> {
 	
 	private Map<T1, T2> map1 = map();
 	private Map<T2, T1> map2 = map();
+	private T1 defaultValue1 = null;
+	private T2 defaultValue2 = null;
 	
 	public static <T1, T2> BiMap<T1, T2> biMap() {
 		return new BiMap<T1, T2>();
@@ -31,24 +34,14 @@ public class BiMap<T1, T2> {
 	
 	@MaybeNull public T1 get1(@MaybeNull T2 value2) {
 		if (value2 == null)
-			return null;
+			return defaultValue1;
 		return map2.get(value2);
-	}
-	
-	public T1 get1OrDefault(@MaybeNull T2 value2, T1 defaultValue1) {
-		T1 ret = get1(value2);
-		return ret != null ? ret : defaultValue1;
 	}
 
 	@MaybeNull public T2 get2(@MaybeNull T1 value1) {
 		if (value1 == null)
-			return null;
+			return defaultValue2;
 		return map1.get(value1);
-	}
-	
-	public T2 get2OrDefault(@MaybeNull T1 value1, T2 defaultValue2) {
-		T2 ret = get2(value1);
-		return ret != null ? ret : defaultValue2;
 	}
 
 	public void put(@NonNull T1 value1, @NonNull T2 value2) {
@@ -64,6 +57,22 @@ public class BiMap<T1, T2> {
 		T2 oldValue2 = map1.get(value1);
 		if (oldValue2 != null)
 			map2.remove(oldValue2);
+	}
+	
+	public T1 getDefaultValue1() {
+		return defaultValue1;
+	}
+
+	public void setDefaultValue1(T1 defaultValue1) {
+		this.defaultValue1 = defaultValue1;
+	}
+
+	public T2 getDefaultValue2() {
+		return defaultValue2;
+	}
+
+	public void setDefaultValue2(T2 defaultValue2) {
+		this.defaultValue2 = defaultValue2;
 	}
 
 }
