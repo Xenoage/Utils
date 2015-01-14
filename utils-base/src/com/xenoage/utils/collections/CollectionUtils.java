@@ -156,6 +156,16 @@ public final class CollectionUtils {
 	public static boolean containsNull(Collection<?> c) {
 		return containsRef(c, null);
 	}
+	
+	/**
+	 * Returns true, if the given collection contains only <code>null</code> elements.
+	 */
+	public static boolean containsOnlyNull(Collection<?> c) {
+		for (Object e : c)
+			if (e != null)
+				return false;
+		return true;
+	}
 
 	/**
 	 * Returns the sum of the items of the given collection.
