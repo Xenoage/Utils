@@ -67,5 +67,18 @@ public abstract class SupportedFormats<T extends Document> {
 				return f;
 		throw new IllegalArgumentException("Format with ID \"" + id + "\" does not exist");
 	}
-
+	
+	/**
+	 * Gets the format of the file with the given name, guessed by its extension.
+	 * If this is not possible, the default read format is returned.
+	 */
+	public FileFormat<T> getFormatByExtension(String filename) {
+		filename = filename.toLowerCase();
+		for (FileFormat<T> format : formats)
+			for (String ext : format.getAllExtensions())
+				if (filename.endsWith(ext.toLowerCase()))
+					return format;
+		return getReadDefaultFormat();
+	}
+ 
 }

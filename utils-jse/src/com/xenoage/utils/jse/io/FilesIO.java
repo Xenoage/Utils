@@ -332,4 +332,16 @@ public class FilesIO
 		}
 	}
 
+	public File getUserDir() {
+		return userDir;
+	}
+	
+	public File getSystemDir() {
+		return systemDir;
+	}
+	
+	public File getSharedDir() {
+		return sharedDir;
+	}
+
 }

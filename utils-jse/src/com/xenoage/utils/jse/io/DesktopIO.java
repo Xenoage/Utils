@@ -180,5 +180,26 @@ public class DesktopIO
 	public void deleteFile(String filePath, boolean system) {
 		filesIO.deleteFile(filePath, system);
 	}
+	
+	/**
+	 * See {@link FilesIO#getUserDir()}.
+	 */
+	public File getUserDir() {
+		return filesIO.getUserDir();
+	}
+	
+	/**
+	 * See {@link FilesIO#getSystemDir()}.
+	 */
+	public File getSystemDir() {
+		return filesIO.getSystemDir();
+	}
+	
+	/**
+	 * See {@link FilesIO#getSharedDir()}.
+	 */
+	public File getSharedDir() {
+		return filesIO.getSharedDir();
+	}
 
 }

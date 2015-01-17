@@ -1,5 +1,7 @@
 package com.xenoage.utils.document.io;
 
+import static com.xenoage.utils.kernel.Range.range;
+
 import com.xenoage.utils.document.Document;
 
 /**
@@ -68,6 +70,28 @@ public final class FileFormat<T extends Document> {
 	 */
 	public String[] getOtherExtensions() {
 		return otherExtensions;
+	}
+	
+	/**
+	 * Gets all supported extensions, like ".mid" or ".xml".
+	 */
+	public String[] getAllExtensions() {
+		String[] ret = new String[otherExtensions.length + 1];
+		ret[0] = defaultExtension;
+		for (int i : range(otherExtensions))
+			ret[1+i] = otherExtensions[i];
+		return ret;
+	}
+	
+	/**
+	 * Gets all supported extensions with a leading asterisk, like "*.mid" or "*.xml".
+	 */
+	public String[] getAllExtensionsWithAsterisk() {
+		String[] ret = new String[otherExtensions.length + 1];
+		ret[0] = "*" + defaultExtension;
+		for (int i : range(otherExtensions))
+			ret[1+i] = "*" + otherExtensions[i];
+		return ret;
 	}
 	
 	/**
