@@ -140,10 +140,23 @@ public final class CollectionUtils {
 	}
 
 	/**
+	 * Gets the element in the given list with the given index,
+	 * or null if the list is null or if the index is outside the range
+	 * or if the value at the given index is null.
+	 */
+	public static <T> T getOrNull(List<T> c, int index) {
+		if (c == null)
+			return null;
+		if (index < 0 || index >= c.size())
+			return null;
+		return c.get(index);
+	}
+	
+	/**
 	 * Returns true, if the given collection contains the given object
 	 * (same reference, not same contents).
 	 */
-	public static boolean containsRef(Collection<?> c, Object o) {
+	public static <T> boolean containsRef(Collection<T> c, T o) {
 		for (Object e : c)
 			if (e == o)
 				return true;
