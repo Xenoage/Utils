@@ -95,7 +95,7 @@ public final class CollectionUtils {
 	 * Creates a new {@link Set} with the inferred type
 	 * using the given elements.
 	 */
-	@SafeVarargs public static <T> Set<T> set(T... vals) {
+	public static <T> Set<T> set(T... vals) {
 		HashSet<T> ret = new HashSet<T>();
 		for (T v : vals)
 			ret.add(v);
@@ -106,7 +106,7 @@ public final class CollectionUtils {
 	 * Creates a new {@link Set} with the inferred type
 	 * using the given elements.
 	 */
-	@SafeVarargs public static <T> Set<T> set(Collection<T> vals) {
+	public static <T> Set<T> set(Collection<T> vals) {
 		return new HashSet<T>(vals);
 	}
 

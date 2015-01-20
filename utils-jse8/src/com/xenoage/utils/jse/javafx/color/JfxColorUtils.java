@@ -8,7 +8,7 @@ import com.xenoage.utils.color.Color;
  * 
  * @author Andreas Wenger
  */
-public class JavaFXColorUtils {
+public class JfxColorUtils {
 
 	public static Color fromJavaFXColor(javafx.scene.paint.Color jfxColor) {
 		return new Color(to255(jfxColor.getRed()), to255(jfxColor.getGreen()),

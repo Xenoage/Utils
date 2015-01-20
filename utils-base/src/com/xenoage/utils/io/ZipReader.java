@@ -1,6 +1,5 @@
 package com.xenoage.utils.io;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 /**

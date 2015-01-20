@@ -5,7 +5,6 @@ import static com.xenoage.utils.collections.CollectionUtils.map;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +13,7 @@ import java.util.zip.ZipInputStream;
 
 import com.xenoage.utils.collections.CList;
 import com.xenoage.utils.collections.IList;
+import com.xenoage.utils.io.FileNotFoundException;
 import com.xenoage.utils.io.InputStream;
 import com.xenoage.utils.io.ZipReader;
 import com.xenoage.utils.jse.zip.ZipUtils;
