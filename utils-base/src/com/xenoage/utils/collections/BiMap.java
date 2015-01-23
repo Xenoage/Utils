@@ -35,13 +35,15 @@ public class BiMap<T1, T2> {
 	@MaybeNull public T1 get1(@MaybeNull T2 value2) {
 		if (value2 == null)
 			return defaultValue1;
-		return map2.get(value2);
+		T1 ret = map2.get(value2);
+		return (ret != null ? ret : defaultValue1);
 	}
 
 	@MaybeNull public T2 get2(@MaybeNull T1 value1) {
 		if (value1 == null)
 			return defaultValue2;
-		return map1.get(value1);
+		T2 ret = map1.get(value1);
+		return (ret != null ? ret : defaultValue2);
 	}
 
 	public void put(@NonNull T1 value1, @NonNull T2 value2) {
