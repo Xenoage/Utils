@@ -19,6 +19,12 @@ public class Delta {
 
 	/** Abbreviation for {@link #DELTA_FLOAT_ROUGH} */
 	public static final float DRf = DELTA_FLOAT;
+	
+	/** Abbreviation for {@link #DELTA_FLOAT} */
+	public static final float df = DELTA_FLOAT;
+
+	/** Abbreviation for {@link #DELTA_FLOAT_ROUGH} */
+	public static final float drf = DELTA_FLOAT;
 
 
 	public static boolean equals(float v1, float v2) {

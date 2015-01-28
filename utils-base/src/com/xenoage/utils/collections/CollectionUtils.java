@@ -269,5 +269,13 @@ public final class CollectionUtils {
 			list = Collections.emptyList();
 		return list;
 	}
+	
+	/**
+	 * Adds the given array elements to the given target list.
+	 */
+	public static <T> void addAll(List<T> target, T[] elements) {
+		for (T e : elements)
+			target.add(e);
+	}
 
 }
