@@ -122,6 +122,22 @@ public class ArrayUtils {
 		}
 		return ret;
 	}
+	
+	/**
+	 * Gets the index of the entry with the maximum value,
+	 * or -1 if the array is empty.
+	 */
+	public static int getMaxIndex(float[] a) {
+		int ret = -1;
+		float max = Float.MIN_VALUE;
+		for (int i : range(a)) {
+			if (a[i] > max) {
+				max = a[i];
+				ret = i;
+			}
+		}
+		return ret;
+	}
 
 	/**
 	 * Returns the given array as a human-readable comma-separated String,

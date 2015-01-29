@@ -51,6 +51,13 @@ public final class Range
 	public static <T> Range range(int[] a) {
 		return new Range(0, a.length - 1, 1);
 	}
+	
+	/**
+	 * Creates a new range for all indices within the given array.
+	 */
+	public static <T> Range range(float[] a) {
+		return new Range(0, a.length - 1, 1);
+	}
 
 	/**
 	 * Creates a new range for all indices within the given array.
