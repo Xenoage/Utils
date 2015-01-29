@@ -31,6 +31,21 @@ public class CheckUtils {
 			throw new IllegalStateException(message);
 		return o;
 	}
+	
+	/**
+	 * Throws an {@link IllegalStateException} if the given array is null
+	 * or contains null.
+	 * For convenience, the array is returned.
+	 */
+	public static <T> T[] checkNotNullIn(T[] a)
+		throws IllegalStateException {
+		if (a == null)
+			throw new IllegalStateException();
+		for (T o : a)
+			if (o == null)
+				throw new IllegalStateException();
+		return a;
+	}
 
 	/**
 	 * Throws an {@link IllegalStateException} if the given collection is null
@@ -41,7 +56,7 @@ public class CheckUtils {
 		throws IllegalStateException {
 		if (c == null)
 			throw new IllegalStateException();
-		for (Object o : c)
+		for (T o : c)
 			if (o == null)
 				throw new IllegalStateException();
 		return c;
@@ -52,13 +67,14 @@ public class CheckUtils {
 	 * if the given collection is null or contains null.
 	 * For convenience, the collection is returned.
 	 */
-	public static void checkNotNullIn(Collection<?> c, String message)
+	public static <T> Collection<T> checkNotNullIn(Collection<T> c, String message)
 		throws IllegalStateException {
 		if (c == null)
 			throw new IllegalStateException(message);
-		for (Object o : c)
+		for (T o : c)
 			if (o == null)
 				throw new IllegalStateException(message);
+		return c;
 	}
 	
 	/**

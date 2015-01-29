@@ -237,6 +237,20 @@ public final class Fraction
 	public boolean isGreater0() {
 		return numerator > 0;
 	}
+	
+	/**
+	 * Returns true, if this fraction is less than the given one.
+	 */
+	public boolean isLessThan(Fraction fr) {
+		return compareTo(fr) < 0;
+	}
+	
+	/**
+	 * Returns true, if this fraction is greater than the given one.
+	 */
+	public boolean isGreaterThan(Fraction fr) {
+		return compareTo(fr) > 0;
+	}
 
 	/**
 	 * Gets a comparator for fractions.
