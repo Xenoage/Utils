@@ -12,8 +12,9 @@ import com.xenoage.utils.annotations.MaybeNull;
 public class Optional<T> {
 	
 	private static Optional<Object> absent = new Optional<Object>(null);
-		
+
 	private T value;
+	
 	
 	/**
 	 * Returns a new {@link Optional} with the given non-null value.
@@ -65,5 +66,29 @@ public class Optional<T> {
 	@MaybeNull public T orNull() {
     return null;
   }
+	
+	@Override public int hashCode() {
+		if (value == null)
+			return 0;
+		else
+			return value.hashCode();
+	}
+
+	@Override public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Optional<?> other = (Optional<?>) obj;
+		if (value == null) {
+			if (other.value != null)
+				return false;
+		}
+		else if (!value.equals(other.value))
+			return false;
+		return true;
+	}
 		
 }
