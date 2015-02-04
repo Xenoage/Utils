@@ -1,11 +1,10 @@
 package com.xenoage.utils.iterators;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * Iterator for multiple collections.
+ * Iterator for multiple iterators.
  * They are iterated one after the other.
  * 
  * @author Andreas Wenger
@@ -13,28 +12,24 @@ import java.util.NoSuchElementException;
 public class MultiIt<T>
 	implements Iterator<T>, Iterable<T> {
 
-	private final Collection<? extends T>[] collections;
-
-	private Iterator<? extends T> currentIterator = null;
+	private final Iterator<? extends T>[] iterators;
 	private int index = 0;
 
 
-	@SafeVarargs public MultiIt(Collection<? extends T>... collections) {
-		if (collections.length == 0)
-			throw new IllegalArgumentException("At least one collection must be given");
-		this.collections = collections;
-		this.currentIterator = collections[0].iterator();
+	@SafeVarargs public MultiIt(Iterator<? extends T>... iterators) {
+		if (iterators.length == 0)
+			throw new IllegalArgumentException("At least one iterator must be given");
+		this.iterators = iterators;
 	}
 
-	@SafeVarargs public static <T> MultiIt<T> multiIt(Collection<? extends T>... collections) {
-		return new MultiIt<T>(collections);
+	@SafeVarargs public static <T> MultiIt<T> multiIt(Iterator<? extends T>... iterators) {
+		return new MultiIt<T>(iterators);
 	}
 
 	@Override public boolean hasNext() {
-		if (!currentIterator.hasNext()) {
-			if (index + 1 < collections.length) {
+		if (!iterators[index].hasNext()) {
+			if (index + 1 < iterators.length) {
 				index++;
-				currentIterator = collections[index].iterator();
 				return hasNext();
 			}
 			else {
@@ -47,19 +42,9 @@ public class MultiIt<T>
 	}
 
 	@Override public T next() {
-		if (!currentIterator.hasNext()) {
-			if (index + 1 < collections.length) {
-				index++;
-				currentIterator = collections[index].iterator();
-				return next();
-			}
-			else {
-				throw new NoSuchElementException();
-			}
-		}
-		else {
-			return currentIterator.next();
-		}
+		if (!hasNext())
+			throw new NoSuchElementException();
+		return iterators[index].next();
 	}
 
 	@Override public void remove() {
