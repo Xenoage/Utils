@@ -9,7 +9,7 @@ package com.xenoage.utils.math;
 public class Delta {
 
 	/** Can be used to compare floats for equality. High precision. */
-	public static final float DELTA_FLOAT = 0.0000001f;
+	public static final float DELTA_FLOAT = 0.000001f;
 
 	/** Can be used to compare floats for equality. Low precision. */
 	public static final float DELTA_FLOAT_ROUGH = 0.001f;
