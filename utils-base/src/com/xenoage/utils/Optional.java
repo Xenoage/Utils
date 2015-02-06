@@ -64,7 +64,7 @@ public class Optional<T> {
 	 * Gets the value or null, if absent.
 	 */
 	@MaybeNull public T orNull() {
-    return null;
+    return value;
   }
 	
 	@Override public int hashCode() {
