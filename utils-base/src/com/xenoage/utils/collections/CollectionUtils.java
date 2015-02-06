@@ -277,5 +277,24 @@ public final class CollectionUtils {
 		for (T e : elements)
 			target.add(e);
 	}
+	
+	/**
+	 * Gets the first element of the list.
+	 */
+	public static <T> T getFirst(List<T> list) {
+		if (list.isEmpty())
+			throw new IndexOutOfBoundsException();
+		return list.get(0);
+	}
+	
+	/**
+	 * Gets the last element of the list, or the given replacement
+	 * if the list is empty.
+	 */
+	public static <T> T getLast(List<T> list) {
+		if (list.isEmpty())
+			throw new IndexOutOfBoundsException();
+		return list.get(list.size() - 1);
+	}
 
 }
