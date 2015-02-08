@@ -100,6 +100,14 @@ public class MathUtils {
 		ret = (n1 * n2) / ret;
 		return ret;
 	}
+	
+	/**
+	 * Like the % operator, but also returns positive results for negative numbers.
+	 * E.g. 3 % 2 = 1, but also -3 & 2 = 1.
+	 */
+	public static int mod(int n, int mod) {
+		return ((n % mod) + mod) % mod;
+	}
 
 	/**
 	 * Returns the lowest result of n modulo mod, where the result is still

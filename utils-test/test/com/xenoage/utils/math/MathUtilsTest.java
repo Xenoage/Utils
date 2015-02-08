@@ -4,6 +4,7 @@ import static com.xenoage.utils.math.Delta.DRf;
 import static com.xenoage.utils.math.Delta.Df;
 import static com.xenoage.utils.math.MathUtils.interpolateLinear;
 import static com.xenoage.utils.math.MathUtils.lowestPrimeNumber;
+import static com.xenoage.utils.math.MathUtils.mod;
 import static com.xenoage.utils.math.MathUtils.modMin;
 import static com.xenoage.utils.math.MathUtils.rotate;
 import static org.junit.Assert.assertEquals;
@@ -20,6 +21,13 @@ import com.xenoage.utils.math.geom.Point2f;
  */
 public class MathUtilsTest {
 
+	@Test public void modTest() {
+		for (int i = -20; i <= 20; i+=2)
+			assertEquals(0, mod(i, 2));
+		for (int i = -19; i <= 19; i+=2)
+			assertEquals(1, mod(i, 2));
+	}
+	
 	@Test public void modMinTest() {
 		assertEquals(2, modMin(5, 3, 0));
 		assertEquals(-8, modMin(1, 3, -10));
