@@ -22,10 +22,20 @@ import com.xenoage.utils.math.geom.Point2f;
 public class MathUtilsTest {
 
 	@Test public void modTest() {
+		//mod 2
 		for (int i = -20; i <= 20; i+=2)
 			assertEquals(0, mod(i, 2));
 		for (int i = -19; i <= 19; i+=2)
 			assertEquals(1, mod(i, 2));
+		//mod 4
+		for (int i = -20; i <= 20; i+=4)
+			assertEquals(0, mod(i, 4));
+		for (int i = -19; i <= 17; i+=4)
+			assertEquals(1, mod(i, 4));
+		for (int i = -18; i <= 18; i+=4)
+			assertEquals(2, mod(i, 4));
+		for (int i = -17; i <= 19; i+=4)
+			assertEquals(3, mod(i, 4));
 	}
 	
 	@Test public void modMinTest() {

@@ -103,7 +103,7 @@ public class MathUtils {
 	
 	/**
 	 * Like the % operator, but also returns positive results for negative numbers.
-	 * E.g. 3 % 2 = 1, but also -3 & 2 = 1.
+	 * E.g. -3 mod 4 = 1.
 	 */
 	public static int mod(int n, int mod) {
 		return ((n % mod) + mod) % mod;
