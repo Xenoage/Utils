@@ -152,5 +152,21 @@ public class ArrayUtils {
 		}
 		return s.toString();
 	}
+	
+	public static <T> T getFirst(T[] a) {
+		return a[0];
+	}
+	
+	public static <T> T getLast(T[] a) {
+		return a[a.length - 1];
+	}
+	
+	public static int getFirst(int[] a) {
+		return a[0];
+	}
+	
+	public static int getLast(int[] a) {
+		return a[a.length - 1];
+	}
 
 }
