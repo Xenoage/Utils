@@ -169,4 +169,12 @@ public class ArrayUtils {
 		return a[a.length - 1];
 	}
 
+	public static float getFirst(float[] a) {
+		return a[0];
+	}
+	
+	public static float getLast(float[] a) {
+		return a[a.length - 1];
+	}
+	
 }
