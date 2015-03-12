@@ -4,10 +4,17 @@ import static com.xenoage.utils.math.Delta.DRf;
 import static com.xenoage.utils.math.Delta.Df;
 import static com.xenoage.utils.math.MathUtils.interpolateLinear;
 import static com.xenoage.utils.math.MathUtils.lowestPrimeNumber;
+import static com.xenoage.utils.math.MathUtils.max;
+import static com.xenoage.utils.math.MathUtils.min;
 import static com.xenoage.utils.math.MathUtils.mod;
 import static com.xenoage.utils.math.MathUtils.modMin;
 import static com.xenoage.utils.math.MathUtils.rotate;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+
+import java.math.BigInteger;
 
 import org.junit.Test;
 
@@ -82,6 +89,28 @@ public class MathUtilsTest {
 		assertEquals(5, interpolateLinear(5, 10, 100, 200, 100), Df);
 		assertEquals(10, interpolateLinear(5, 10, 100, 200, 200), Df);
 		assertEquals(6, interpolateLinear(5, 10, 100, 200, 120), Df);
+	}
+	
+	@Test public void minTest() {
+		assertNull(min());
+		assertNull(min((Integer) null));
+		assertEquals((Integer) 1, min(2, null, 1, 5));
+		//test, if first candidate is returned
+		BigInteger ref1 = new BigInteger("1");
+		BigInteger ref2 = new BigInteger("1");
+		assertSame(ref1, min(ref1, ref2));
+		assertNotSame(ref1, min(ref2, ref1));
+	}
+	
+	@Test public void maxTest() {
+		assertNull(max());
+		assertNull(max((Integer) null));
+		assertEquals((Integer) 5, max(2, null, 5, 1));
+		//test, if first candidate is returned
+		BigInteger ref1 = new BigInteger("1");
+		BigInteger ref2 = new BigInteger("1");
+		assertSame(ref1, max(ref1, ref2));
+		assertNotSame(ref1, max(ref2, ref1));
 	}
 
 }

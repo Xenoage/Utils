@@ -225,10 +225,24 @@ public class MathUtils {
 		else
 			return 0;
 	}
+	
+	/**
+	 * Returns the minimum element of the given {@link Comparable}s.
+	 * If all elements are null or if no element is given, null is returned.
+	 * If more then one element qualifies, the first one is returned.
+	 */
+	@SafeVarargs public static <T extends Comparable<T>> T min(T... ts) {
+		T ret = null;
+		for (T t : ts)
+			if (ret == null || (t != null && t.compareTo(ret) < 0))
+				ret = t;
+		return ret;
+	}
 
 	/**
-	 * Returns the maximum value of the given {@link Comparable} objects.
-	 * If all values are null or no value is given, null is returned.
+	 * Returns the maximum element of the given {@link Comparable}s.
+	 * If all elements are null or if no element is given, null is returned.
+	 * If more then one element qualifies, the first one is returned.
 	 */
 	@SafeVarargs public static <T extends Comparable<T>> T max(T... ts) {
 		T ret = null;

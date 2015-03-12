@@ -108,18 +108,52 @@ public class ArrayUtils {
 				return false;
 		return true;
 	}
+	
+	/**
+	 * Returns the entry with the lowest value.
+	 * The array may not be empty.
+	 */
+	public static int min(int[] a) {
+		int ret = a[0];
+		for (int v : a)
+			if (v < ret)
+				ret = v;
+		return ret;
+	}
 
 	/**
 	 * Returns the entry with the lowest value.
+	 * The array may not be empty.
 	 */
 	public static <T extends Comparable<T>> T min(T[] c) {
-		T ret = null;
-		if (c.length > 0) {
-			ret = c[0];
-			for (T t : c)
-				if (t.compareTo(ret) < 0)
-					ret = t;
-		}
+		T ret = c[0];
+		for (T t : c)
+			if (t.compareTo(ret) < 0)
+				ret = t;
+		return ret;
+	}
+	
+	/**
+	 * Returns the entry with the highest value.
+	 * The array may not be empty.
+	 */
+	public static int max(int[] a) {
+		int ret = a[0];
+		for (int v : a)
+			if (v > ret)
+				ret = v;
+		return ret;
+	}
+
+	/**
+	 * Returns the entry with the highest value.
+	 * The array may not be empty.
+	 */
+	public static <T extends Comparable<T>> T max(T[] c) {
+		T ret = c[0];
+		for (T t : c)
+			if (t.compareTo(ret) > 0)
+				ret = t;
 		return ret;
 	}
 	

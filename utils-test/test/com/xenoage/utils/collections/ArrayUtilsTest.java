@@ -1,5 +1,7 @@
 package com.xenoage.utils.collections;
 
+import static com.xenoage.utils.collections.ArrayUtils.max;
+import static com.xenoage.utils.collections.ArrayUtils.min;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -42,6 +44,22 @@ public class ArrayUtilsTest {
 		a = ArrayUtils.toIntArray(al);
 		for (int i = 0; i < arraySize; i++)
 			assertEquals(i, a[i]);
+	}
+	
+	@Test public void minTestInt() {
+		assertEquals(5, min(new int[]{6, 8, 5, 6}));
+	}
+	
+	@Test public void minTestGeneric() {
+		assertEquals((Integer) 5, min(new Integer[]{6, 8, 5, 6}));
+	}
+	
+	@Test public void maxTestInt() {
+		assertEquals(8, max(new int[]{6, 8, 5, 6}));
+	}
+	
+	@Test public void maxTestGeneric() {
+		assertEquals((Integer) 8, max(new Integer[]{6, 8, 5, 6}));
 	}
 
 }
