@@ -65,6 +65,23 @@ public final class CollectionUtils {
 			ret.add(value);
 		return ret;
 	}
+	
+	/**
+	 * Creates a new {@link ArrayList} with the inferred type
+	 * using the given elements of all given Collections.
+	 */
+	@SafeVarargs
+	public static <T> ArrayList<T> alist(Collection<T>... lists) {
+		//compute size
+		int count = 0;
+		for (Collection<T> list : lists)
+			count += list.size();
+		//copy
+		ArrayList<T> ret = new ArrayList<T>(count);
+		for (Collection<T> list : lists)
+			ret.addAll(list);
+		return ret;
+	}
 
 	/**
 	 * Creates a new empty {@link HashMap} with the inferred type.
