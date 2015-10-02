@@ -75,6 +75,29 @@ public final class Rectangle2i {
 		int newY2 = Math.max(this.position.y + this.size.height, p.y);
 		return new Rectangle2i(newX1, newY1, newX2 - newX1, newY2 - newY1);
 	}
+	
+	@Override public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Rectangle2i other = (Rectangle2i) obj;
+		if (position == null) {
+			if (other.position != null)
+				return false;
+		}
+		else if (!position.equals(other.position))
+			return false;
+		if (size == null) {
+			if (other.size != null)
+				return false;
+		}
+		else if (!size.equals(other.size))
+			return false;
+		return true;
+	}
 
 	@Override public String toString() {
 		return "x=" + position.x + ", y=" + position.y + ", w=" + size.width + ", h=" + size.height;
