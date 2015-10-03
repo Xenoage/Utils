@@ -71,7 +71,7 @@ public final class CollectionUtils {
 	 * using the given elements of all given Collections.
 	 */
 	@SafeVarargs
-	public static <T> ArrayList<T> alist(Collection<T>... lists) {
+	public static <T> ArrayList<T> alistFromLists(Collection<T>... lists) {
 		//compute size
 		int count = 0;
 		for (Collection<T> list : lists)
