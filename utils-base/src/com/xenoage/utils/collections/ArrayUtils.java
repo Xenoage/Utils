@@ -211,4 +211,17 @@ public class ArrayUtils {
 		return a[a.length - 1];
 	}
 	
+	/**
+	 * Creates a new double array with the given size and default value.
+	 * @param size
+	 * @param defaultValue
+	 * @return
+	 */
+	public static double[] arrayDouble(int size, double defaultValue) {
+		double ret[] = new double[size];
+		for (int i = 0; i < size; i++)
+			ret[i] = defaultValue;
+		return ret;
+	}
+	
 }
