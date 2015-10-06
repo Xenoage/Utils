@@ -1,3 +1,4 @@
+apply plugin: 'java'
 defaultTasks 'dist'
 
 //settings common to all projects
