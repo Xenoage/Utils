@@ -1,0 +1,4 @@
+sourceCompatibility = 8
+dependencies {
+	compile project(':utils-jse')
+}

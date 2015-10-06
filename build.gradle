@@ -43,13 +43,8 @@ allprojects {
 }
 
 //project dependencies
-project(':utils-base') { dependencies { compile project(':utils-kernel') } }
+//GOON: move into subprojects as own build.gradle files
 project(':utils-pdlib') { dependencies { compile project(':utils-base') } }
-project(':utils-jse') { dependencies { compile project(':utils-base') } }
-project(':utils-jse8') {
-	sourceCompatibility = 8
-	dependencies { compile project(':utils-jse') }
-}
 project(':utils-serialize') { dependencies { compile project(':utils-jse') } }
 project(':utils-test') {
 	sourceCompatibility = 8
