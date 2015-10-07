@@ -302,5 +302,15 @@ public final class CollectionUtils {
 	public static <T> T getLast(List<T> list) {
 		return list.get(list.size() - 1);
 	}
+	
+	/**
+	 * Removes trailing null elements at the end of the given list in place.
+	 * The modified list is returned for convenience.
+	 */
+	public static <T> List<T> trimEnd(List<T> list) {
+		while (false == list.isEmpty() && getLast(list) == null)
+			list.remove(list.size() - 1);
+		return list;
+	}
 
 }
