@@ -23,6 +23,8 @@ public class AwtTextMeasurer
 	}
 	
 	public static TextMetrics measure(Font awtFont, String text) {
+		if (text.length() == 0)
+			return new TextMetrics(0, 0, 0, 0);
 		TextLayout layout = new TextLayout(text, awtFont, new FontRenderContext(null, false, true));
 		float ascent = Units.pxToMm(layout.getAscent(), 1);
 		float descent = Units.pxToMm(layout.getDescent(), 1);
