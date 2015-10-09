@@ -24,5 +24,12 @@ public class AwtColorUtils {
 	public static java.awt.Color toAwtColor(Color color) {
 		return new java.awt.Color(color.r, color.g, color.b, color.a);
 	}
+	
+	/**
+	 * Returns a color based on the given color, using the given alpha value.
+	 */
+	public static java.awt.Color withAlpha(java.awt.Color color, int alpha) {
+		return new java.awt.Color(color.getRed(), color.getGreen(), color.getBlue(), alpha);
+	}
 
 }
