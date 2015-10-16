@@ -8,9 +8,6 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import com.xenoage.utils.PlatformUtils;
-import com.xenoage.utils.jse.JsePlatformUtils;
-
 /**
  * Test cases for the {@link RecentFiles} class.
  * 

@@ -43,21 +43,6 @@ allprojects {
 	}
 }
 
-//project dependencies
-//GOON: move into subprojects as own build.gradle files
-project(':utils-pdlib') { dependencies { compile project(':utils-base') } }
-project(':utils-serialize') { dependencies { compile project(':utils-jse') } }
-project(':utils-test') {
-	sourceCompatibility = 8
-	dependencies { compile project(':utils-jse'), project(':utils-pdlib'), project(':utils-serialize') }
-}
-
-//utils-gwt dependencies
-project(':utils-gwt') { dependencies {
-	compile project(':utils-base')
-	compile group: 'com.google.gwt', name: 'gwt-user', version: '2.6.1'
-} }
-
 //distribution in multiple jars
 task distDir(type:Copy) {
 	dependsOn subprojects*.build

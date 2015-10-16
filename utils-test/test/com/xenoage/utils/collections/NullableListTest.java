@@ -16,8 +16,10 @@ import org.junit.Test;
  * 
  * @author Andreas Wenger
  */
+@SuppressWarnings("deprecation")
 public class NullableListTest {
 
+	
 	@Test public void addTest() {
 		assertEquals(list(1), NullableList.add(null, 1));
 		assertEquals(list(1, 2), NullableList.add(list(1), 2));

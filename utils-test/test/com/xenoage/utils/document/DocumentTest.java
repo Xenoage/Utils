@@ -71,7 +71,7 @@ public class DocumentTest {
 		//write to byte buffer
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		FileFormat<Notes> format = notes.getSupportedFormats().getWriteDefaultFormat();
-		format.getOutput().write(notes, new JseOutputStream(out), null);
+		format.getOutput().write(notes, 0, new JseOutputStream(out));
 		//read again
 		ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
 		Notes nodesRead = format.getInput().read(new JseInputStream(in), null);

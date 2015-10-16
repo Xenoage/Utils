@@ -30,7 +30,7 @@ public class GwtErrorProcessing
 			if (report.filePaths != null && report.filePaths.size() > 0)
 				filePath = report.filePaths.get(0);
 			//create dialog - TODO: nicer dialog, add level and filepath
-			Window.alert(message);
+			Window.alert(message + (filePath != null ? "\n" + filePath : ""));
 		}
 		//if it is a fatal error, close application
 		if (report.level == Level.Fatal) {

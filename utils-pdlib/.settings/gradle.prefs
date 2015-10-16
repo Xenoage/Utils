@@ -1,7 +1,7 @@
 {
   "1.0": {
-    "project_path": ":utils-kernel",
-    "project_dir": "D:\\Projekte\\Utils\\utils\\utils-kernel",
+    "project_path": ":utils-pdlib",
+    "project_dir": "D:\\Projekte\\Utils\\utils\\utils-pdlib",
     "connection_project_dir": "D:\\Projekte\\Utils\\utils",
     "connection_gradle_user_home": null,
     "connection_gradle_distribution": "GRADLE_DISTRIBUTION(WRAPPER)",

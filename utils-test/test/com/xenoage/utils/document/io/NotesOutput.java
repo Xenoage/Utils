@@ -13,19 +13,15 @@ import com.xenoage.utils.jse.io.JseOutputStream;
  * @author Andreas Wenger
  */
 public class NotesOutput
-	implements FileOutput<Notes> {
+	extends FileOutput<Notes> {
 
-	@Override public void write(Notes document, OutputStream stream, String filePath)
+	@Override public void write(Notes document, int fileIndex, OutputStream stream)
 		throws IOException {
 		PrintWriter writer = new PrintWriter(new JseOutputStream(stream));
 		for (String line : document.getLines())
 			writer.println(line);
 		writer.flush();
 		writer.close();
-	}
-
-	@Override public boolean isFilePathRequired(Notes document) {
-		return false;
 	}
 
 }

@@ -1,0 +1,5 @@
+sourceCompatibility = 8
+
+dependencies {
+	compile project(':utils-pdlib'), project(':utils-serialize')
+}
