@@ -3,3 +3,8 @@ bin
 build
 dist
 /doc
+
+# Eclipse settings (should be generated with Gradle import in Eclipse)
+.project
+.classpath
+.settings
