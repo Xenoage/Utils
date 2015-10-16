@@ -34,6 +34,11 @@ public class JseOutputStream
 		throws FileNotFoundException {
 		this.jseOutputStream = new FileOutputStream(file);
 	}
+	
+	public JseOutputStream(String filePath)
+		throws FileNotFoundException {
+		this.jseOutputStream = new FileOutputStream(filePath);
+	}
 
 	@Override public void write(int b)
 		throws IOException {

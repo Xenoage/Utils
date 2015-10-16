@@ -27,7 +27,8 @@ public class FilenameUtils {
 	 * and so on.
 	 * This method is aware of directories: If the original name has
 	 * a "/" or "\" in it, only the part behind its last appearance
-	 * is seen as a filename.
+	 * is seen as a filename. The returned file names contain the
+	 * directories again.
 	 */
 	public static List<String> numberFiles(String originalName, int count) {
 		//simple case

@@ -9,7 +9,8 @@ import java.io.IOException;
  * 
  * @author Andreas Wenger
  */
-public interface OutputStream {
+public interface OutputStream
+	extends AutoCloseable {
 
 	/**
    * Writes the specified byte to this output stream.
