@@ -218,9 +218,19 @@ public class ArrayUtils {
 	 * @return
 	 */
 	public static double[] arrayDouble(int size, double defaultValue) {
-		double ret[] = new double[size];
+		double[] ret = new double[size];
 		for (int i = 0; i < size; i++)
 			ret[i] = defaultValue;
+		return ret;
+	}
+	
+	/**
+	 * Creates an int array with the values from 0 to size-1.
+	 */
+	public static int[] arrayCount(int size) {
+		int[] ret = new int[size];
+		for (int i = 0; i < size; i++)
+			ret[i] = i;
 		return ret;
 	}
 	
