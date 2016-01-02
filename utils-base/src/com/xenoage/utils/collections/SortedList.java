@@ -173,7 +173,7 @@ public class SortedList<T extends Comparable<T>>
 	 * Runtime: O(1)
 	 */
 	public T getLast() {
-		return list.getFirst();
+		return list.getLast();
 	}
 
 	/**

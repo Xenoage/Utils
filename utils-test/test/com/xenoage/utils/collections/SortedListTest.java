@@ -133,6 +133,18 @@ public class SortedListTest {
 		assertEquals(6, merged.get(2).intValue());
 		assertEquals(7, merged.get(3).intValue());
 	}
+	
+	
+	@Test public void getFirstAndGetLastTest() {
+		SortedList<Integer> list = new SortedList<Integer>(false);
+		list.add(2);
+		list.add(1);
+		list.add(3);
+		list.add(0);
+		list.add(1);
+		assertEquals(0, list.getFirst().intValue());
+		assertEquals(3, list.getLast().intValue());
+	}
 
 
 	public class Comp
