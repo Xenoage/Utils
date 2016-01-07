@@ -1,6 +1,9 @@
 apply plugin: 'java'
-
 sourceCompatibility = 6
+
+dependencies {
+	compile project(':utils-kernel')
+}
 
 sourceSets {
 	main {
@@ -8,8 +11,3 @@ sourceSets {
 		resources { srcDir 'src' }
 	}
 }
-
-dependencies {
-	compile project(':utils-kernel')
-}
-
