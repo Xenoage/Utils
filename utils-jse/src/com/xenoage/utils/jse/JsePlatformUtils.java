@@ -20,6 +20,7 @@ import com.xenoage.utils.jse.io.DesktopIO;
 import com.xenoage.utils.jse.io.JseInputStream;
 import com.xenoage.utils.jse.io.JseOutputStream;
 import com.xenoage.utils.jse.io.JseZipReader;
+import com.xenoage.utils.jse.thread.ThreadUtils;
 import com.xenoage.utils.jse.xml.JseXmlReader;
 import com.xenoage.utils.jse.xml.JseXmlWriter;
 import com.xenoage.utils.xml.XmlReader;
@@ -82,22 +83,15 @@ public class JsePlatformUtils
 	}
 
 	@Override public List<StackTraceElement> getCurrentStackTrace() {
-		return alist(Thread.currentThread().getStackTrace());
+		return ThreadUtils.getCurrentStackTrace();
 	}
 
 	@Override public String getStackTraceString(Throwable throwable) {
-		final Writer result = new StringWriter();
-		final PrintWriter printWriter = new PrintWriter(result);
-		throwable.printStackTrace(printWriter);
-		return result.toString();
+		return ThreadUtils.getStackTraceString(throwable);
 	}
 
 	@Override public StackTraceElement getCaller(int level) {
-		List<StackTraceElement> stackTrace = getCurrentStackTrace();
-		if (stackTrace.size() > 2 + level)
-			return stackTrace.get(2 + level);
-		else
-			return null;
+		return ThreadUtils.getCaller(level + 1);
 	}
 
 	@Override public TextMeasurer getTextMeasurer() {

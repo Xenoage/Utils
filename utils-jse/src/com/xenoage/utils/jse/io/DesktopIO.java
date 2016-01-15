@@ -75,7 +75,7 @@ public class DesktopIO
 	}
 
 	/**
-	 * Like {@link #existsDirectory(String)}, but with direct return.
+	 * Like {@link #existsDirectoryAsync(String, AsyncResult)}, but with direct return.
 	 */
 	public boolean existsDirectory(String directory) {
 		return filesIO.existsDirectory(directory) ||
@@ -87,7 +87,7 @@ public class DesktopIO
 	}
 
 	/**
-	 * Like {@link #listFilesAsync(String)}, but with direct return.
+	 * Like {@link #listFilesAsync(String, AsyncResult)}, but with direct return.
 	 */
 	public List<String> listFiles(String dirPath) {
 		List<String> fileNames = filesIO.listFiles(dirPath);

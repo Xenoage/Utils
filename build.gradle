@@ -1,59 +1,43 @@
 apply plugin: 'java'
 defaultTasks 'dist'
 
-//settings common to all projects
 allprojects {
-    apply plugin: 'java'
-	
-	compileJava.options.encoding = 'UTF-8'
-	compileTestJava.options.encoding = 'UTF-8'
-    
-	sourceCompatibility = 6
-	
+
 	repositories {
 		mavenCentral()
 	}
-	
-	//additional configurations for compile classpaths
-	configurations {
-		compileOnly
-		testCompileOnly { extendsFrom compileOnly }
-	}
-	
-	dependencies {
-		testCompile group: 'junit', name: 'junit', version: '4.+'
-	}
 
-	sourceSets {
-		main {
-			java { srcDir 'src' }
-			resources { srcDir 'src' }
-			compileClasspath += configurations.compileOnly
-		}
-		test {
-			java { srcDir 'test' }
-			resources { srcDir 'test' }
-			compileClasspath += configurations.compileOnly + configurations.testCompileOnly
-		}
-	}
-
+	//use UTF-8 encoding
+	compileJava.options.encoding = 'UTF-8'
+	compileTestJava.options.encoding = 'UTF-8'
+	
+	//create jar file with author information
 	jar {
 		from 'license.txt'
 		manifest.attributes 'Created-By': 'Xenoage Software'
 	}
+
 }
+    
+//TODO in subprojects:
+//additional configurations for compile classpaths (use as soon as Buildship (Gradle in Eclipse) supports it)
+//configurations { //TODO: add configuration as soon as Buildship (Gradle in Eclipse) supports it
+//	compileOnly
+//	testCompileOnly { extendsFrom compileOnly }
+//} 
+//sourceSets -> main / test:
+//	compileClasspath += configurations.compileOnly //TODO: add configuration as soon as Buildship (Gradle in Eclipse) supports it
+//	compileClasspath += configurations.compileOnly + configurations.testCompileOnly //TODO: add configuration as soon as Buildship (Gradle in Eclipse) supports it
+
 
 //distribution in multiple jars
 task distDir(type:Copy) {
-	dependsOn subprojects*.build
-	from subprojects*.jar.outputs.files
+	from subprojects.collect { it.tasks.withType(Jar) }
 	into "build/dist/split"
 }
 
 //distribution in single jar
 task singleJar(type: Jar) {
-	dependsOn subprojects*.build
-	
 	subprojects.each() { subproject ->
 		ext.jarDir = "${subproject.name}/build/libs/"
 		from (zipTree(ext.jarDir + subproject.name + ".jar")) { exclude 'license.txt' }
@@ -70,20 +54,21 @@ task cleanDoc(type: Delete) {
 	delete "doc"
 }
 
+/* TODO: currently not working
 //create JavaDoc
 task createDoc(type: Javadoc, dependsOn: cleanDoc) {
 	title = "Xenoage Utils API"
-	source = subprojects.collect { it.sourceSets.main.allJava }
-    destinationDir = new File(projectDir, 'doc')
+	source = subprojects.collect{ it.sourceSets.main.allJava }
+	destinationDir = new File(projectDir, 'doc')
 	failOnError = false
 	configure(options) {
 		windowTitle = "Xenoage Utils API"
 		author = true
 		use = true //create class and package usage pages
 	}
-}
+} */
 
 //main task
 task dist {
-	dependsOn build, distDir, singleJar
+	dependsOn distDir, singleJar
 }
