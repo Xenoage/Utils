@@ -1,5 +1,8 @@
 package com.xenoage.utils.color;
 
+import com.xenoage.utils.annotations.Optimized;
+
+import static com.xenoage.utils.annotations.Optimized.Reason.Performance;
 import static com.xenoage.utils.math.MathUtils.clamp;
 
 /**
@@ -10,30 +13,41 @@ import static com.xenoage.utils.math.MathUtils.clamp;
  */
 public class Color {
 
-	public static final Color black = new Color(0, 0, 0);
-	public static final Color blue = new Color(0, 0, 255);
-	public static final Color gray = new Color(128, 128, 128);
-	public static final Color green = new Color(0, 255, 0);
-	public static final Color lightGray = new Color(192, 192, 192);
-	public static final Color red = new Color(255, 0, 0);
-	public static final Color white = new Color(255, 255, 255);
-	public static final Color yellow = new Color(255, 255, 0);
+	public static final Color black = new Color(0, 0, 0, 255);
+	public static final Color blue = new Color(0, 0, 255, 255);
+	public static final Color gray = new Color(128, 128, 128, 255);
+	public static final Color green = new Color(0, 255, 0, 255);
+	public static final Color lightGray = new Color(192, 192, 192, 255);
+	public static final Color red = new Color(255, 0, 0, 255);
+	public static final Color white = new Color(255, 255, 255, 255);
+	public static final Color yellow = new Color(255, 255, 0, 255);
+
+	private static final Color[] shared = {
+			black, blue, gray, green, lightGray, red, white, yellow};
 
 	public final int r, g, b, a;
 
 
-	public Color(int r, int g, int b, int a) {
+	public static Color color(int r, int g, int b) {
+		return color(r, g, b, 255);
+	}
+
+	/**
+	 * Creates a new color or returns a shared instance (see public color constants).
+	 */
+	@Optimized(Performance)
+	public static Color color(int r, int g, int b, int a) {
+		for (Color c : shared)
+			if (r == c.r && g == c.g && b == c.b && a == c.a)
+				return c;
+		return color(r, g, b, 255);
+	}
+
+	private Color(int r, int g, int b, int a) {
 		this.r = r;
 		this.g = g;
 		this.b = b;
 		this.a = a;
-	}
-
-	public Color(int r, int g, int b) {
-		this.r = r;
-		this.g = g;
-		this.b = b;
-		this.a = 255;
 	}
 
 	/**
@@ -42,8 +56,8 @@ public class Color {
 	 * to remove light.
 	 */
 	public Color addWhite(int summand) {
-		return new Color(clamp(r + summand, 0, 255), clamp(g + summand, 0, 255), clamp(b + summand, 0,
-			255));
+		return new Color(clamp(r + summand, 0, 255), clamp(g + summand, 0, 255),
+				clamp(b + summand, 0, 255), 255);
 	}
 
 	public int getRGB() {
