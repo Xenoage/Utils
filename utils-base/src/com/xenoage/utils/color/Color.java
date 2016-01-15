@@ -40,7 +40,7 @@ public class Color {
 		for (Color c : shared)
 			if (r == c.r && g == c.g && b == c.b && a == c.a)
 				return c;
-		return color(r, g, b, 255);
+		return new Color(r, g, b, a);
 	}
 
 	private Color(int r, int g, int b, int a) {
