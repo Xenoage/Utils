@@ -1,5 +1,7 @@
 package com.xenoage.utils.jse.javafx.color;
 
+import static com.xenoage.utils.color.Color.color;
+
 import com.xenoage.utils.color.Color;
 
 
@@ -11,7 +13,7 @@ import com.xenoage.utils.color.Color;
 public class JfxColorUtils {
 
 	public static Color fromJavaFXColor(javafx.scene.paint.Color jfxColor) {
-		return new Color(to255(jfxColor.getRed()), to255(jfxColor.getGreen()),
+		return color(to255(jfxColor.getRed()), to255(jfxColor.getGreen()),
 			to255(jfxColor.getBlue()), to255(jfxColor.getOpacity()));
 	}
 
