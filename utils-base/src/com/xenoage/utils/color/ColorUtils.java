@@ -1,5 +1,7 @@
 package com.xenoage.utils.color;
 
+import static com.xenoage.utils.color.Color.color;
+
 /**
  * Useful methods to work with colors.
  * 
@@ -24,7 +26,7 @@ public class ColorUtils {
 			int r = Integer.parseInt(s.substring(offset + 1, offset + 3), 16);
 			int g = Integer.parseInt(s.substring(offset + 3, offset + 5), 16);
 			int b = Integer.parseInt(s.substring(offset + 5, offset + 7), 16);
-			return new Color(r, g, b, a);
+			return color(r, g, b, a);
 		} catch (RuntimeException ex) {
 			throw new NumberFormatException();
 		}

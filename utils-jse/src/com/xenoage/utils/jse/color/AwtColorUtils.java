@@ -2,6 +2,8 @@ package com.xenoage.utils.jse.color;
 
 import com.xenoage.utils.color.Color;
 
+import static com.xenoage.utils.color.Color.color;
+
 
 /**
  * Useful methods for working with AWT colors.
@@ -15,7 +17,8 @@ public class AwtColorUtils {
 	 * @param awtColor  the AWT color
 	 */
 	public static Color fromAwtColor(java.awt.Color awtColor) {
-		return new Color(awtColor.getRed(), awtColor.getGreen(), awtColor.getBlue(), awtColor.getAlpha());
+		return color(awtColor.getRed(), awtColor.getGreen(),
+				awtColor.getBlue(), awtColor.getAlpha());
 	}
 
 	/**
