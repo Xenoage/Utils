@@ -212,10 +212,17 @@ public class ArrayUtils {
 	}
 	
 	/**
+	 * Creates a new float array with the given size and default value.
+	 */
+	public static float[] arrayFloat(int size, float defaultValue) {
+		float ret[] = new float[size];
+		for (int i = 0; i < size; i++)
+			ret[i] = defaultValue;
+		return ret;
+	}
+	
+	/**
 	 * Creates a new double array with the given size and default value.
-	 * @param size
-	 * @param defaultValue
-	 * @return
 	 */
 	public static double[] arrayDouble(int size, double defaultValue) {
 		double ret[] = new double[size];
