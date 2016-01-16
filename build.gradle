@@ -49,26 +49,13 @@ task singleJar(type: Jar) {
 	manifest.attributes 'Created-By': 'Xenoage Software'
 }
 
-//clean JavaDoc directory
-task cleanDoc(type: Delete) {
-	delete "doc"
-}
-
-/* TODO: currently not working
-//create JavaDoc
-task createDoc(type: Javadoc, dependsOn: cleanDoc) {
-	title = "Xenoage Utils API"
-	source = subprojects.collect{ it.sourceSets.main.allJava }
-	destinationDir = new File(projectDir, 'doc')
-	failOnError = false
-	configure(options) {
-		windowTitle = "Xenoage Utils API"
-		author = true
-		use = true //create class and package usage pages
-	}
-} */
-
 //main task
 task dist {
 	dependsOn distDir, singleJar
+}
+
+//create JavaDoc using Ant task
+ant.importBuild 'javadoc.build.xml'
+task createDoc {
+	dependsOn antUtilsJavadoc
 }
