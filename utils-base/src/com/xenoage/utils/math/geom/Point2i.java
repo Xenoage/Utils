@@ -6,6 +6,10 @@ package com.xenoage.utils.math.geom;
  * @author Andreas Wenger
  */
 public final class Point2i {
+	
+	/** Point at the origin (0, 0). */
+	public static final Point2i origin = new Point2i(0, 0);
+
 
 	public final int x;
 	public final int y;
