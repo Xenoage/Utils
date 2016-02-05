@@ -79,7 +79,7 @@ public class Settings {
 		// load the settings from the .settings files
 		this.files = new Hashtable<String, Properties>();
 		List<String> fileList = null;
-			fileList = io().listFiles(directory);
+		fileList = io().listFiles(directory);
 		for (String file : fileList) {
 			String name = file;
 			if (name.endsWith(".settings")) {

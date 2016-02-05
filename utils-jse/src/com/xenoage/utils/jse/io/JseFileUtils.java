@@ -52,6 +52,8 @@ public class JseFileUtils {
 	 * Returns a filename filter for the given {@link com.xenoage.utils.io.FileFilter}.
 	 */
 	public static FilenameFilter getFilter(final com.xenoage.utils.io.FileFilter fileFilter) {
+		if (fileFilter == null)
+			return null;
 		FilenameFilter ret = new FilenameFilter() {
 
 			@Override public boolean accept(File dir, String name) {

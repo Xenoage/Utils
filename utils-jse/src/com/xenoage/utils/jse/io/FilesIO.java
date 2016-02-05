@@ -9,11 +9,13 @@ import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.xenoage.utils.annotations.MaybeNull;
 import com.xenoage.utils.async.AsyncResult;
 import com.xenoage.utils.io.FileFilter;
 import com.xenoage.utils.io.FilesystemInput;
@@ -32,6 +34,9 @@ import com.xenoage.utils.io.index.FilesystemIndex;
  *   <li>"Shared directory": Optional: a directory where to search for data, which is shared between
  *     different programs (shared directory)</li>
  * </ul>
+ * 
+ * Both relative and absolute paths are supported.
+ * The following rules apply for relative paths:
  * 
  * When listing files, all directories are listed sequentially,
  * beginning with the user directory, then the system directory,
@@ -133,8 +138,16 @@ public class FilesIO
 	 * Like {@link #existsFileAsync(String, AsyncResult)}, but with direct return.
 	 */
 	public boolean existsFile(String filePath) {
-		return new File(userDir, filePath).exists() || new File(systemDir, filePath).exists() ||
-			(sharedDir != null ? new File(sharedDir, filePath).exists() : false);
+		File absoluteFile = new File(filePath);
+		if (absoluteFile.isAbsolute()) {
+			//absolute path
+			return absoluteFile.exists();
+		}
+		else {
+			//relative path
+			return new File(userDir, filePath).exists() || new File(systemDir, filePath).exists() ||
+				(sharedDir != null ? new File(sharedDir, filePath).exists() : false);
+		}
 	}
 	
 	@Override public void existsDirectoryAsync(String dirPath, AsyncResult<Boolean> exists) {
@@ -145,16 +158,24 @@ public class FilesIO
 	 * Like {@link #existsDirectoryAsync(String, AsyncResult)}, but with direct return.
 	 */
 	public boolean existsDirectory(String directory) {
-		File userFile = new File(userDir, directory);
-		if (userFile.exists() && userFile.isDirectory())
-			return true;
-		File systemFile = new File(systemDir, directory);
-		if (systemFile.exists() && systemFile.isDirectory())
-			return true;
-		if (sharedDir != null) {
-			File sharedFile = new File(sharedDir, directory);
-			if (sharedFile.exists() && sharedFile.isDirectory())
+		File absoluteDir = new File(directory);
+		if (absoluteDir.isAbsolute()) {
+			//absolute path
+			return absoluteDir.exists() && absoluteDir.isDirectory();
+		}
+		else {
+			//relative path
+			File userFile = new File(userDir, directory);
+			if (userFile.exists() && userFile.isDirectory())
 				return true;
+			File systemFile = new File(systemDir, directory);
+			if (systemFile.exists() && systemFile.isDirectory())
+				return true;
+			if (sharedDir != null) {
+				File sharedFile = new File(sharedDir, directory);
+				if (sharedFile.exists() && sharedFile.isDirectory())
+					return true;
+			}
 		}
 		return false;
 	}
@@ -180,29 +201,43 @@ public class FilesIO
 	 */
 	public List<String> listFiles(String dirPath, FileFilter filter) {
 		FilenameFilter jseFilenameFilter = JseFileUtils.getFilter(filter);
-		Set<String> ret = new HashSet<String>();
-		for (int iDir = 0; iDir < 3; iDir++) {
-			File baseDir = null;
-			switch (iDir) {
-				case 0:
-					baseDir = userDir;
-					break;
-				case 1:
-					baseDir = systemDir;
-					break;
-				case 2:
-					baseDir = sharedDir;
-					break;
-			}
-			if (baseDir != null) {
-				File dir = new File(baseDir, dirPath);
-				String[] files = (filter != null ? dir.list(jseFilenameFilter) : dir.list());
-				if (files != null) {
-					ret.addAll(Arrays.asList(files));
+		File absoluteDir = new File(dirPath);
+		if (absoluteDir.isAbsolute()) {
+			//absolute path
+			return listFiles(absoluteDir, jseFilenameFilter);
+		}
+		else {
+			//relative path
+			Set<String> ret = new HashSet<String>();
+			for (int iDir = 0; iDir < 3; iDir++) {
+				File baseDir = null;
+				switch (iDir) {
+					case 0:
+						baseDir = userDir;
+						break;
+					case 1:
+						baseDir = systemDir;
+						break;
+					case 2:
+						baseDir = sharedDir;
+						break;
+				}
+				if (baseDir != null) {
+					File dir = new File(baseDir, dirPath);
+					if (dir.exists())
+						ret.addAll(listFiles(dir, jseFilenameFilter));
 				}
 			}
+			return alist(ret);
 		}
-		return alist(ret);
+	}
+	
+	private List<String> listFiles(File dir, @MaybeNull FilenameFilter filter) {
+		String[] files = (filter != null ? dir.list(filter) : dir.list());
+		if (files != null)
+			return Arrays.asList(files);
+		else
+			return Collections.<String>emptyList();
 	}
 	
 	@Override public void listDirectoriesAsync(String dirPath, AsyncResult<List<String>> dirNames) {
@@ -213,30 +248,49 @@ public class FilesIO
 	 * Like {@link #listDirectoriesAsync(String, AsyncResult)}, but with direct return.
 	 */
 	public List<String> listDirectories(String dirPath) {
-		Set<String> ret = new HashSet<String>();
-		for (int iDir = 0; iDir < 3; iDir++) {
-			File baseDir = null;
-			switch (iDir) {
-				case 0:
-					baseDir = userDir;
-					break;
-				case 1:
-					baseDir = systemDir;
-					break;
-				case 2:
-					baseDir = sharedDir;
-					break;
-			}
-			if (baseDir != null) {
-				File[] dirs = new File(baseDir, dirPath).listFiles(JseFileUtils.getDirectoriesFilter());
-				if (dirs != null) {
-					for (int i = 0; i < dirs.length; i++) {
-						ret.add(dirs[i].getName());
-					}
+		File absoluteDir = new File(dirPath);
+		if (absoluteDir.isAbsolute()) {
+			//absolute path
+			return listDirectories(absoluteDir);
+		}
+		else {
+			//relative path
+			Set<String> ret = new HashSet<String>();
+			for (int iDir = 0; iDir < 3; iDir++) {
+				File baseDir = null;
+				switch (iDir) {
+					case 0:
+						baseDir = userDir;
+						break;
+					case 1:
+						baseDir = systemDir;
+						break;
+					case 2:
+						baseDir = sharedDir;
+						break;
+				}
+				if (baseDir != null) {
+					File dir = new File(baseDir, dirPath);
+					if (dir.exists())
+						ret.addAll(listDirectories(dir));
 				}
 			}
+			return alist(ret);
 		}
-		return alist(ret);
+	}
+	
+	private List<String> listDirectories(File dir) {
+		File[] dirs = dir.listFiles(JseFileUtils.getDirectoriesFilter());
+		if (dirs != null) {
+			List<String> ret = alist();
+			for (int i = 0; i < dirs.length; i++) {
+				ret.add(dirs[i].getName());
+			}
+			return ret;
+		}
+		else {
+			return Collections.<String>emptyList();
+		}
 	}
 
 	@Override public void openFileAsync(String filePath, AsyncResult<InputStream> inputStream) {
@@ -259,24 +313,33 @@ public class FilesIO
 	}
 	
 	/**
-	 * Gets the file at the given relative path. The file is searched in the user's
-	 * application settings directory first, and if not found, in the directory where the
-	 * program was installed. If still not found, null is returned.
+	 * Gets the file at the given absolute or relative path.
+	 * A relative path is searched in the user's application settings directory first,
+	 * and if not found, in the directory where the program was installed, and then
+	 * in the shared directory.
+	 * If still not found, null is returned.
 	 */
 	public File findFile(String filePath)
 		throws IOException {
-		File file = new File(userDir, filePath);
-		if (!file.exists()) {
-			file = new File(systemDir, filePath);
-		}
-		if (!file.exists() && sharedDir != null) {
-			file = new File(sharedDir, filePath);
-		}
-		if (file.exists()) {
-			return file;
+		File file = new File(filePath);
+		if (file.isAbsolute()) {
+			//absolute path
+			if (file.exists())
+				return file;
+			else
+				return null;
 		}
 		else {
-			return null;
+			//relative path
+			file = new File(userDir, filePath);
+			if (!file.exists())
+				file = new File(systemDir, filePath);
+			if (!file.exists() && sharedDir != null)
+				file = new File(sharedDir, filePath);
+			if (file.exists())
+				return file;
+			else
+				return null;
 		}
 	}
 	
@@ -300,12 +363,14 @@ public class FilesIO
 	}
 
 	/**
-	 * Gets the data file for writing at the given relative path.
-	 * It is always located in the user's application settings folder.
+	 * Gets the data file for writing at the given absolute or relative path.
+	 * Relative files are always located in the user's application settings folder.
 	 * If not existing, the parent directories are created.
 	 */
 	public File createFile(String filePath) {
-		File file = new File(userDir, filePath);
+		File file = new File(filePath);
+		if (false == file.isAbsolute())
+			file = new File(userDir, filePath);
 		//create the parent directory on demand
 		File parent = file.getParentFile();
 		if (parent != null && !parent.exists()) {
@@ -316,19 +381,29 @@ public class FilesIO
 	}
 
 	/**
-	 * Removes the data file at the given relative path.
+	 * Removes the data file at the given absolute relative path.
 	 * @param system  If true, not only the user's private data file is deleted,
 	 *                but also the system data file.
 	 *                Files in the shared folder are never deleted.
+	 *                Used only for relative paths.
 	 */
 	public void deleteFile(String filePath, boolean system) {
-		File file = new File(userDir, filePath);
-		if (file.exists())
-			file.delete();
-		if (system) {
-			file = new File(systemDir, filePath);
+		File file = new File(filePath);
+		if (file.isAbsolute()) {
+			//absolute path
 			if (file.exists())
 				file.delete();
+		}
+		else {
+			//relative path
+			file = new File(userDir, filePath);
+			if (file.exists())
+				file.delete();
+			if (system) {
+				file = new File(systemDir, filePath);
+				if (file.exists())
+					file.delete();
+			}
 		}
 	}
 
