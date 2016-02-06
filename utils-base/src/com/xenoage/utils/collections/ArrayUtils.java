@@ -5,6 +5,8 @@ import static com.xenoage.utils.kernel.Range.range;
 import java.util.Collection;
 import java.util.List;
 
+import com.xenoage.utils.kernel.Range;
+
 /**
  * Some useful functions for arrays.
  *
@@ -229,6 +231,14 @@ public class ArrayUtils {
 		for (int i = 0; i < size; i++)
 			ret[i] = defaultValue;
 		return ret;
+	}
+	
+	/**
+	 * Sets all elements of the given array to the given value.
+	 */
+	public static <T> void setValues(T[] array, T value) {
+		for (int i : range(array))
+			array[i] = value;
 	}
 	
 }
