@@ -1,11 +1,6 @@
 package com.xenoage.utils.jse;
 
-import static com.xenoage.utils.collections.CollectionUtils.alist;
-
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.List;
 
 import com.xenoage.utils.PlatformUtils;

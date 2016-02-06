@@ -5,8 +5,6 @@ import static com.xenoage.utils.kernel.Range.range;
 import java.util.Collection;
 import java.util.List;
 
-import com.xenoage.utils.kernel.Range;
-
 /**
  * Some useful functions for arrays.
  *
