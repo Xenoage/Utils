@@ -23,12 +23,19 @@ public class AwtTextMeasurer
 	}
 	
 	public static TextMetrics measure(Font awtFont, String text) {
+		if (text.length() == 0)
+			return measureEmpty(awtFont);
 		TextLayout layout = new TextLayout(text, awtFont, new FontRenderContext(null, false, true));
 		float ascent = Units.pxToMm(layout.getAscent(), 1);
 		float descent = Units.pxToMm(layout.getDescent(), 1);
 		float leading = Units.pxToMm(layout.getLeading(), 1);
 		float width = Units.pxToMm((float) layout.getBounds().getWidth(), 1);
 		return new TextMetrics(ascent, descent, leading, width);
+	}
+	
+	private static TextMetrics measureEmpty(Font awtFont) {
+		TextMetrics metrics = measure(awtFont, " ");
+		return new TextMetrics(metrics.getAscent(), metrics.getDescent(), metrics.getLeading(), 0);
 	}
 
 }
