@@ -17,5 +17,12 @@ public class CommandLine {
 	public static void setArgs(String[] args) {
 		CommandLine.args = args;
 	}
+	
+	public static boolean containsArg(String arg) {
+		for (String s : args)
+			if (s.equals(arg))
+				return true;
+		return false;
+	}
 
 }
