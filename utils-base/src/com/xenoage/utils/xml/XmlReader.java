@@ -57,8 +57,14 @@ public abstract class XmlReader {
 	public int getTextIntNotNull() {
 		String v = getText();
 		Integer ret = Parser.parseIntegerNull(v);
-		if (ret == null)
-			throw dataException(v + " can not be parsed to int");
+		if (ret == null) {
+			//TODO: TOLERANT mode
+			//try again to read float and cast it to int
+			Float floatValue = Parser.parseFloatNull(v);
+			if (floatValue == null)
+				throw dataException(v + " can not be parsed to int");
+			ret = floatValue.intValue();
+		}
 		return ret;
 	}
 	
