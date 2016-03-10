@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -293,7 +292,7 @@ public class JseFileUtils {
 	 * Returns a list of all files below the given directory (including
 	 * subdirectories in any depth) matching the given filter.
 	 */
-	public static Collection<File> listFilesDeep(File directory, FilenameFilter filter) {
+	public static List<File> listFilesDeep(File directory, FilenameFilter filter) {
 		return listFiles(directory, filter, true);
 	}
 
