@@ -8,13 +8,13 @@ import com.xenoage.utils.xml.EnumWithXmlNames;
  * @author Andreas Wenger
  */
 public class EnumUtils {
-
+	
 	/**
 	 * Gets the enum value from the given array, that
-	 * matches (lower case) the given text, or null if not found.
+	 * matches (lower case) the given text, or the default value if not found.
 	 * If the text begins with a digit, the prefix "_" is added.
 	 */
-	public static <T> T getEnumValue(String text, T[] values) {
+	public static <T> T getEnumValue(String text, T[] values, T defaultValue) {
 		if (text != null && text.length() > 0) {
 			text = text.toLowerCase();
 			if (Character.isDigit(text.charAt(0)))
@@ -25,7 +25,15 @@ public class EnumUtils {
 				}
 			}
 		}
-		return null;
+		return defaultValue;
+	}
+
+	/**
+	 * Like {@link #getEnumValue(String, Object[], Object)}, but returns null
+	 * if not found.
+	 */
+	public static <T> T getEnumValue(String text, T[] values) {
+		return getEnumValue(text, values, null);
 	}
 
 	/**
