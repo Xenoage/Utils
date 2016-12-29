@@ -297,6 +297,25 @@ public class JseFileUtils {
 	}
 
 	/**
+	 * Returns a list of all directories in the given directoryr.
+	 * @param directory  the directory
+	 * @param recurse    true, to search also recursively in subdirectories, otherwise false
+	 */
+	public static List<File> listDirectories(File directory, boolean recurse) {
+		ArrayList<File> files = new ArrayList<File>();
+		File[] entries = directory.listFiles();
+		for (File entry : entries) {
+			if (entry.isDirectory()) {
+				files.add(entry);
+				if (recurse && entry.isDirectory()) {
+					files.addAll(listDirectories(entry, recurse));
+				}
+			}
+		}
+		return files;
+	}
+
+	/**
 	 * Gets the default directory of the operating system to store application
 	 * data for the current user and the given application name.
 	 * For user "andi" and program "myapp" this is for example:
