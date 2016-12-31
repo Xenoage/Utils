@@ -9,6 +9,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -218,6 +219,7 @@ public class JseFileUtils {
 
 	/**
 	 * Copies a file.
+	 * @deprecated Use Java NIO instead
 	 */
 	public static void copyFile(String in, String out) {
 		try {
@@ -241,6 +243,7 @@ public class JseFileUtils {
 	 * @deprecated Closing the output stream at the end is bad. Use
 	 * {@link #copyFileToStream(String, OutputStream)} instead and close
 	 * the stream when finished.
+	 * @deprecated Use Java NIO instead
 	 */
 	public static void copyFile(String filepath, OutputStream out)
 		throws IOException {
@@ -256,6 +259,7 @@ public class JseFileUtils {
 	
 	/**
 	 * Copies the given file into the given {@link OutputStream}.
+	 * @deprecated Use Java NIO instead
 	 */
 	public static void copyFileToStream(File file, OutputStream out)
 		throws IOException {
