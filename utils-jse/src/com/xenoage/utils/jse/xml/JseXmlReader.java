@@ -1,16 +1,11 @@
 package com.xenoage.utils.jse.xml;
 
-import java.io.InputStream;
-
-import javax.xml.stream.Location;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamConstants;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
-
 import com.xenoage.utils.xml.XmlDataException;
 import com.xenoage.utils.xml.XmlException;
 import com.xenoage.utils.xml.XmlReader;
+
+import javax.xml.stream.*;
+import java.io.InputStream;
 
 /**
  * Java SE implementation of an {@link XmlReader},
@@ -137,11 +132,11 @@ public class JseXmlReader
 	}
 
 	@Override public XmlDataException dataException() {
-		throw new XmlDataException("(at " + getLocation() + ")");
+		return new XmlDataException("(at " + getLocation() + ")");
 	}
 
 	@Override public XmlDataException dataException(String message) {
-		throw new XmlDataException(message + " (at " + getLocation() + ")");
+		return new XmlDataException(message + " (at " + getLocation() + ")");
 	}
 
 	@Override public int getLine() {

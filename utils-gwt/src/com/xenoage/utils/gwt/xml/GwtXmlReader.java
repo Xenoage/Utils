@@ -1,7 +1,5 @@
 package com.xenoage.utils.gwt.xml;
 
-import static com.xenoage.utils.kernel.Range.range;
-
 import com.google.gwt.xml.client.DOMException;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Node;
@@ -9,6 +7,8 @@ import com.google.gwt.xml.client.XMLParser;
 import com.xenoage.utils.xml.XmlDataException;
 import com.xenoage.utils.xml.XmlException;
 import com.xenoage.utils.xml.XmlReader;
+
+import static com.xenoage.utils.kernel.Range.range;
 
 /**
  * GWT implementation of an {@link XmlReader},
@@ -113,11 +113,11 @@ public class GwtXmlReader
 	}
 
 	@Override public XmlDataException dataException() {
-		throw new XmlDataException("");
+		return new XmlDataException("");
 	}
 
 	@Override public XmlDataException dataException(String message) {
-		throw new XmlDataException(message);
+		return new XmlDataException(message);
 	}
 
 	@Override public int getLine() {
