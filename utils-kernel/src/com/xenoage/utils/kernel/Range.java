@@ -176,6 +176,7 @@ public final class Range
 
 	/**
 	 * Returns whether the given number is in the range or not.
+	 * The step is ignored.
 	 */
 	public boolean isInRange(int number) {
 		if (number >= start && number <= stop) {
