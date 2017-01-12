@@ -23,6 +23,8 @@ public final class Fraction
 	public static final Fraction _1$32 = fr(1, 32);
 	public static final Fraction _1$64 = fr(1, 64);
 
+	public static final Fraction _3$4 = fr(3, 4);
+
 	private final int numerator;
 	private final int denominator;
 
@@ -229,6 +231,13 @@ public final class Fraction
 	 */
 	public Fraction mult(Fraction fraction) {
 		return fr(this.numerator * fraction.numerator, this.denominator * fraction.denominator);
+	}
+
+	/**
+	 * Returns true, if this fraction is 0.
+	 */
+	public boolean is0() {
+		return numerator == 0;
 	}
 
 	/**
