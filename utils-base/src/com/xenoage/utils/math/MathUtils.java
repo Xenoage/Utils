@@ -282,22 +282,20 @@ public class MathUtils {
 	}
 
 	/**
-	 * Returns true, if the given point p is within the triangle
-	 * defined by the given points t1, t2 and t3.
-	 * @deprecated use {@link Point2f#isPointInTriangle(Point2f, Point2f, Point2f, Point2f)} instead
+	 * For 2 ^ x = number, returns x. For example. 2 ^ x = 8 returns 3.
+	 * When there is no integer solution, the next smaller integer is returned,
+	 * for example 2 ^ x = 5 returns 2.
 	 */
-	public static boolean isPointInTriangle(Point2f p, Point2f t1, Point2f t2, Point2f t3) {
-		boolean b1 = sign(p, t1, t2) < 0;
-		boolean b2 = sign(p, t2, t3) < 0;
-		boolean b3 = sign(p, t3, t1) < 0;
-		return ((b1 == b2) && (b2 == b3));
-	}
-
-	/**
-	 * @deprecated use same method in {@link Point2f} class
-	 */
-	private static float sign(Point2f p1, Point2f p2, Point2f p3) {
-		return (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y);
+	public static int log2(long number) {
+		if (number < 1)
+			throw new IllegalArgumentException("log2(x) = n for n < 1 not possible");
+		long n = 1;
+		int ret = 0;
+		while (n <= number) {
+			n *= 2;
+			ret++;
+		}
+		return ret - 1;
 	}
 
 	private MathUtils() {

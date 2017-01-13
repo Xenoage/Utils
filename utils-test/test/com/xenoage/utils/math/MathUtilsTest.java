@@ -1,24 +1,15 @@
 package com.xenoage.utils.math;
 
-import static com.xenoage.utils.math.Delta.DRf;
-import static com.xenoage.utils.math.Delta.Df;
-import static com.xenoage.utils.math.MathUtils.interpolateLinear;
-import static com.xenoage.utils.math.MathUtils.lowestPrimeNumber;
-import static com.xenoage.utils.math.MathUtils.max;
-import static com.xenoage.utils.math.MathUtils.min;
-import static com.xenoage.utils.math.MathUtils.mod;
-import static com.xenoage.utils.math.MathUtils.modMin;
-import static com.xenoage.utils.math.MathUtils.rotate;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
+import com.xenoage.utils.math.geom.Point2f;
+import org.junit.Test;
 
 import java.math.BigInteger;
 
-import org.junit.Test;
-
-import com.xenoage.utils.math.geom.Point2f;
+import static com.xenoage.utils.kernel.Range.range;
+import static com.xenoage.utils.math.Delta.DRf;
+import static com.xenoage.utils.math.Delta.Df;
+import static com.xenoage.utils.math.MathUtils.*;
+import static org.junit.Assert.*;
 
 /**
  * Test cases for {@link MathUtils}.
@@ -111,6 +102,28 @@ public class MathUtilsTest {
 		BigInteger ref2 = new BigInteger("1");
 		assertSame(ref1, max(ref1, ref2));
 		assertNotSame(ref1, max(ref2, ref1));
+	}
+
+	@Test public void log2Test() {
+		//one single computation
+		assertEquals(10, log2(1024));
+		//exact result
+		for (int i : range(10)) {
+			long number = (long) Math.pow(2, i);
+			assertEquals("log2(" + number + ")", i, log2(number));
+		}
+		//lower result
+		for (int i : range(2, 10)) {
+			long number = (long) Math.pow(2, i);
+			assertEquals("log2(" + number + ")", i, log2(number + 1 + i));
+		}
+		//exception
+		try {
+			log2(0);
+			log2(-5);
+			fail();
+		} catch (Exception ex) {
+		}
 	}
 
 }
