@@ -96,6 +96,20 @@ public final class CMap<K, V>
 		return this;
 	}
 
+	/**
+	 * Closes the map, like {@link #close()}, but also looks recursively in the values
+	 * for {@link CList}s and {@link CMap}s and also closes them.
+	 */
+	public IMap<K, V> closeDeep() {
+		for (V item : values()) {
+			if (item instanceof CList)
+				((CList)item).closeDeep();
+			else if (item instanceof CMap)
+				((CMap)item).closeDeep();
+		}
+		return close();
+	}
+
 	private void requestWrite() {
 		//if closed, further write operations are forbidden
 		if (closed)
@@ -157,6 +171,21 @@ public final class CMap<K, V>
 	@Override public void clear() {
 		requestWrite();
 		map.clear();
+	}
+
+	@Override public String toString() {
+		return map.toString();
+	}
+
+	@Override public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		CMap<?, ?> cMap = (CMap<?, ?>) o;
+		return map != null ? map.equals(cMap.map) : cMap.map == null;
+	}
+
+	@Override public int hashCode() {
+		return map != null ? map.hashCode() : 0;
 	}
 
 }

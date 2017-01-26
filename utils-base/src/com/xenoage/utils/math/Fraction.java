@@ -234,6 +234,13 @@ public final class Fraction
 	}
 
 	/**
+	 * Multiplies this {@link Fraction} with the given scalar value.
+	 */
+	public Fraction mult(int scalar) {
+		return fr(this.numerator * scalar, this.denominator);
+	}
+
+	/**
 	 * Returns true, if this fraction is 0.
 	 */
 	public boolean is0() {

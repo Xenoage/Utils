@@ -153,6 +153,20 @@ public final class CList<T>
 		return this;
 	}
 
+	/**
+	 * Closes the list, like {@link #close()}, but also looks recursively for
+	 * child {@link CList}s and {@link CMap}s and also closes them.
+	 */
+	public IList<T> closeDeep() {
+		for (T item : array) {
+			if (item instanceof CList)
+				((CList)item).closeDeep();
+			else if (item instanceof CMap)
+				((CMap)item).closeDeep();
+		}
+		return close();
+	}
+
 	private void requestWrite() {
 		//if closed, further write operations are forbidden
 		if (closed)
