@@ -46,6 +46,13 @@ public final class Range
 	}
 
 	/**
+	 * Creates a new range for all indices within the given {@link Countable}.
+	 */
+	public static <T> Range range(Countable countable) {
+		return new Range(0, countable.getCount() - 1, 1);
+	}
+
+	/**
 	 * Creates a new range for all indices within the given array.
 	 */
 	public static <T> Range range(int[] a) {
