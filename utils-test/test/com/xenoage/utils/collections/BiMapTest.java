@@ -48,7 +48,7 @@ public class BiMapTest {
 		assertEquals(null, map.getBy1("B"));
 		//and when A is overwritten, the reference to 1 must be dead
 		map.put("A", 3);
-		assertEquals(null, map.getBy2(3));
+		assertEquals(null, map.getBy2(1));
 	}
 
 }
