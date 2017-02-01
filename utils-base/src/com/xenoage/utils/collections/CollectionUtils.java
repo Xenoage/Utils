@@ -57,6 +57,17 @@ public final class CollectionUtils {
 
 	/**
 	 * Creates a new {@link ArrayList} with the inferred type
+	 * using the given elements.
+	 */
+	public static <T> ArrayList<T> alist(Iterable<T> vals) {
+		ArrayList<T> ret = new ArrayList<T>();
+		for (T v : vals)
+			ret.add(v);
+		return ret;
+	}
+
+	/**
+	 * Creates a new {@link ArrayList} with the inferred type
 	 * and size, using the given value for each element.
 	 */
 	public static <T> ArrayList<T> alistInit(T value, int size) {

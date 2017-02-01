@@ -5,6 +5,7 @@ import com.xenoage.utils.annotations.NonNull;
 import com.xenoage.utils.kernel.Tuple2;
 
 import java.util.Map;
+import java.util.Set;
 
 import static com.xenoage.utils.CheckUtils.checkArgsNotNull;
 import static com.xenoage.utils.collections.CollectionUtils.map;
@@ -76,4 +77,27 @@ public class BiMap<T1, T2> {
 		this.defaultValue = t(defaultValue1, defaultValue2);
 	}
 
+	public Set<T1> getKeys1() {
+		return map1.keySet();
+	}
+
+	public Set<T2> getKeys2() {
+		return map2.keySet();
+	}
+
+	@Override public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		BiMap<?, ?> biMap = (BiMap<?, ?>) o;
+		if (!map1.equals(biMap.map1)) return false;
+		if (!map2.equals(biMap.map2)) return false;
+		return defaultValue != null ? defaultValue.equals(biMap.defaultValue) : biMap.defaultValue == null;
+	}
+
+	@Override public int hashCode() {
+		int result = map1.hashCode();
+		result = 31 * result + map2.hashCode();
+		result = 31 * result + (defaultValue != null ? defaultValue.hashCode() : 0);
+		return result;
+	}
 }

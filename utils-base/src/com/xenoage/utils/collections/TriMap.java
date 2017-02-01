@@ -5,6 +5,7 @@ import com.xenoage.utils.annotations.NonNull;
 import com.xenoage.utils.kernel.Tuple3;
 
 import java.util.Map;
+import java.util.Set;
 
 import static com.xenoage.utils.collections.CollectionUtils.map;
 import static com.xenoage.utils.kernel.Tuple3.t3;
@@ -89,4 +90,33 @@ public class TriMap<T1, T2, T3> {
 		this.defaultValue = null;
 	}
 
+	public Set<T1> getKeys1() {
+		return map1.keySet();
+	}
+
+	public Set<T2> getKeys2() {
+		return map2.keySet();
+	}
+
+	public Set<T3> getKeys3() {
+		return map3.keySet();
+	}
+
+	@Override public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		TriMap<?, ?, ?> triMap = (TriMap<?, ?, ?>) o;
+		if (!map1.equals(triMap.map1)) return false;
+		if (!map2.equals(triMap.map2)) return false;
+		if (!map3.equals(triMap.map3)) return false;
+		return defaultValue != null ? defaultValue.equals(triMap.defaultValue) : triMap.defaultValue == null;
+	}
+
+	@Override public int hashCode() {
+		int result = map1.hashCode();
+		result = 31 * result + map2.hashCode();
+		result = 31 * result + map3.hashCode();
+		result = 31 * result + (defaultValue != null ? defaultValue.hashCode() : 0);
+		return result;
+	}
 }
