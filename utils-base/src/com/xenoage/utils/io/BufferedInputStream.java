@@ -104,4 +104,12 @@ public class BufferedInputStream
 		bufferSize = bufferPos = 0;
 	}
 
+	/**
+	 * Gets the underlying stream.
+	 * Call this method only if you know what you are doing.
+	 */
+	public InputStream getInternalStream() {
+		return stream;
+	}
+
 }

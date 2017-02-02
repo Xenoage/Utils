@@ -62,7 +62,8 @@ public abstract class XmlReader {
 			//try again to read float and cast it to int
 			Float floatValue = Parser.parseFloatNull(v);
 			if (floatValue == null)
-				throw dataException(v + " can not be parsed to int");
+				throw dataException("text \"" + v + "\" in <" + getElementName() +
+						"> can not be parsed to int");
 			ret = floatValue.intValue();
 		}
 		return ret;
@@ -89,7 +90,8 @@ public abstract class XmlReader {
 		String v = getText();
 		Float ret = Parser.parseFloatNull(v);
 		if (ret == null)
-			throw dataException(v + " can not be parsed to float");
+			throw dataException("text \"" + v + "\" in <" + getElementName() +
+					"> can not be parsed to float");
 		return ret;
 	}
 
@@ -167,7 +169,8 @@ public abstract class XmlReader {
 			return Integer.parseInt(v);
 		}
 		catch (NumberFormatException ex) {
-			throw dataException(name + " is no int");
+			throw dataException(name + " in <" + getElementName() +
+					"> is no int");
 		}
 	}
 

@@ -1,7 +1,5 @@
 package com.xenoage.utils.gwt;
 
-import java.util.List;
-
 import com.xenoage.utils.PlatformUtils;
 import com.xenoage.utils.async.AsyncResult;
 import com.xenoage.utils.font.TextMeasurer;
@@ -9,12 +7,11 @@ import com.xenoage.utils.gwt.font.GwtTextMeasurer;
 import com.xenoage.utils.gwt.io.GwtIO;
 import com.xenoage.utils.gwt.io.GwtInputStream;
 import com.xenoage.utils.gwt.xml.GwtXmlReader;
-import com.xenoage.utils.io.FilesystemInput;
-import com.xenoage.utils.io.InputStream;
-import com.xenoage.utils.io.OutputStream;
-import com.xenoage.utils.io.ZipReader;
+import com.xenoage.utils.io.*;
 import com.xenoage.utils.xml.XmlReader;
 import com.xenoage.utils.xml.XmlWriter;
+
+import java.util.List;
 
 /**
  * Google Web Toolkit specific {@link PlatformUtils} implementation.
@@ -83,10 +80,19 @@ public class GwtPlatformUtils
 		gwtIO().openFileAsync(filePath, callback); 
 	}
 
+	/**
+	 * Supports only instances of {@link GwtInputStream} and {@link BufferedInputStream}
+	 * backed by a {@link GwtInputStream}.
+	 */
 	@Override public XmlReader createXmlReader(InputStream inputStream) {
-		//TIDY - normally we always have a GwtInputStream, but who guarantees?
-		GwtInputStream stream = (GwtInputStream) inputStream;
-		return new GwtXmlReader(stream.getData());
+		if (inputStream instanceof GwtInputStream) {
+			GwtInputStream stream = (GwtInputStream) inputStream;
+			return new GwtXmlReader(stream.getData());
+		}
+		else if (inputStream instanceof BufferedInputStream) {
+			return createXmlReader(((BufferedInputStream) inputStream).getInternalStream());
+		}
+		throw new IllegalArgumentException("Unsupported InputStream implementation");
 	}
 
 	/**
