@@ -5,7 +5,7 @@ package com.xenoage.utils.async;
  *
  * @author Andreas Wenger
  */
-public enum PromiseState {
+public enum State {
 	Pending,
 	Resolved,
 	Rejected;

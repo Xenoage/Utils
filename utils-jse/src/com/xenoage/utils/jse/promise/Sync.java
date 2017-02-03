@@ -1,5 +1,6 @@
 package com.xenoage.utils.jse.promise;
 
+import com.xenoage.utils.async.Consumer;
 import com.xenoage.utils.async.Promise;
 
 /**
@@ -23,12 +24,11 @@ public class Sync {
 	 */
 	public static <T> T sync(Promise<T> promise)
 		throws Exception {
-		return null;
-		/*
+
 		//start production
 		final State<T> state = new State<T>();
 		promise
-			.thenDo(new Consumer<T>() {
+			.thenDo("", new Consumer<T>() {
 				@Override public void run(T data) {
 					state.data = data;
 					synchronized (state.lock) {
@@ -37,7 +37,7 @@ public class Sync {
 					}
 				}
 			})
-			.whenFails(new Consumer<Exception>() {
+			.onError("", new Consumer<Exception>() {
 				@Override public void run(Exception ex) {
 					state.exception = ex;
 					synchronized (state.lock) {
@@ -61,7 +61,7 @@ public class Sync {
 		if (state.exception != null)
 			throw state.exception;
 		else
-			return state.data; */
+			return state.data;
 	}
 
 }
