@@ -1,9 +1,6 @@
 package com.xenoage.utils.gwt.xml;
 
-import com.google.gwt.xml.client.DOMException;
-import com.google.gwt.xml.client.Document;
-import com.google.gwt.xml.client.Node;
-import com.google.gwt.xml.client.XMLParser;
+import com.google.gwt.xml.client.*;
 import com.xenoage.utils.xml.XmlDataException;
 import com.xenoage.utils.xml.XmlException;
 import com.xenoage.utils.xml.XmlReader;
@@ -38,7 +35,13 @@ public class GwtXmlReader
 	}
 
 	@Override public String getText() {
-		return currentNode.getNodeValue();
+		String s = "";
+		for (int i : range(currentNode.getChildNodes().getLength())) {
+			Node child = currentNode.getChildNodes().item(i);
+			if (child.getNodeType() == Node.TEXT_NODE)
+				s += ((Text) child).getNodeValue();
+		}
+		return (s.length() > 0 ? s : null);
 	}
 
 	@Override public int getAttributeCount() {

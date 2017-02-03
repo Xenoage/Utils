@@ -1,10 +1,5 @@
 package com.xenoage.utils;
 
-import static com.xenoage.utils.CheckUtils.checkArgsNotNull;
-
-import java.io.IOException;
-import java.util.List;
-
 import com.xenoage.utils.annotations.NonNull;
 import com.xenoage.utils.async.AsyncResult;
 import com.xenoage.utils.font.TextMeasurer;
@@ -12,8 +7,14 @@ import com.xenoage.utils.io.FilesystemInput;
 import com.xenoage.utils.io.InputStream;
 import com.xenoage.utils.io.OutputStream;
 import com.xenoage.utils.io.ZipReader;
+import com.xenoage.utils.promise.Promise;
 import com.xenoage.utils.xml.XmlReader;
 import com.xenoage.utils.xml.XmlWriter;
+
+import java.io.IOException;
+import java.util.List;
+
+import static com.xenoage.utils.CheckUtils.checkArgsNotNull;
 
 /**
  * General methods which implementation is platform dependent.
@@ -91,6 +92,11 @@ public abstract class PlatformUtils {
 	 * may provide also blocking methods for file reading.
 	 */
 	@NonNull public abstract void openFileAsync(String filePath, AsyncResult<InputStream> result);
+
+	/**
+	 * Like {@link #openFileAsync(String, AsyncResult)}, but realized using a {@link Promise}.
+	 */
+	@NonNull public abstract Promise<InputStream> openFileAsync(String filePath);
 	
 	/**
 	 * Returns an {@link XmlReader} for the given {@link InputStream} for this platform.

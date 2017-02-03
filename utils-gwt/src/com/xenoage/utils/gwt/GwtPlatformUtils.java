@@ -8,6 +8,7 @@ import com.xenoage.utils.gwt.io.GwtIO;
 import com.xenoage.utils.gwt.io.GwtInputStream;
 import com.xenoage.utils.gwt.xml.GwtXmlReader;
 import com.xenoage.utils.io.*;
+import com.xenoage.utils.promise.Promise;
 import com.xenoage.utils.xml.XmlReader;
 import com.xenoage.utils.xml.XmlWriter;
 
@@ -78,6 +79,19 @@ public class GwtPlatformUtils
 
 	@Override public void openFileAsync(String filePath, AsyncResult<InputStream> callback) {
 		gwtIO().openFileAsync(filePath, callback); 
+	}
+
+	@Override public Promise<InputStream> openFileAsync(String filePath) {
+		return new Promise<InputStream>(ret -> {
+			gwtIO().openFileAsync(filePath, new AsyncResult<InputStream>() {
+				@Override public void onSuccess(InputStream data) {
+					ret.resolve(data);
+				}
+				@Override public void onFailure(Exception ex) {
+					ret.reject(ex);
+				}
+			});
+		});
 	}
 
 	/**

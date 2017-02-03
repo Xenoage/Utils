@@ -1,8 +1,5 @@
 package com.xenoage.utils.jse;
 
-import java.io.IOException;
-import java.util.List;
-
 import com.xenoage.utils.PlatformUtils;
 import com.xenoage.utils.annotations.NonNull;
 import com.xenoage.utils.async.AsyncResult;
@@ -18,8 +15,14 @@ import com.xenoage.utils.jse.io.JseZipReader;
 import com.xenoage.utils.jse.thread.ThreadUtils;
 import com.xenoage.utils.jse.xml.JseXmlReader;
 import com.xenoage.utils.jse.xml.JseXmlWriter;
+import com.xenoage.utils.promise.Executor;
+import com.xenoage.utils.promise.Promise;
+import com.xenoage.utils.promise.Return;
 import com.xenoage.utils.xml.XmlReader;
 import com.xenoage.utils.xml.XmlWriter;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Java SE specific {@link PlatformUtils} implementation.
@@ -105,7 +108,23 @@ public class JsePlatformUtils
 			callback.onFailure(ex);
 		}
 	}
-	
+
+	//TIDY-LAMBDA
+	@Override public Promise<InputStream> openFileAsync(final String filePath) {
+		return new Promise<InputStream>(new Executor<InputStream>() {
+			@Override public void run(final Return<InputStream> ret) {
+				openFileAsync(filePath, new AsyncResult<InputStream>() {
+					@Override public void onSuccess(InputStream data) {
+						ret.resolve(data);
+					}
+					@Override public void onFailure(Exception ex) {
+						ret.reject(ex);
+					}
+				});
+			}
+		});
+	}
+
 	/**
 	 * Convenience method for opening an {@link InputStream} for the file at the given relative path.
 	 * This method is blocking.
