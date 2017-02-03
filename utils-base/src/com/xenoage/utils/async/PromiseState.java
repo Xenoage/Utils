@@ -7,6 +7,6 @@ package com.xenoage.utils.async;
  */
 public enum PromiseState {
 	Pending,
-	Success,
-	Failure;
+	Resolved,
+	Rejected;
 }

@@ -1,153 +1,96 @@
 package com.xenoage.utils.async;
 
-import static com.xenoage.utils.async.PromiseState.*;
+import static com.xenoage.utils.async.PromiseState.Pending;
+import static com.xenoage.utils.async.PromiseState.Resolved;
 
 /**
  * TODO: Experimental.
  *
+ * This class is very tedious to use with old Java style (anonymous classes).
+ * Instead, use the lambda style. See the test cases for this class.
+ *
  * @author Andreas Wenger
  */
-public abstract class Promise<T> {
+public class Promise<T> {
+
+	private static class Handler<T, R> {
+		Function<Object, R> onResolved;
+		Consumer<Object> resolve;
+
+		Handler(Function<Object, R> onResolved, Consumer<Object> resolve) {
+			this.onResolved = onResolved;
+			this.resolve = resolve;
+		}
+	}
+
 
 	private PromiseState state = Pending;
+	private Object value;
+	//asynchronous callback, if the value can not be resolved immediately
+	private Handler<T, Object> deferred = null; //TODO: list, instead of only the last registered one
 
-	private T result;
-	private Exception error;
 
-	private boolean isProcessed = false;
-	private Promise<?> waitPromise;
+	public Promise(PromiseFn<T> fn) {
+		fn.run(new Consumer<T>() {
+			@Override public void run(T value) {
+				resolve(value);
+			}
+		});
+	}
 
+	private synchronized void resolve(Object value) {
+		if (value instanceof Promise) {
+			//resolve promise
+			((Promise) value).thenSync(new Function() {
+				@Override public Object run(Object value) {
+					resolve(value);
+					return null;
+				}
+			});
+		}
+		else {
+			//plain value
+			this.state = Resolved;
+			this.value = value;
+			if (deferred != null) {
+				handle(deferred);
+			}
+		}
+	}
+
+	private <R> void handle(Handler<T, R> handler) {
+		if (state == Pending)
+			deferred = (Handler) handler;
+		else if (handler.onResolved == null)
+			handler.resolve.run((T) value);
+		else {
+			Object ret = handler.onResolved.run(value);
+			handler.resolve.run(ret);
+		}
+	}
 
 	/**
-	 * Code to produce the promised value asynchronously.
-	 * Call the {@link #success(Object)} or {@link #failure(Exception)} method
-	 * when the production is finished or has failed.
-	 * This metjod must return this instance to allow chaining.
+	 * Returns a promise for the result of the given synchronous function
+	 * applied to the value of this promise.
 	 */
-	public abstract Promise<T> produce();
+	public synchronized <R> Promise<R> thenSync(final Function<T, R> onResolved) {
+		return thenInternal((Function) onResolved);
+	}
 
 	/**
-	 * Sets a function, which is called when the promise is finished.
-	 * The function transforms the result of the promise into some other type,
-	 * which is returned as another promise.
+	 * Returns a promise for the result of the given asynchronous function
+	 * applied to the value of this promise.
 	 */
-	public <R> Promise<R> then(final Function<T, Promise<R>> executor) {
-		final Promise<T> self = this;
-		//result of this promise already known? then apply executor and report success or failure
-		if (state == Success) {
-			Promise<R> ret = executor.run(result);
-			return ret.produce();
-		}
-		else if (state == Failure) {
-			Promise<R> ret = new Promise<R>() {  //forward error in different Promise type
-				@Override public Promise<R> produce() {
-					this.failure(self.error);
-					return this;
-				}
-			};
-			return ret.produce();
-		}
-		//otherwise, wait for result until going on
-		else {
-			waitPromise = new Promise<R>() {
-				@Override public Promise<R> produce() {
-					if (self.state == Success) {
-						Promise<R> ret = executor.run(self.result);
-						return ret.produce();
-					}
-					else if (self.state == Failure) {
-						Promise<R> ret = new Promise<R>() {  //forward error in different Promise type
-							@Override public Promise<R> produce() {
-								this.failure(self.error);
-								return this;
-							}
-						};
-						return ret.produce();
-					}
-					else {
-						throw new IllegalStateException();
-					}
-				}
-			};
-			return (Promise<R>) waitPromise;
-		}
+	public synchronized <R> Promise<R> thenAsync(final Function<T, Promise<R>> onResolved) {
+		return thenInternal((Function) onResolved);
 	}
 
-	public Promise<T> thenDo(final Consumer<T> executor) {
-		final Promise<T> self = this;
-		//result of this promise already known? then apply executor
-		if (state == Success) {
-			executor.run(result);
-			return this;
-		}
-		else if (state == Failure) {
-			return this; //forward error
-		}
-		//otherwise, wait for result until going on
-		else {
-			waitPromise = new Promise<T>() {
-				@Override public Promise<T> produce() {
-					if (self.state == Success) {
-						executor.run(self.result);
-						return self;
-					}
-					else if (self.state == Failure) {
-						return self; //forward error
-					}
-					else {
-						throw new IllegalStateException();
-					}
-				}
-			};
-			return (Promise<T>) waitPromise;
-		}
-	}
-
-	public Promise<T> whenFails(final Consumer<Exception> executor) {
-		final Promise<T> self = this;
-		//result of this promise already known? then apply executor
-		if (state == Success) {
-			return this; //forward success
-		}
-		else if (state == Failure) {
-			executor.run(self.error);
-			return this;
-		}
-		//otherwise, wait for result until going on
-		else {
-			waitPromise = new Promise<T>() {
-				@Override public Promise<T> produce() {
-					if (self.state == Success) {
-						return self; //forward success
-					} else if (self.state == Failure) {
-						executor.run(self.error);
-						return self;
-					} else {
-						throw new IllegalStateException();
-					}
-				}
-			};
-			return (Promise<T>) waitPromise;
-		}
-	}
-
-	public void success(T result) {
-		this.state = Success;
-		this.result = result;
-		if (waitPromise != null) {
-			waitPromise.produce();
-			waitPromise = null;
-		}
-	}
-
-	public void failure(Exception error) {
-		this.state = Failure;
-		this.error = error;
-		if (waitPromise != null) {
-			waitPromise.produce();
-			waitPromise = null;
-		}
-
+	private <R> Promise<R> thenInternal(final Function<T, Object> onResolved) {
+		return new Promise<R>(new PromiseFn<R>() {
+			@Override public void run(Consumer<R> resolve) {
+				handle((Handler) new Handler<T, R>((Function) onResolved, (Consumer) resolve));
+			}
+		});
 	}
 
 }
