@@ -28,15 +28,13 @@ public class Promise<T> {
 		}
 	}
 
-	private String name;
 	private State state = Pending;
 	private Object value;
 	//asynchronous callback, if the value can not be resolved immediately
 	private Handler<T, Object> deferred = null; //TODO: list, instead of only the last registered one
 
 
-	public Promise(String name, Executor<T> exec) {
-		this.name = name;
+	public Promise(Executor<T> exec) {
 		final Promise<T> self = this;
 		exec.run(new Return<T>() {
 			@Override public void resolve(T result) {
@@ -52,10 +50,13 @@ public class Promise<T> {
 		if (value instanceof Promise) {
 			//resolve promise
 			Promise p = ((Promise) value);
-			p.thenSync(p.name + "+", new Function() {
-				@Override public Object run(Object value) {
+			p.thenDo(new Consumer() {
+				@Override public void run(Object value) {
 					resolve(value);
-					return null;
+				}
+			}).onError(new Consumer<Exception>() {
+				@Override public void run(Exception error) {
+					reject(error);
 				}
 			});
 		}
@@ -107,7 +108,7 @@ public class Promise<T> {
 					handler.onRejected.run((Exception) value);
 					handler.ret.resolve(null);
 				} catch (Exception error) {
-					handler.ret.reject(error);
+					handler.ret.resolve(error);
 				}
 			}
 		}
@@ -117,27 +118,27 @@ public class Promise<T> {
 	 * Returns a promise for the result of the given synchronous function
 	 * applied to the value of this promise.
 	 */
-	public synchronized <R> Promise<R> thenSync(String name, final Function<T, R> onResolved) {
-		return thenInternal(name, (Function) onResolved);
+	public synchronized <R> Promise<R> thenSync(final Function<T, R> onResolved) {
+		return thenInternal((Function) onResolved);
 	}
 
 	/**
 	 * Returns a promise for the result of the given asynchronous function
 	 * applied to the value of this promise.
 	 */
-	public synchronized <R> Promise<R> thenAsync(String name, final Function<T, Promise<R>> onResolved) {
-		return thenInternal(name, (Function) onResolved);
+	public synchronized <R> Promise<R> thenAsync(final Function<T, Promise<R>> onResolved) {
+		return thenInternal((Function) onResolved);
 	}
 
 	/**
 	 * Calls the given consumer, when this promise is resolved, and returns this promise for further use.
 	 */
-	public synchronized Promise<T> thenDo(String name, final Consumer<T> onResolved) {
-		return thenInternal(name, toFunction(onResolved));
+	public synchronized Promise<T> thenDo(final Consumer<T> onResolved) {
+		return thenInternal(toFunction(onResolved));
 	}
 
-	private <R> Promise<R> thenInternal(String name, final Function<T, Object> onResolved) {
-		return new Promise<R>(name, new Executor<R>() {
+	private <R> Promise<R> thenInternal(final Function<T, Object> onResolved) {
+		return new Promise<R>(new Executor<R>() {
 			@Override public void run(Return<R> r) {
 				handle((Handler) new Handler<T, R>((Function) onResolved, null, (Return) r));
 			}
@@ -147,13 +148,12 @@ public class Promise<T> {
 	/**
 	 * Calls the given consumer, when this promise is rejected, and returns this promise for further use.
 	 */
-	public synchronized Promise<T> onError(String name, final Consumer<Exception> onRejected) {
-		new Promise<Void>(name, new Executor<Void>() {
-			@Override public void run(Return<Void> r) {
-				handle((Handler) new Handler<T, Void>(null, onRejected, (Return) r));
+	public synchronized Promise<T> onError(final Consumer<Exception> onRejected) {
+		return new Promise<T>(new Executor<T>() {
+			@Override public void run(Return<T> r) {
+				handle((Handler) new Handler<T, Object>(null, onRejected, (Return) r));
 			}
 		});
-		return this;
 	}
 
 

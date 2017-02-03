@@ -28,7 +28,7 @@ public class Sync {
 		//start production
 		final State<T> state = new State<T>();
 		promise
-			.thenDo("", new Consumer<T>() {
+			.thenDo(new Consumer<T>() {
 				@Override public void run(T data) {
 					state.data = data;
 					synchronized (state.lock) {
@@ -37,7 +37,7 @@ public class Sync {
 					}
 				}
 			})
-			.onError("", new Consumer<Exception>() {
+			.onError(new Consumer<Exception>() {
 				@Override public void run(Exception ex) {
 					state.exception = ex;
 					synchronized (state.lock) {
