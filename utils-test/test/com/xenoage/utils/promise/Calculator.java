@@ -1,7 +1,5 @@
 package com.xenoage.utils.promise;
 
-import com.xenoage.utils.async.Promise;
-
 import static com.xenoage.utils.promise.Calculator.Op.Div;
 import static com.xenoage.utils.promise.Calculator.Op.Plus;
 

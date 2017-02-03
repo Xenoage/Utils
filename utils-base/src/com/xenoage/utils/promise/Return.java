@@ -1,4 +1,4 @@
-package com.xenoage.utils.async;
+package com.xenoage.utils.promise;
 
 /**
  * A promise executor can either end by success or by failure.

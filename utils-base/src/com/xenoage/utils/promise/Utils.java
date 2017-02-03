@@ -1,4 +1,4 @@
-package com.xenoage.utils.async;
+package com.xenoage.utils.promise;
 
 /**
  * Utils for promises.

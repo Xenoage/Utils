@@ -1,7 +1,7 @@
 package com.xenoage.utils.jse.promise;
 
-import com.xenoage.utils.async.Consumer;
-import com.xenoage.utils.async.Promise;
+import com.xenoage.utils.promise.Consumer;
+import com.xenoage.utils.promise.Promise;
 
 /**
  * This class allows block a promise until it finished

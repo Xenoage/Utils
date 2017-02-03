@@ -1,9 +1,4 @@
-package com.xenoage.utils.async;
-
-import static com.xenoage.utils.async.State.Pending;
-import static com.xenoage.utils.async.State.Rejected;
-import static com.xenoage.utils.async.State.Resolved;
-import static com.xenoage.utils.async.Utils.toFunction;
+package com.xenoage.utils.promise;
 
 /**
  * TODO: Experimental.
@@ -28,7 +23,7 @@ public class Promise<T> {
 		}
 	}
 
-	private State state = Pending;
+	private State state = State.Pending;
 	private Object value;
 	//asynchronous callback, if the value can not be resolved immediately
 	private Handler<T, Object> deferred = null; //TODO: list, instead of only the last registered one
@@ -62,7 +57,7 @@ public class Promise<T> {
 		}
 		else {
 			//plain value
-			this.state = Resolved;
+			this.state = State.Resolved;
 			this.value = value;
 			if (deferred != null) {
 				handle(deferred);
@@ -71,7 +66,7 @@ public class Promise<T> {
 	}
 
 	private synchronized void reject(Exception error) {
-		this.state = Rejected;
+		this.state = State.Rejected;
 		this.value = error;
 		if (deferred != null) {
 			handle(deferred);
@@ -79,11 +74,11 @@ public class Promise<T> {
 	}
 
 	private <R> void handle(Handler<T, R> handler) {
-		if (state == Pending) {
+		if (state == State.Pending) {
 			//executor not finished yet; remember handler
 			deferred = (Handler) handler;
 		}
-		else if (state == Resolved) {
+		else if (state == State.Resolved) {
 			//resolved
 			if (handler.onResolved == null) {
 				handler.ret.resolve((T) value);
@@ -134,7 +129,7 @@ public class Promise<T> {
 	 * Calls the given consumer, when this promise is resolved, and returns this promise for further use.
 	 */
 	public synchronized Promise<T> thenDo(final Consumer<T> onResolved) {
-		return thenInternal(toFunction(onResolved));
+		return thenInternal(Utils.toFunction(onResolved));
 	}
 
 	private <R> Promise<R> thenInternal(final Function<T, Object> onResolved) {
