@@ -128,4 +128,11 @@ public class GwtPlatformUtils
 		throw new Error("Fatal error", ex);
 	}
 
+	/**
+	 * Calls console.log with the given message.
+	 */
+	public static native void consoleLog(Object message) /*-{
+      console.log(message);
+  }-*/;
+
 }
