@@ -1,8 +1,8 @@
 package com.xenoage.utils.math;
 
-import static com.xenoage.utils.math.geom.Point2f.p;
-
 import com.xenoage.utils.math.geom.Point2f;
+
+import static com.xenoage.utils.math.geom.Point2f.p;
 
 /**
  * Some useful mathematical functions.
@@ -159,6 +159,25 @@ public class MathUtils {
 		return p1 + (p2 - p1) * (t - t1) / (t2 - t1);
 	}
 
+	/**
+	 * Linear interpolation between p1 and p2, at position t between t1 and t2,
+	 * where t1 is the coordinate of p1 and t2 is the coordinate of p2.
+	 */
+	public static float interpolateLinear(LinearInterpolationPoints points, float t) {
+		return interpolateLinear(points.p1, points.p2, points.t1, points.t2, t);
+	}
+
+	public static class LinearInterpolationPoints {
+		public final float p1, p2, t1, t2;
+
+		public LinearInterpolationPoints(float p1, float p2, float t1, float t2) {
+			this.p1 = p1;
+			this.p2 = p2;
+			this.t1 = t1;
+			this.t2 = t2;
+		}
+	}
+
 	public static int lowestPrimeNumber(int number) {
 		for (int i = 2; i <= Math.sqrt(number); i++) {
 			if (number % i == 0) {
@@ -231,7 +250,7 @@ public class MathUtils {
 	 * If all elements are null or if no element is given, null is returned.
 	 * If more then one element qualifies, the first one is returned.
 	 */
-	@SafeVarargs public static <T extends Comparable<T>> T min(T... ts) {
+	public static <T extends Comparable<T>> T min(T... ts) {
 		T ret = null;
 		for (T t : ts)
 			if (ret == null || (t != null && t.compareTo(ret) < 0))
@@ -244,7 +263,7 @@ public class MathUtils {
 	 * If all elements are null or if no element is given, null is returned.
 	 * If more then one element qualifies, the first one is returned.
 	 */
-	@SafeVarargs public static <T extends Comparable<T>> T max(T... ts) {
+	public static <T extends Comparable<T>> T max(T... ts) {
 		T ret = null;
 		for (T t : ts)
 			if (ret == null || (t != null && t.compareTo(ret) > 0))
