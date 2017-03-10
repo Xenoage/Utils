@@ -19,7 +19,7 @@
 				<include name="utils-base/src/**/*.java"/>
 				<include name="utils-gwt/src/**/*.java"/>
 				<include name="utils-jse/src/**/*.java"/>
-				<include name="utils-jse8/src/**/*.java"/>
+				<include name="utils-jsebase/src/**/*.java"/>
 				<include name="utils-kernel/src/**/*.java"/>
 				<include name="utils-pdlib/src/**/*.java"/>
 				<include name="utils-serialize/src/**/*.java"/>

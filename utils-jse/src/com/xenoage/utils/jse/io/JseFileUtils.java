@@ -38,7 +38,11 @@ public class JseFileUtils {
 	 */
 	public static FileFilter getDirectoriesFilter() {
 		if (directoriesFilter == null)
-			directoriesFilter = file -> file.isDirectory() && !file.getName().startsWith(".");
+			directoriesFilter = new FileFilter() { //ZONG-120: replace by lambda later
+				@Override public boolean accept(File file) {
+					return file.isDirectory() && !file.getName().startsWith(".");
+				}
+			};
 		return directoriesFilter;
 	}
 
@@ -48,19 +52,25 @@ public class JseFileUtils {
 	public static FilenameFilter getFilter(com.xenoage.utils.io.FileFilter fileFilter) {
 		if (fileFilter == null)
 			return null;
-		return (dir, name) -> fileFilter.accept(new JseFile(new File(dir, name)));
+		return new FilenameFilter() { //ZONG-120: replace by lambda later
+			@Override public boolean accept(File dir, String name) {
+				return fileFilter.accept(new JseFile(new File(dir, name)));
+			}
+		};
 	}
 
 	/**
 	 * Returns a filename filter which accepts all of the given filters.
 	 */
 	public static FilenameFilter orFilter(final FilenameFilter... filters) {
-		return (dir, name) -> {
-			for (FilenameFilter filter : filters) {
-				if (filter.accept(dir, name))
-					return true;
+		return new FilenameFilter() { //ZONG-120: replace by lambda later
+			@Override public boolean accept(File dir, String name) {
+				for (FilenameFilter filter : filters) {
+					if (filter.accept(dir, name))
+						return true;
+				}
+				return false;
 			}
-			return false;
 		};
 	}
 

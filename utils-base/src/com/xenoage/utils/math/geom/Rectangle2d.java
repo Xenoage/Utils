@@ -2,8 +2,6 @@ package com.xenoage.utils.math.geom;
 
 import static com.xenoage.utils.math.geom.Point2d.p;
 
-import java.awt.geom.Rectangle2D;
-
 /**
  * Class for a 2D rectangle.
  *
@@ -35,11 +33,6 @@ public final class Rectangle2d {
 
 	public Rectangle2d(double x, double y, double width, double height) {
 		this(new Point2d(x, y), new Size2d(width, height));
-	}
-
-	public Rectangle2d(Rectangle2D rectangle) {
-		this(new Point2d(rectangle.getX(), rectangle.getY()), new Size2d(rectangle.getWidth(),
-			rectangle.getHeight()));
 	}
 
 	public static Rectangle2d fromX1Y1X2Y2(double x1, double y1, double x2, double y2) {
@@ -155,10 +148,6 @@ public final class Rectangle2d {
 
 	public Point2d se() {
 		return p(x2(), y2());
-	}
-
-	public static Rectangle2d fromRectangle2D(Rectangle2D r) {
-		return new Rectangle2d(r.getMinX(), r.getMinY(), r.getWidth(), r.getHeight());
 	}
 
 	@Override public String toString() {
