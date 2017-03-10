@@ -37,47 +37,31 @@ public class JseFileUtils {
 	 * (e.g. ".svn").
 	 */
 	public static FileFilter getDirectoriesFilter() {
-		if (directoriesFilter == null) {
-			directoriesFilter = new FileFilter() {
-
-				@Override public boolean accept(File file) {
-					return file.isDirectory() && !file.getName().startsWith(".");
-				}
-			};
-		}
+		if (directoriesFilter == null)
+			directoriesFilter = file -> file.isDirectory() && !file.getName().startsWith(".");
 		return directoriesFilter;
 	}
 
 	/**
 	 * Returns a filename filter for the given {@link com.xenoage.utils.io.FileFilter}.
 	 */
-	public static FilenameFilter getFilter(final com.xenoage.utils.io.FileFilter fileFilter) {
+	public static FilenameFilter getFilter(com.xenoage.utils.io.FileFilter fileFilter) {
 		if (fileFilter == null)
 			return null;
-		FilenameFilter ret = new FilenameFilter() {
-
-			@Override public boolean accept(File dir, String name) {
-				return fileFilter.accept(new JseFile(new File(dir, name)));
-			}
-		};
-		return ret;
+		return (dir, name) -> fileFilter.accept(new JseFile(new File(dir, name)));
 	}
 
 	/**
 	 * Returns a filename filter which accepts all of the given filters.
 	 */
 	public static FilenameFilter orFilter(final FilenameFilter... filters) {
-		FilenameFilter ret = new FilenameFilter() {
-
-			@Override public boolean accept(File dir, String name) {
-				for (FilenameFilter filter : filters) {
-					if (filter.accept(dir, name))
-						return true;
-				}
-				return false;
+		return (dir, name) -> {
+			for (FilenameFilter filter : filters) {
+				if (filter.accept(dir, name))
+					return true;
 			}
+			return false;
 		};
-		return ret;
 	}
 
 	/**

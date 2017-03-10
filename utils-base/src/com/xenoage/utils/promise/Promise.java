@@ -45,15 +45,7 @@ public class Promise<T> {
 		if (value instanceof Promise) {
 			//resolve promise
 			Promise p = ((Promise) value);
-			p.thenDo(new Consumer() {
-				@Override public void run(Object value) {
-					resolve(value);
-				}
-			}).onError(new Consumer<Exception>() {
-				@Override public void run(Exception error) {
-					reject(error);
-				}
-			});
+			p.thenDo(this::resolve).onError(e -> reject((Exception) e));
 		}
 		else {
 			//plain value
@@ -133,22 +125,16 @@ public class Promise<T> {
 	}
 
 	private <R> Promise<R> thenInternal(final Function<T, Object> onResolved) {
-		return new Promise<R>(new Executor<R>() {
-			@Override public void run(Return<R> r) {
-				handle((Handler) new Handler<T, R>((Function) onResolved, null, (Return) r));
-			}
-		});
+		return new Promise<>(r -> handle(
+			new Handler<>((Function) onResolved, null, (Return) r)));
 	}
 
 	/**
 	 * Calls the given consumer, when this promise is rejected, and returns this promise for further use.
 	 */
 	public synchronized Promise<T> onError(final Consumer<Exception> onRejected) {
-		return new Promise<T>(new Executor<T>() {
-			@Override public void run(Return<T> r) {
-				handle((Handler) new Handler<T, Object>(null, onRejected, (Return) r));
-			}
-		});
+		return new Promise<>(r -> handle(
+			(Handler) new Handler<T, Object>(null, onRejected, (Return) r)));
 	}
 
 

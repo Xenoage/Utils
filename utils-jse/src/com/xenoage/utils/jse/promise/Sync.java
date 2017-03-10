@@ -28,22 +28,18 @@ public class Sync {
 		//start production
 		final State<T> state = new State<T>();
 		promise
-			.thenDo(new Consumer<T>() {
-				@Override public void run(T data) {
-					state.data = data;
-					synchronized (state.lock) {
-						state.lock.notify();
-						state.finished = true;
-					}
+			.thenDo(data -> {
+				state.data = data;
+				synchronized (state.lock) {
+					state.lock.notify();
+					state.finished = true;
 				}
 			})
-			.onError(new Consumer<Exception>() {
-				@Override public void run(Exception ex) {
-					state.exception = ex;
-					synchronized (state.lock) {
-						state.lock.notify();
-						state.finished = true;
-					}
+			.onError(ex -> {
+				state.exception = ex;
+				synchronized (state.lock) {
+					state.lock.notify();
+					state.finished = true;
 				}
 			});
 		//wait for promise to finish

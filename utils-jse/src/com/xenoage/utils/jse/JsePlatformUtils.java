@@ -109,20 +109,15 @@ public class JsePlatformUtils
 		}
 	}
 
-	//TIDY-LAMBDA
 	@Override public Promise<InputStream> openFileAsync(final String filePath) {
-		return new Promise<InputStream>(new Executor<InputStream>() {
-			@Override public void run(final Return<InputStream> ret) {
-				openFileAsync(filePath, new AsyncResult<InputStream>() {
-					@Override public void onSuccess(InputStream data) {
-						ret.resolve(data);
-					}
-					@Override public void onFailure(Exception ex) {
-						ret.reject(ex);
-					}
-				});
+		return new Promise<>(ret -> openFileAsync(filePath, new AsyncResult<InputStream>() {
+			@Override public void onSuccess(InputStream data) {
+				ret.resolve(data);
 			}
-		});
+			@Override public void onFailure(Exception ex) {
+				ret.reject(ex);
+			}
+		}));
 	}
 
 	/**
