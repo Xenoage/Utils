@@ -20,7 +20,7 @@ public final class Tuple2<T1, T2> {
 	}
 
 	public static <T1, T2> Tuple2<T1, T2> t(T1 e1, T2 e2) {
-		return new Tuple2<T1, T2>(e1, e2);
+		return new Tuple2<>(e1, e2);
 	}
 
 	public T1 get1() {

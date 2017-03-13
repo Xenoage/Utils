@@ -22,7 +22,7 @@ public final class CollectionUtils {
 	 * Creates a new empty {@link ArrayList} with the inferred type.
 	 */
 	public static <T> ArrayList<T> alist() {
-		return new ArrayList<T>();
+		return new ArrayList<>();
 	}
 
 	/**
@@ -30,7 +30,7 @@ public final class CollectionUtils {
 	 * using the given capacity.
 	 */
 	public static <T> ArrayList<T> alist(int initialCapacity) {
-		return new ArrayList<T>(initialCapacity);
+		return new ArrayList<>(initialCapacity);
 	}
 	
 	/**
@@ -38,7 +38,7 @@ public final class CollectionUtils {
 	 * using the given elements.
 	 */
 	public static <T> ArrayList<T> alist(Collection<T> vals) {
-		ArrayList<T> ret = new ArrayList<T>(vals.size());
+		ArrayList<T> ret = new ArrayList<>(vals.size());
 		for (T v : vals)
 			ret.add(v);
 		return ret;
@@ -49,7 +49,7 @@ public final class CollectionUtils {
 	 * using the given elements.
 	 */
 	@SafeVarargs public static <T> ArrayList<T> alist(T... vals) {
-		ArrayList<T> ret = new ArrayList<T>(vals.length);
+		ArrayList<T> ret = new ArrayList<>(vals.length);
 		for (T v : vals)
 			ret.add(v);
 		return ret;
@@ -60,7 +60,7 @@ public final class CollectionUtils {
 	 * using the given elements.
 	 */
 	public static <T> ArrayList<T> alist(Iterable<T> vals) {
-		ArrayList<T> ret = new ArrayList<T>();
+		ArrayList<T> ret = new ArrayList<>();
 		for (T v : vals)
 			ret.add(v);
 		return ret;
@@ -71,7 +71,7 @@ public final class CollectionUtils {
 	 * and size, using the given value for each element.
 	 */
 	public static <T> ArrayList<T> alistInit(T value, int size) {
-		ArrayList<T> ret = new ArrayList<T>(size);
+		ArrayList<T> ret = new ArrayList<>(size);
 		for (int i = 0; i < size; i++)
 			ret.add(value);
 		return ret;
@@ -88,7 +88,7 @@ public final class CollectionUtils {
 		for (Collection<T> list : lists)
 			count += list.size();
 		//copy
-		ArrayList<T> ret = new ArrayList<T>(count);
+		ArrayList<T> ret = new ArrayList<>(count);
 		for (Collection<T> list : lists)
 			ret.addAll(list);
 		return ret;
@@ -98,14 +98,14 @@ public final class CollectionUtils {
 	 * Creates a new empty {@link HashMap} with the inferred type.
 	 */
 	public static <T1, T2> HashMap<T1, T2> map() {
-		return new HashMap<T1, T2>();
+		return new HashMap<>();
 	}
 
 	/**
 	 * Creates a new empty {@link LinkedList} with the inferred type.
 	 */
 	public static <T> LinkedList<T> llist() {
-		return new LinkedList<T>();
+		return new LinkedList<>();
 	}
 
 	/**
@@ -113,7 +113,7 @@ public final class CollectionUtils {
 	 * using the given elements.
 	 */
 	@SafeVarargs public static <T> LinkedList<T> llist(T... vals) {
-		LinkedList<T> ret = new LinkedList<T>();
+		LinkedList<T> ret = new LinkedList<>();
 		for (T v : vals)
 			ret.add(v);
 		return ret;
@@ -124,7 +124,7 @@ public final class CollectionUtils {
 	 * using the given elements.
 	 */
 	public static <T> Set<T> set(T... vals) {
-		HashSet<T> ret = new HashSet<T>();
+		HashSet<T> ret = new HashSet<>();
 		for (T v : vals)
 			ret.add(v);
 		return ret;
@@ -135,7 +135,7 @@ public final class CollectionUtils {
 	 * using the given elements.
 	 */
 	public static <T> Set<T> set(Collection<T> vals) {
-		return new HashSet<T>(vals);
+		return new HashSet<>(vals);
 	}
 
 	/**
@@ -240,7 +240,7 @@ public final class CollectionUtils {
 	 */
 	public static <T> List<T> setExtend(List<T> list, int index, T element, T fillElement) {
 		if (list == null)
-			list = new ArrayList<T>(index + 1);
+			list = new ArrayList<>(index + 1);
 		while (index >= list.size())
 			list.add(fillElement);
 		list.set(index, element);
@@ -278,7 +278,7 @@ public final class CollectionUtils {
 	 */
 	public static <T> List<T> addOrNew(List<T> list, T element) {
 		if (list.size() == 0)
-			list = new ArrayList<T>(1);
+			list = new ArrayList<>(1);
 		list.add(element);
 		return list;
 	}
@@ -301,7 +301,7 @@ public final class CollectionUtils {
 	/**
 	 * Adds the given array elements to the given target list.
 	 */
-	public static <T> void addAll(List<T> target, T[] elements) {
+	public static <T> void addAll(List<T> target, T... elements) {
 		for (T e : elements)
 			target.add(e);
 	}

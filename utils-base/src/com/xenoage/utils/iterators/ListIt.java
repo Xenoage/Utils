@@ -21,7 +21,7 @@ public class ListIt<T>
 	 * Creates a new {@link ListIt} around the given {@link ListIterator}.
 	 */
 	public static <T> ListIt<T> listIt(ListIterator<T> iterator) {
-		return new ListIt<T>(iterator);
+		return new ListIt<>(iterator);
 	}
 
 	@Override public boolean hasNext() {

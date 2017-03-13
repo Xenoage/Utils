@@ -14,7 +14,7 @@ import java.util.ListIterator;
 public class SortedList<T extends Comparable<T>>
 	implements Iterable<T> {
 
-	private LinkedList<T> list = new LinkedList<T>();
+	private LinkedList<T> list = new LinkedList<>();
 	private final boolean duplicates;
 
 
@@ -31,7 +31,7 @@ public class SortedList<T extends Comparable<T>>
 	 * Creates a new sorted list without duplicates.
 	 */
 	public static <T2 extends Comparable<T2>> SortedList<T2> sortedListNoDuplicates() {
-		return new SortedList<T2>(false);
+		return new SortedList<>(false);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class SortedList<T extends Comparable<T>>
 	 * Merges this list with the given list and returns the result.
 	 */
 	public SortedList<T> merge(SortedList<T> sortedList, boolean duplicates) {
-		SortedList<T> ret = new SortedList<T>(duplicates);
+		SortedList<T> ret = new SortedList<>(duplicates);
 		Iterator<T> l1 = this.list.iterator();
 		Iterator<T> l2 = sortedList.list.iterator();
 		T e1 = (l1.hasNext() ? l1.next() : null);

@@ -24,7 +24,7 @@ public interface InputStream {
    * the buffer array <code>b</code>. The number of bytes actually read is
    * returned as an integer.
    */
-  public int read(byte b[])
+  public int read(byte... b)
   	throws IOException;
   
   /**

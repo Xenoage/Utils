@@ -1,11 +1,11 @@
 package com.xenoage.utils.iterators;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  * Tests for {@link ClassFilterIt}.
@@ -15,7 +15,7 @@ import org.junit.Test;
 public class ClassFilterItTest {
 
 	@Test public void test1() {
-		List<Object> list = new LinkedList<Object>();
+		List<Object> list = new LinkedList<>();
 		list.add("Hello");
 		list.add(1f);
 		list.add(12);
@@ -23,7 +23,7 @@ public class ClassFilterItTest {
 		list.add("we");
 		list.add(7f);
 		//must deliver 1f, 12 and 7f
-		ClassFilterIt<Number> it = new ClassFilterIt<Number>(list, Number.class);
+		ClassFilterIt<Number> it = new ClassFilterIt<>(list, Number.class);
 		assertEquals(true, it.hasNext());
 		assertEquals(1f, it.next());
 		assertEquals(1, it.getIndex());
@@ -37,7 +37,7 @@ public class ClassFilterItTest {
 	}
 
 	@Test public void test2() {
-		List<Object> list = new LinkedList<Object>();
+		List<Object> list = new LinkedList<>();
 		list.add(1f);
 		list.add(12);
 		list.add("here");
@@ -45,7 +45,7 @@ public class ClassFilterItTest {
 		list.add(7f);
 		list.add("go");
 		//must deliver 1f, 12 and 7f
-		ClassFilterIt<Number> it = new ClassFilterIt<Number>(list, Number.class);
+		ClassFilterIt<Number> it = new ClassFilterIt<>(list, Number.class);
 		assertEquals(true, it.hasNext());
 		assertEquals(1f, it.next());
 		assertEquals(0, it.getIndex());

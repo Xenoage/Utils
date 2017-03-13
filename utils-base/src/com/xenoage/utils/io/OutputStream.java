@@ -20,7 +20,7 @@ public interface OutputStream extends AutoCloseable {
 	/**
 	 * Writes the given bytes to this output stream.
 	 */
-	public void write(byte b[]) throws IOException;
+	public void write(byte... b) throws IOException;
 
 	/**
 	 * Writes <code>len</code> bytes from the given byte array starting at

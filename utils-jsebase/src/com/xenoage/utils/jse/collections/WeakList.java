@@ -1,9 +1,9 @@
 package com.xenoage.utils.jse.collections;
 
-import static com.xenoage.utils.kernel.Range.rangeReverse;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+
+import static com.xenoage.utils.kernel.Range.rangeReverse;
 
 /**
  * A list of weakly referenced objects (by {@link WeakReference}.
@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class WeakList<T> {
 
-	private ArrayList<WeakReference<T>> list = new ArrayList<WeakReference<T>>();
+	private ArrayList<WeakReference<T>> list = new ArrayList<>();
 
 
 	/**
@@ -26,7 +26,7 @@ public class WeakList<T> {
 	 */
 	public synchronized ArrayList<T> getAll() {
 		clean();
-		ArrayList<T> ret = new ArrayList<T>();
+		ArrayList<T> ret = new ArrayList<>();
 		for (WeakReference<T> e : list) {
 			T t = e.get();
 			if (t != null)
@@ -46,7 +46,7 @@ public class WeakList<T> {
 		for (WeakReference<T> e : list)
 			if (e.get().equals(element))
 				return;
-		list.add(new WeakReference<T>(element));
+		list.add(new WeakReference<>(element));
 	}
 
 	/**

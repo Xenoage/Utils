@@ -13,7 +13,7 @@ public class StreamUtils {
 	 * Default implementation of {@link InputStream#read(byte[])}.
 	 * Uses {@link #read(InputStream, byte[], int, int)} (see performance warning).
 	 */
-	public static int read(InputStream stream, byte[] b)
+	public static int read(InputStream stream, byte... b)
 		throws IOException {
 		return stream.read(b, 0, b.length);
 	}
@@ -40,7 +40,7 @@ public class StreamUtils {
 	 * Default implementation of {@link OutputStream#write(byte[])}.
 	 * Uses {@link #write(OutputStream, byte[], int, int)} (see performance warning).
 	 */
-	public static void write(OutputStream stream, byte b[])
+	public static void write(OutputStream stream, byte... b)
 		throws IOException {
     write(stream, b, 0, b.length);
 	}

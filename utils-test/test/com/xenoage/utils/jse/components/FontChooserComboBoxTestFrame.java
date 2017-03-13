@@ -1,24 +1,11 @@
 package com.xenoage.utils.jse.components;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import javax.swing.*;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Hashtable;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JTextField;
-import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 public class FontChooserComboBoxTestFrame
 	extends JFrame {
@@ -43,12 +30,9 @@ public class FontChooserComboBoxTestFrame
 		//font chooser
 		fccb = new FontChooserComboBox();
 		fccb.setPreviewFontSize((int) (new JLabel().getFont().getSize2D() * 1.5));
-		fccb.addItemListener(new ItemListener() {
-
-			@Override public void itemStateChanged(ItemEvent e) {
-				String fontName = fccb.getSelectedFontName();
-				lblResult.setText(fontName != null ? fontName : "");
-			}
+		fccb.addItemListener(e -> {
+			String fontName = fccb.getSelectedFontName();
+			lblResult.setText(fontName != null ? fontName : "");
 		});
 		toolbar.add(fccb);
 
@@ -89,7 +73,7 @@ public class FontChooserComboBoxTestFrame
 		sliderPreview.setPaintLabels(true);
 		sliderPreview.setPaintTicks(true);
 		//sliderPreview.setPreferredSize(new Dimension(160, 50));
-		Hashtable<Integer, JLabel> table = new Hashtable<Integer, JLabel>();
+		Hashtable<Integer, JLabel> table = new Hashtable<>();
 		table.put(0, new JLabel("none"));
 		table.put(1, new JLabel("1"));
 		table.put(2, new JLabel("2"));
@@ -97,29 +81,23 @@ public class FontChooserComboBoxTestFrame
 		table.put(4, new JLabel("4"));
 		table.put(5, new JLabel("5"));
 		sliderPreview.setLabelTable(table);
-		sliderPreview.addChangeListener(new ChangeListener() {
-
-			@Override public void stateChanged(ChangeEvent e) {
-				//fccb.setRecentFontsCount(sliderPreview.getValue());
-			}
+		sliderPreview.addChangeListener(e -> {
+			//fccb.setRecentFontsCount(sliderPreview.getValue());
 		});
 		contentPanel.add(sliderPreview);
 
 		pack();
 	}
 
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-
-			@Override public void run() {
-				try {
-					UIManager.setLookAndFeel(new NimbusLookAndFeel());
-				} catch (Exception e) {
-				}
-
-				FontChooserComboBoxTestFrame frame = new FontChooserComboBoxTestFrame();
-				frame.setVisible(true);
+	public static void main(String... args) {
+		SwingUtilities.invokeLater(() -> {
+			try {
+				UIManager.setLookAndFeel(new NimbusLookAndFeel());
+			} catch (Exception e) {
 			}
+
+			FontChooserComboBoxTestFrame frame = new FontChooserComboBoxTestFrame();
+			frame.setVisible(true);
 		});
 	}
 

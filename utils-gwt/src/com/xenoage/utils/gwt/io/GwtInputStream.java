@@ -75,7 +75,7 @@ public class GwtInputStream
 		return stream.read();
 	}
 
-	@Override public int read(byte[] b)
+	@Override public int read(byte... b)
 		throws IOException {
 		return stream.read(b, 0, b.length);
 	}

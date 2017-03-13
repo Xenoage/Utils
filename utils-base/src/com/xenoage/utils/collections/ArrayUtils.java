@@ -1,9 +1,9 @@
 package com.xenoage.utils.collections;
 
-import static com.xenoage.utils.kernel.Range.range;
-
 import java.util.Collection;
 import java.util.List;
+
+import static com.xenoage.utils.kernel.Range.range;
 
 /**
  * Some useful functions for arrays.
@@ -51,7 +51,7 @@ public class ArrayUtils {
 	/**
 	 * Creates a copy of the given <code>float</code> array.
 	 */
-	public static float[] copy(float[] a) {
+	public static float[] copy(float... a) {
 		float[] ret = new float[a.length];
 		for (int i = 0; i < a.length; i++)
 			ret[i] = a[i];
@@ -72,12 +72,22 @@ public class ArrayUtils {
 	}
 
 	/**
+	 * Returns the sum of the given <code>int</code> array.
+	 */
+	public static int sum(int[] a) {
+		int ret = 0;
+		for (int v : a)
+			ret += v;
+		return ret;
+	}
+
+	/**
 	 * Returns the sum of the given <code>float</code> array.
 	 */
-	public static float sum(float[] a) {
+	public static float sum(float... a) {
 		float ret = 0;
-		for (int i = 0; i < a.length; i++)
-			ret += a[i];
+		for (float v : a)
+			ret += v;
 		return ret;
 	}
 
@@ -95,14 +105,14 @@ public class ArrayUtils {
 	/**
 	 * Returns true, if the given array contains a <code>null</code> element.
 	 */
-	public static boolean containsNull(Object[] a) {
+	public static boolean containsNull(Object... a) {
 		return containsRef(a, null);
 	}
 
 	/**
 	 * Returns true, if the given array contains only <code>null</code> elements.
 	 */
-	public static <T> boolean containsOnlyNull(T[] c) {
+	public static <T> boolean containsOnlyNull(T... c) {
 		for (Object e : c)
 			if (e != null)
 				return false;
@@ -113,7 +123,7 @@ public class ArrayUtils {
 	 * Returns the entry with the lowest value.
 	 * The array may not be empty.
 	 */
-	public static int min(int[] a) {
+	public static int min(int... a) {
 		int ret = a[0];
 		for (int v : a)
 			if (v < ret)
@@ -137,7 +147,7 @@ public class ArrayUtils {
 	 * Returns the entry with the highest value.
 	 * The array may not be empty.
 	 */
-	public static int max(int[] a) {
+	public static int max(int... a) {
 		int ret = a[0];
 		for (int v : a)
 			if (v > ret)
@@ -161,7 +171,7 @@ public class ArrayUtils {
 	 * Gets the index of the entry with the maximum value,
 	 * or -1 if the array is empty.
 	 */
-	public static int getMaxIndex(float[] a) {
+	public static int getMaxIndex(float... a) {
 		int ret = -1;
 		float max = Float.MIN_VALUE;
 		for (int i : range(a)) {
@@ -177,7 +187,7 @@ public class ArrayUtils {
 	 * Returns the given array as a human-readable comma-separated String,
 	 * e.g. <code>[0,1,2]</code> as <code>"0, 1, 2"</code>.
 	 */
-	public static <T> String toString(T[] c) {
+	public static <T> String toString(T... c) {
 		StringBuilder s = new StringBuilder();
 		if (c.length > 0) {
 			for (int i : range(0, c.length - 2))
@@ -187,27 +197,27 @@ public class ArrayUtils {
 		return s.toString();
 	}
 	
-	public static <T> T getFirst(T[] a) {
+	public static <T> T getFirst(T... a) {
 		return a[0];
 	}
 	
-	public static <T> T getLast(T[] a) {
+	public static <T> T getLast(T... a) {
 		return a[a.length - 1];
 	}
 	
-	public static int getFirst(int[] a) {
+	public static int getFirst(int... a) {
 		return a[0];
 	}
 	
-	public static int getLast(int[] a) {
+	public static int getLast(int... a) {
 		return a[a.length - 1];
 	}
 
-	public static float getFirst(float[] a) {
+	public static float getFirst(float... a) {
 		return a[0];
 	}
 	
-	public static float getLast(float[] a) {
+	public static float getLast(float... a) {
 		return a[a.length - 1];
 	}
 	

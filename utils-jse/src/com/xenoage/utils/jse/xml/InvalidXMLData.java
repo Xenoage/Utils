@@ -1,10 +1,10 @@
 package com.xenoage.utils.jse.xml;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Runtime exception for invalid XML data.
@@ -36,7 +36,7 @@ public final class InvalidXMLData
 
 	public List<Node> getStack() {
 		Node n = element;
-		LinkedList<Node> stack = new LinkedList<Node>();
+		LinkedList<Node> stack = new LinkedList<>();
 		do {
 			stack.addFirst(n);
 			n = n.getParentNode();

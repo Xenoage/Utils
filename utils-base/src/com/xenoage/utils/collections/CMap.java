@@ -47,12 +47,12 @@ public final class CMap<K, V>
 	 * map. A shallow copy of the given map is created.
 	 */
 	public CMap(java.util.Map<K, V> mutableMap) {
-		map = new HashMap<K, V>(mutableMap);
+		map = new HashMap<>(mutableMap);
 	}
 
 	private CMap(boolean init) {
 		if (init)
-			map = new HashMap<K, V>();
+			map = new HashMap<>();
 		else
 			map = null;
 	}
@@ -61,7 +61,7 @@ public final class CMap<K, V>
 	 * Creates an empty and unclosed {@link CMap}.
 	 */
 	public static <K2, V2> CMap<K2, V2> cmap() {
-		return new CMap<K2, V2>();
+		return new CMap<>();
 	}
 
 	/**
@@ -69,7 +69,7 @@ public final class CMap<K, V>
 	 * map. A shallow copy of the given map is created.
 	 */
 	public static <K2, V2> CMap<K2, V2> cmap(java.util.Map<K2, V2> mutableMap) {
-		return new CMap<K2, V2>(mutableMap);
+		return new CMap<>(mutableMap);
 	}
 
 	/**
@@ -78,7 +78,7 @@ public final class CMap<K, V>
 	 * The memory is shared until the new map receives the first write operation.
 	 */
 	public static <K2, V2> CMap<K2, V2> cmap(IMap<K2, V2> m) {
-		CMap<K2, V2> ret = new CMap<K2, V2>(false);
+		CMap<K2, V2> ret = new CMap<>(false);
 		ret.sharedMemory = true;
 		if (m instanceof CMap)
 			ret.map = ((CMap<K2, V2>) m).map; //avoid a stack of redirections. use map directly
@@ -116,7 +116,7 @@ public final class CMap<K, V>
 			throw new IllegalStateException("map is closed");
 		//if shared memory is used, create full copy instead
 		if (sharedMemory) {
-			map = new HashMap<K, V>(map);
+			map = new HashMap<>(map);
 			sharedMemory = false;
 		}
 	}

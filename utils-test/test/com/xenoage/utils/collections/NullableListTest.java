@@ -1,15 +1,12 @@
 package com.xenoage.utils.collections;
 
-import static com.xenoage.utils.kernel.Range.range;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.junit.Test;
+import static com.xenoage.utils.kernel.Range.range;
+import static org.junit.Assert.*;
 
 /**
  * Tests for {@link NullableList}.
@@ -83,7 +80,7 @@ public class NullableListTest {
 	}
 
 	private <T> ArrayList<T> list(@SuppressWarnings("unchecked") T... vals) {
-		ArrayList<T> ret = new ArrayList<T>();
+		ArrayList<T> ret = new ArrayList<>();
 		for (T val : vals)
 			ret.add(val);
 		return ret;

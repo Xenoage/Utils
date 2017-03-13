@@ -25,7 +25,7 @@ public class Sync {
 	public static <T> T sync(AsyncProducer<T> producer)
 		throws Exception {
 		//start async production
-		final State<T> state = new State<T>();
+		final State<T> state = new State<>();
 		producer.produce(new AsyncResult<T>() {
 	
 			@Override public void onSuccess(T data) {

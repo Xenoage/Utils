@@ -14,7 +14,7 @@ public class EnumUtils {
 	 * matches (lower case) the given text, or null if not found.
 	 * If the text begins with a digit, the prefix "_" is added.
 	 */
-	public static <T> T getEnumValue(String text, T[] values) {
+	public static <T> T getEnumValue(String text, T... values) {
 		if (text != null && text.length() > 0) {
 			text = text.toLowerCase();
 			if (Character.isDigit(text.charAt(0)))
@@ -34,7 +34,7 @@ public class EnumUtils {
 	 * or null if not found.
 	 * If the text begins with a digit, the prefix "_" is added.
 	 */
-	public static <T> T getEnumValue(Object text, T[] values) {
+	public static <T> T getEnumValue(Object text, T... values) {
 		if (text != null)
 			return getEnumValue("" + text, values);
 		return null;
@@ -45,7 +45,7 @@ public class EnumUtils {
 	 *  enum value from the given array, that
 	 * matches (lower case) the given text, or null if not found.
 	 */
-	public static <T extends EnumWithXmlNames> T getEnumValueNamed(String text, T[] values) {
+	public static <T extends EnumWithXmlNames> T getEnumValueNamed(String text, T... values) {
 		if (text != null) {
 			for (T value : values) {
 				if (text.equals(value.getXmlName())) {

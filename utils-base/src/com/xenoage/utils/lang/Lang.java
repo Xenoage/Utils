@@ -1,9 +1,11 @@
 package com.xenoage.utils.lang;
 
-import java.util.ArrayList;
-
 import com.xenoage.utils.iterators.It;
 import com.xenoage.utils.kernel.Tuple2;
+
+import java.util.ArrayList;
+
+import static com.xenoage.utils.kernel.Tuple2.t;
 
 /**
  * This class manages a single language pack for
@@ -15,7 +17,7 @@ public class Lang {
 
 	private static Language currentLanguage = null;
 
-	private static ArrayList<Tuple2<String, String>> tokens = new ArrayList<Tuple2<String, String>>();
+	private static ArrayList<Tuple2<String, String>> tokens = new ArrayList<>();
 
 
 	/**
@@ -94,14 +96,14 @@ public class Lang {
 	 * Register a token for replacement, e.g. "{app.name}" by "Xenoage WhatEver".
 	 */
 	public static void registerToken(String symbol, String value) {
-		tokens.add(new Tuple2<String, String>(symbol, value));
+		tokens.add(t(symbol, value));
 	}
 
 	/**
 	 * Gets an iterator over the tokens for replacement.
 	 */
 	public static It<Tuple2<String, String>> getTokens() {
-		return new It<Tuple2<String, String>>(tokens);
+		return new It<>(tokens);
 	}
 
 }

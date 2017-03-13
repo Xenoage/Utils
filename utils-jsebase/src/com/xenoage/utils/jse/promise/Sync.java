@@ -1,6 +1,5 @@
 package com.xenoage.utils.jse.promise;
 
-import com.xenoage.utils.promise.Consumer;
 import com.xenoage.utils.promise.Promise;
 
 /**
@@ -26,7 +25,7 @@ public class Sync {
 		throws Exception {
 
 		//start production
-		final State<T> state = new State<T>();
+		final State<T> state = new State<>();
 		promise
 			.thenDo(data -> {
 				state.data = data;

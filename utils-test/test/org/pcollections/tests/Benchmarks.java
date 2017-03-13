@@ -1,27 +1,8 @@
 package org.pcollections.tests;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import org.pcollections.*;
 
-import org.pcollections.ConsPStack;
-import org.pcollections.HashTreePBag;
-import org.pcollections.HashTreePMap;
-import org.pcollections.HashTreePSet;
-import org.pcollections.IntTreePMap;
-import org.pcollections.PBag;
-import org.pcollections.PCollection;
-import org.pcollections.PMap;
-import org.pcollections.PSet;
-import org.pcollections.PStack;
-import org.pcollections.PVector;
-import org.pcollections.TreePVector;
+import java.util.*;
 
 
 @SuppressWarnings({"unchecked", "rawtypes"}) public class Benchmarks
@@ -36,7 +17,7 @@ import org.pcollections.TreePVector;
 	 * 
 	 * @param args
 	 */
-	public static void main(final String[] args)
+	public static void main(final String... args)
 	{
 		// make an array of linear indices
 		int n = 10000;
@@ -64,7 +45,7 @@ import org.pcollections.TreePVector;
 	 * 
 	 * @param list An array of keys
 	 */
-	public static void benchmarks(final Object[] list)
+	public static void benchmarks(final Object... list)
 	{
 		List linkedList = new LinkedList();
 		PStack consPStack = ConsPStack.empty();
@@ -131,7 +112,7 @@ import org.pcollections.TreePVector;
 	}
 
 
-	private static PCollection pCollectionPlus(PCollection c, final Object[] list)
+	private static PCollection pCollectionPlus(PCollection c, final Object... list)
 	{
 		System.out.format(METHOD, c.getClass().getName() + ".plus()");
 		long t0 = System.currentTimeMillis();
@@ -144,7 +125,7 @@ import org.pcollections.TreePVector;
 	}
 
 
-	private static void collectionAdd(final Collection c, final Object[] list)
+	private static void collectionAdd(final Collection c, final Object... list)
 	{
 		System.out.format(METHOD, c.getClass().getName() + ".add()");
 		long t0 = System.currentTimeMillis();
@@ -156,7 +137,7 @@ import org.pcollections.TreePVector;
 	}
 
 
-	private static PMap pMapPlus(PMap m, final Object[] list)
+	private static PMap pMapPlus(PMap m, final Object... list)
 	{
 		System.out.format(METHOD, m.getClass().getName() + ".plus()");
 		long t0 = System.currentTimeMillis();
@@ -169,7 +150,7 @@ import org.pcollections.TreePVector;
 	}
 
 
-	private static void mapPut(final Map m, final Object[] list)
+	private static void mapPut(final Map m, final Object... list)
 	{
 		System.out.format(METHOD, m.getClass().getName() + ".put()");
 		long t0 = System.currentTimeMillis();
@@ -181,7 +162,7 @@ import org.pcollections.TreePVector;
 	}
 
 
-	private static void collectionContains(final Collection c, final Object[] list)
+	private static void collectionContains(final Collection c, final Object... list)
 	{
 		System.out.format(METHOD, c.getClass().getName() + ".contains()==true");
 		long t0 = System.currentTimeMillis();
@@ -205,7 +186,7 @@ import org.pcollections.TreePVector;
 	}
 
 
-	private static void mapContainsKey(final Map m, final Object[] list)
+	private static void mapContainsKey(final Map m, final Object... list)
 	{
 		System.out.format(METHOD, m.getClass().getName() + ".containsKey()==true");
 		long t0 = System.currentTimeMillis();

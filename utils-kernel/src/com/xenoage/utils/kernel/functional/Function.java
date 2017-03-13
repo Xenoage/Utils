@@ -6,6 +6,6 @@ package com.xenoage.utils.kernel.functional;
  * @author Andreas Wenger
  */
 @FunctionalInterface
-public interface Supplier<T> {
-	T get();
+public interface Function<T, R> {
+	R apply(T t);
 }

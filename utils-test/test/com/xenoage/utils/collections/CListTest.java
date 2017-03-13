@@ -1,11 +1,11 @@
 package com.xenoage.utils.collections;
 
-import static com.xenoage.utils.collections.CList.clist;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 import java.util.ArrayList;
 
-import org.junit.Test;
+import static com.xenoage.utils.collections.CList.clist;
+import static org.junit.Assert.*;
 
 /**
  * Tests for {@link CList}.
@@ -37,14 +37,14 @@ public class CListTest {
 		//branches must be (if not modified) much faster than normal copies
 		int testsCount = 100000;
 		//prepare data
-		ArrayList<Integer> originalA = new ArrayList<Integer>();
+		ArrayList<Integer> originalA = new ArrayList<>();
 		for (int i = 0; i < 20000; i++)
 			originalA.add(i);
-		CList<Integer> originalI = new CList<Integer>();
+		CList<Integer> originalI = new CList<>();
 		originalI.addAll(originalA);
 		originalI.close();
 		//run test without branching
-		CList<Integer> cl = new CList<Integer>();
+		CList<Integer> cl = new CList<>();
 		long startTimeNoBranch = System.currentTimeMillis();
 		for (int i = 0; i < testsCount; i++) {
 			cl = clist(originalA);
@@ -55,7 +55,7 @@ public class CListTest {
 		}
 		long durationNoBranch = System.currentTimeMillis() - startTimeNoBranch;
 		//same test with branching
-		cl = new CList<Integer>();
+		cl = new CList<>();
 		long startTimeBranch = System.currentTimeMillis();
 		for (int i = 0; i < testsCount; i++) {
 			cl = clist(originalI);

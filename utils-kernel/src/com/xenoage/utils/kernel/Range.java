@@ -55,14 +55,14 @@ public final class Range
 	/**
 	 * Creates a new range for all indices within the given array.
 	 */
-	public static <T> Range range(int[] a) {
+	public static <T> Range range(int... a) {
 		return new Range(0, a.length - 1, 1);
 	}
 	
 	/**
 	 * Creates a new range for all indices within the given array.
 	 */
-	public static <T> Range range(float[] a) {
+	public static <T> Range range(float... a) {
 		return new Range(0, a.length - 1, 1);
 	}
 
@@ -85,7 +85,7 @@ public final class Range
 	 * Creates a new range for all indices within the given array,
 	 * but in reverse direction.
 	 */
-	public static <T> Range rangeReverse(int[] a) {
+	public static <T> Range rangeReverse(int... a) {
 		return new Range(a.length - 1, 0, -1);
 	}
 	
@@ -93,7 +93,7 @@ public final class Range
 	 * Creates a new range for all indices within the given array,
 	 * but in reverse direction.
 	 */
-	public static <T> Range rangeReverse(float[] a) {
+	public static <T> Range rangeReverse(float... a) {
 		return new Range(a.length - 1, 0, -1);
 	}
 

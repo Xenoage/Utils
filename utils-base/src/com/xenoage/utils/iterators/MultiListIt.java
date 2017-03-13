@@ -27,7 +27,7 @@ public class MultiListIt<T>
 	}
 
 	@SafeVarargs public static <T> MultiListIt<T> multiListIt(Collection<? extends T>... collections) {
-		return new MultiListIt<T>(collections);
+		return new MultiListIt<>(collections);
 	}
 
 	@Override public boolean hasNext() {

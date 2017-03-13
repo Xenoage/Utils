@@ -1,9 +1,7 @@
 package com.xenoage.utils.jse.files;
 
-import static com.xenoage.utils.collections.CollectionUtils.alist;
-import static com.xenoage.utils.jse.JsePlatformUtils.io;
-import static com.xenoage.utils.log.Log.log;
-import static com.xenoage.utils.log.Report.warning;
+import com.xenoage.utils.jse.io.DesktopIO;
+import com.xenoage.utils.jse.io.JseStreamUtils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -12,8 +10,10 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.xenoage.utils.jse.io.DesktopIO;
-import com.xenoage.utils.jse.io.JseStreamUtils;
+import static com.xenoage.utils.collections.CollectionUtils.alist;
+import static com.xenoage.utils.jse.JsePlatformUtils.io;
+import static com.xenoage.utils.log.Log.log;
+import static com.xenoage.utils.log.Report.warning;
 
 /**
  * Manages a list of the recently opened files.
@@ -39,7 +39,7 @@ public class RecentFiles {
 	 * list is returned (no error reporting is done).
 	 */
 	public static ArrayList<File> getRecentFiles() {
-		ArrayList<File> ret = new ArrayList<File>(maxEntries);
+		ArrayList<File> ret = new ArrayList<>(maxEntries);
 		if (io().existsFile(filePath)) {
 			try {
 				String list = JseStreamUtils.readToString(io().openFile(filePath));

@@ -26,7 +26,7 @@ public class TestInputStream
 		return ret;
 	}
 	
-	@Override public int read(byte[] b)
+	@Override public int read(byte... b)
 		throws IOException {
 		return StreamUtils.read(this, b);
 	}

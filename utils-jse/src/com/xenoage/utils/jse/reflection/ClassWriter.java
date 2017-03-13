@@ -49,16 +49,16 @@ public class ClassWriter {
 					out.writeUTF((String) value);
 				} else if (value instanceof Integer) {
 					out.writeByte(CONSTANT_INTEGER);
-					out.writeInt(((Integer) value).intValue());
+					out.writeInt((Integer) value);
 				} else if (value instanceof Float) {
 					out.writeByte(CONSTANT_FLOAT);
-					out.writeFloat(((Float) value).floatValue());
+					out.writeFloat((Float) value);
 				} else if (value instanceof Long) {
 					out.writeByte(CONSTANT_LONG);
-					out.writeLong(((Long) value).longValue());
+					out.writeLong((Long) value);
 				} else if (value instanceof Double) {
 					out.writeDouble(CONSTANT_DOUBLE);
-					out.writeDouble(((Double) value).doubleValue());
+					out.writeDouble((Double) value);
 				} else {
 					throw new InternalError("bogus value entry: " + value);
 				}
@@ -122,10 +122,10 @@ public class ClassWriter {
 		private short get(Object key, java.util.function.Supplier<Entry> entry) {
 			Short index = map.get(key);
 			if (index != null) {
-				return index.shortValue();
+				return index;
 			} else {
 				short i = addEntry(entry.get());
-				map.put(key, new Short(i));
+				map.put(key, i);
 				return i;
 			}
 		}

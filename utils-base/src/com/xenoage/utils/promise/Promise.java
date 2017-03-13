@@ -134,7 +134,7 @@ public class Promise<T> {
 	 */
 	public synchronized Promise<T> onError(final Consumer<Exception> onRejected) {
 		return new Promise<>(r -> handle(
-			(Handler) new Handler<T, Object>(null, onRejected, (Return) r)));
+			(Handler) new Handler<>(null, onRejected, (Return) r)));
 	}
 
 

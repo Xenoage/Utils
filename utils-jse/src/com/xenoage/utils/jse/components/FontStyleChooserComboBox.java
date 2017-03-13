@@ -1,29 +1,18 @@
 package com.xenoage.utils.jse.components;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
+import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxEditor;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Caret;
 import javax.swing.text.PlainDocument;
+import java.awt.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 /**
  * Combobox which lists all installed fonts, sorted alphabetically. In the
@@ -50,7 +39,7 @@ public class FontStyleChooserComboBox
 	private int recentFontsCount = 5;
 
 	private List<String> fontNames;
-	private HashMap<String, Item> itemsCache = new HashMap<String, Item>();
+	private HashMap<String, Item> itemsCache = new HashMap<>();
 
 
 	/**

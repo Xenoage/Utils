@@ -60,8 +60,8 @@ public class ZipUtils {
 		String[] entries = dir.list();
 		byte[] buffer = new byte[4096];
 		int bytesRead;
-		for (int i = 0; i < entries.length; i++) {
-			File f = new File(dir, entries[i]);
+		for (String e : entries) {
+			File f = new File(dir, e);
 			if (f.isDirectory())
 				continue;
 			FileInputStream in = new FileInputStream(f);

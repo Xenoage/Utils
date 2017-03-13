@@ -1,16 +1,16 @@
 package com.xenoage.utils.document.command;
 
-import static com.xenoage.utils.log.Log.log;
-import static com.xenoage.utils.log.Report.remark;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.xenoage.utils.annotations.MaybeNull;
 import com.xenoage.utils.document.Document;
 import com.xenoage.utils.document.exceptions.CancelledException;
 import com.xenoage.utils.document.exceptions.PropertyAlreadySetException;
 import com.xenoage.utils.document.exceptions.UselessException;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.xenoage.utils.log.Log.log;
+import static com.xenoage.utils.log.Report.remark;
 
 /**
  * This class performs {@link Command}s on a {@link Document} and supports undoing and redoing them.
@@ -23,7 +23,7 @@ public class CommandPerformer {
 
 	@MaybeNull private Document document;
 	private CommandHistory history = new CommandHistory();
-	private List<CommandListener> listeners = new ArrayList<CommandListener>();
+	private List<CommandListener> listeners = new ArrayList<>();
 
 
 	/**

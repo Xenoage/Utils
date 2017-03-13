@@ -1,11 +1,11 @@
 package com.xenoage.utils.jse.lang;
 
+import com.xenoage.utils.jse.collections.WeakList;
+import com.xenoage.utils.lang.Lang;
+
 import static com.xenoage.utils.error.Err.handle;
 import static com.xenoage.utils.log.Report.fatal;
 import static com.xenoage.utils.log.Report.warning;
-
-import com.xenoage.utils.jse.collections.WeakList;
-import com.xenoage.utils.lang.Lang;
 
 /**
  * This class manages and watches the current {@link Lang}
@@ -20,7 +20,7 @@ public class LangManager {
 
 	public static final String defaultLangPath = "data/lang";
 
-	private static WeakList<LanguageListener> languageComponents = new WeakList<LanguageListener>();
+	private static WeakList<LanguageListener> languageComponents = new WeakList<>();
 
 
 	/**

@@ -1,13 +1,9 @@
 package com.xenoage.utils.jse.lang;
 
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
-
 import com.xenoage.utils.lang.Lang;
 import com.xenoage.utils.lang.VocID;
+
+import java.util.*;
 
 /**
  * This class provides access to {@link Lang} language packs
@@ -36,8 +32,8 @@ public class LangResourceBundle
 	 * Creates a new {@link LangResourceBundle} for the given
 	 * vocabulary keys.
 	 */
-	public LangResourceBundle(VocID[] vocIDs) {
-		this.vocIDs = new HashMap<String, VocID>();
+	public LangResourceBundle(VocID... vocIDs) {
+		this.vocIDs = new HashMap<>();
 		for (VocID vocID : vocIDs) {
 			this.vocIDs.put(vocID.toString(), vocID);
 		}

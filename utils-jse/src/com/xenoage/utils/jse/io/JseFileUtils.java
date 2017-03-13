@@ -1,25 +1,18 @@
 package com.xenoage.utils.jse.io;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.nio.file.Files;
+import com.xenoage.utils.io.FileUtils;
+import com.xenoage.utils.jse.OSUtils;
+import com.xenoage.utils.jse.OSUtils.OS;
+import com.xenoage.utils.kernel.Tuple2;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 
-import com.xenoage.utils.io.FileUtils;
-import com.xenoage.utils.jse.OSUtils;
-import com.xenoage.utils.jse.OSUtils.OS;
-import com.xenoage.utils.kernel.Tuple2;
+import static com.xenoage.utils.kernel.Tuple2.t;
 
 /**
  * Some useful file system functions.
@@ -38,11 +31,7 @@ public class JseFileUtils {
 	 */
 	public static FileFilter getDirectoriesFilter() {
 		if (directoriesFilter == null)
-			directoriesFilter = new FileFilter() { //ZONG-120: replace by lambda later
-				@Override public boolean accept(File file) {
-					return file.isDirectory() && !file.getName().startsWith(".");
-				}
-			};
+			directoriesFilter = file -> file.isDirectory() && !file.getName().startsWith(".");
 		return directoriesFilter;
 	}
 
@@ -52,25 +41,19 @@ public class JseFileUtils {
 	public static FilenameFilter getFilter(com.xenoage.utils.io.FileFilter fileFilter) {
 		if (fileFilter == null)
 			return null;
-		return new FilenameFilter() { //ZONG-120: replace by lambda later
-			@Override public boolean accept(File dir, String name) {
-				return fileFilter.accept(new JseFile(new File(dir, name)));
-			}
-		};
+		return (dir, name) -> fileFilter.accept(new JseFile(new File(dir, name)));
 	}
 
 	/**
 	 * Returns a filename filter which accepts all of the given filters.
 	 */
 	public static FilenameFilter orFilter(final FilenameFilter... filters) {
-		return new FilenameFilter() { //ZONG-120: replace by lambda later
-			@Override public boolean accept(File dir, String name) {
-				for (FilenameFilter filter : filters) {
-					if (filter.accept(dir, name))
-						return true;
-				}
-				return false;
+		return (dir, name) -> {
+			for (FilenameFilter filter : filters) {
+				if (filter.accept(dir, name))
+					return true;
 			}
+			return false;
 		};
 	}
 
@@ -123,11 +106,11 @@ public class JseFileUtils {
 			String dir = p.substring(0, endPos);
 			dir = dir.replaceAll("/", Matcher.quoteReplacement(File.separator));
 			String file = p.substring(endPos + 1);
-			return new Tuple2<String, String>(dir, file);
+			return t(dir, file);
 		}
 		else {
 			//only filename
-			return new Tuple2<String, String>("", p);
+			return t("", p);
 		}
 	}
 
@@ -176,13 +159,11 @@ public class JseFileUtils {
 	public static boolean deleteDirectory(File path) {
 		if (path.exists()) {
 			File[] files = path.listFiles();
-			for (int i = 0; i < files.length; i++) {
-				if (files[i].isDirectory()) {
-					deleteDirectory(files[i]);
-				}
-				else {
-					files[i].delete();
-				}
+			for (File file : files) {
+				if (file.isDirectory())
+					deleteDirectory(file);
+				else
+					file.delete();
 			}
 		}
 		return path.delete();
@@ -194,7 +175,7 @@ public class JseFileUtils {
 	 * @param subdirs    true, if recursive search in subdirectories, otherwise false 
 	 */
 	public static List<File> listFiles(File dir, boolean subdirs) {
-		LinkedList<File> list = new LinkedList<File>();
+		LinkedList<File> list = new LinkedList<>();
 		listFiles(list, dir, subdirs);
 		return list;
 	}
@@ -202,11 +183,11 @@ public class JseFileUtils {
 	private static void listFiles(LinkedList<File> list, File dir, boolean subdirs) {
 		File[] children = dir.listFiles();
 		if (children != null) {
-			for (int i = 0; i < children.length; i++) {
-				if (children[i].isDirectory() && subdirs)
-					listFiles(list, children[i], subdirs);
+			for (File aChildren : children) {
+				if (aChildren.isDirectory() && subdirs)
+					listFiles(list, aChildren, subdirs);
 				else
-					list.add(children[i]);
+					list.add(aChildren);
 			}
 		}
 	}
@@ -235,7 +216,7 @@ public class JseFileUtils {
 	 * Copies the given file into the given {@link OutputStream},
 	 * which is closed at the end.
 	 * @deprecated Closing the output stream at the end is bad. Use
-	 * {@link #copyFileToStream(String, OutputStream)} instead and close
+	 * {@link #copyFileToStream(File, OutputStream)} instead and close
 	 * the stream when finished.
 	 * @deprecated Use Java NIO instead
 	 */
@@ -273,7 +254,7 @@ public class JseFileUtils {
 	 * @param recurse    true, to search also recursively in subdirectories, otherwise false
 	 */
 	public static List<File> listFiles(File directory, FilenameFilter filter, boolean recurse) {
-		ArrayList<File> files = new ArrayList<File>();
+		ArrayList<File> files = new ArrayList<>();
 		File[] entries = directory.listFiles();
 		for (File entry : entries) {
 			if (filter == null || filter.accept(directory, entry.getName())) {
@@ -300,7 +281,7 @@ public class JseFileUtils {
 	 * @param recurse    true, to search also recursively in subdirectories, otherwise false
 	 */
 	public static List<File> listDirectories(File directory, boolean recurse) {
-		ArrayList<File> files = new ArrayList<File>();
+		ArrayList<File> files = new ArrayList<>();
 		File[] entries = directory.listFiles();
 		for (File entry : entries) {
 			if (entry.isDirectory()) {

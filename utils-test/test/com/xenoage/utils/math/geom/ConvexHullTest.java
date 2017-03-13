@@ -1,15 +1,12 @@
 package com.xenoage.utils.math.geom;
 
-import static com.xenoage.utils.math.geom.Point2f.p;
-import static org.junit.Assert.assertEquals;
+import com.xenoage.utils.math.VSide;
+import org.junit.Test;
 
 import java.util.ArrayList;
 
-import org.junit.Test;
-
-import com.xenoage.utils.math.VSide;
-import com.xenoage.utils.math.geom.ConvexHull;
-import com.xenoage.utils.math.geom.Point2f;
+import static com.xenoage.utils.math.geom.Point2f.p;
+import static org.junit.Assert.*;
 
 /**
  * Test cases for the {@link ConvexHull} class.
@@ -20,7 +17,7 @@ public class ConvexHullTest {
 
 	@Test public void computeHullTest() {
 		//top hull
-		ArrayList<Point2f> points = new ArrayList<Point2f>();
+		ArrayList<Point2f> points = new ArrayList<>();
 		points.add(p(1, 1));
 		points.add(p(2, 2));
 		points.add(p(3, 4));
@@ -32,7 +29,7 @@ public class ConvexHullTest {
 		assertEquals(p(3, 4), res.get(1));
 		assertEquals(p(5, 1), res.get(2));
 		//bottom hull
-		points = new ArrayList<Point2f>();
+		points = new ArrayList<>();
 		points.add(p(1, 4));
 		points.add(p(2, 3));
 		points.add(p(3, 1));

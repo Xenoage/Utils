@@ -1,10 +1,10 @@
 package com.xenoage.utils.lang;
 
-import static com.xenoage.utils.NullUtils.notNull;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+
+import static com.xenoage.utils.NullUtils.notNull;
 
 /**
  * Language pack, containing vocabularies.
@@ -19,7 +19,7 @@ public class Language {
 	private final String id;
 
 	//maps vocabulary id to translated text
-	public HashMap<String, String> entries = new HashMap<String, String>();
+	public HashMap<String, String> entries = new HashMap<>();
 
 
 	public Language(String id, HashMap<String, String> entries) {
@@ -103,7 +103,7 @@ public class Language {
 	 * Gets all vocabulary keys.
 	 */
 	public Set<String> getAllKeys() {
-		return new HashSet<String>(entries.keySet());
+		return new HashSet<>(entries.keySet());
 	}
 
 }

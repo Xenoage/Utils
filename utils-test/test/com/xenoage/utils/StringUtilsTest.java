@@ -1,13 +1,13 @@
 package com.xenoage.utils;
 
-import static com.xenoage.utils.StringUtils.concatenate;
-import static com.xenoage.utils.StringUtils.trimRight;
-import static com.xenoage.utils.collections.CollectionUtils.alist;
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 import java.util.ArrayList;
 
-import org.junit.Test;
+import static com.xenoage.utils.StringUtils.concatenate;
+import static com.xenoage.utils.StringUtils.trimRight;
+import static com.xenoage.utils.collections.CollectionUtils.alist;
+import static org.junit.Assert.*;
 
 /**
  * Test cases for a {@link StringUtils} class.
@@ -26,7 +26,7 @@ public class StringUtilsTest {
 
 	@Test public void concatenateTest() {
 		String separator = ":";
-		assertEquals("", concatenate(new ArrayList<String>(), separator));
+		assertEquals("", concatenate(new ArrayList<>(), separator));
 		assertEquals("1", concatenate(alist("1"), separator));
 		assertEquals("1:2", concatenate(alist("1", "2"), separator));
 		assertEquals("1:2:3", concatenate(alist("1", "2", "3"), separator));

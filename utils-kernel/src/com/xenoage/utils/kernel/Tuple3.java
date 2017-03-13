@@ -22,7 +22,7 @@ public class Tuple3<T1, T2, T3> {
 	}
 
 	public static <P1, P2, P3> Tuple3<P1, P2, P3> t3(P1 e1, P2 e2, P3 e3) {
-		return new Tuple3<P1, P2, P3>(e1, e2, e3);
+		return new Tuple3<>(e1, e2, e3);
 	}
 
 	public T1 get1() {

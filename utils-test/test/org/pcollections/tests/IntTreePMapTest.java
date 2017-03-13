@@ -1,14 +1,13 @@
 package org.pcollections.tests;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.Map.Entry;
-
+import junit.framework.TestCase;
 import org.pcollections.IntTreePMap;
 import org.pcollections.PMap;
 
-import junit.framework.TestCase;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Random;
 
 
 public class IntTreePMapTest
@@ -21,7 +20,7 @@ public class IntTreePMapTest
 	public void testRandomlyAgainstJavaMap()
 	{
 		PMap<Integer, Integer> pmap = IntTreePMap.empty();
-		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		Map<Integer, Integer> map = new HashMap<>();
 		Random r = new Random();
 		for (int i = 0; i < 10000; i++) {
 			if (pmap.size() == 0 || r.nextBoolean()) { // add
@@ -81,7 +80,7 @@ public class IntTreePMapTest
 	public void testEmpty()
 	{
 		PMap<?, ?> empty = IntTreePMap.empty();
-		UtilityTest.assertEqualsAndHash(new HashMap<Object, Object>(), empty);
+		UtilityTest.assertEqualsAndHash(new HashMap<>(), empty);
 		assertEquals(0, empty.size());
 		assertTrue(empty.isEmpty());
 		for (@SuppressWarnings("unused") Object e : empty.entrySet())

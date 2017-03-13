@@ -1,9 +1,9 @@
 package com.xenoage.utils.math.geom;
 
+import com.xenoage.utils.math.VSide;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.xenoage.utils.math.VSide;
 
 /**
  * This class contains the convex hull over a given list
@@ -53,7 +53,7 @@ public class ConvexHull {
 	public static ConvexHull create(List<Point2f> points, VSide side) {
 		if (points.size() < 2)
 			throw new IllegalArgumentException("At least two points must be given");
-		ArrayList<Point2f> ret = new ArrayList<Point2f>();
+		ArrayList<Point2f> ret = new ArrayList<>();
 		ret.add(points.get(0));
 		int lastHullPointIndex = 0;
 		//look at all the following points and select the one with the highest

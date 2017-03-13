@@ -1,16 +1,12 @@
 package com.xenoage.utils.jse.lang;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import com.xenoage.utils.jse.lang.LanguageTest.TestVocabulary;
+import com.xenoage.utils.lang.Lang;
+import org.junit.Test;
 
 import java.util.List;
 
-import org.junit.Test;
-
-import com.xenoage.utils.jse.lang.LanguageTest.TestVocabulary;
-import com.xenoage.utils.lang.Lang;
+import static org.junit.Assert.*;
 
 /**
  * Tests for {@link LangManager}.
@@ -32,10 +28,10 @@ public class LangManagerTest {
 		throws Exception {
 		List<LanguageInfo> langs = LanguageInfo.getAvailableLanguages(LangManager.defaultLangPath);
 		assertTrue("There must be at least one language pack!", langs.size() > 0);
-		for (int i = 0; i < langs.size(); i++) {
-			LangManager.loadLanguage(langs.get(i).getID());
+		for (LanguageInfo lang : langs) {
+			LangManager.loadLanguage(lang.getID());
 			assertNotNull("Null result in language " + Lang.getCurrentLanguage().getID(),
-				Lang.get(TestVocabulary.Anything));
+					Lang.get(TestVocabulary.Anything));
 		}
 	}
 

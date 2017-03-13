@@ -1,13 +1,9 @@
 package com.xenoage.utils.collections;
 
+import java.util.*;
+
 import static com.xenoage.utils.iterators.It.it;
 import static com.xenoage.utils.iterators.ListIt.listIt;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 /**
  * Immutable closeable list.
@@ -51,7 +47,7 @@ public final class CList<T>
 	 * given initial capacity.
 	 */
 	public CList(int initialCapacity) {
-		array = new ArrayList<T>(initialCapacity);
+		array = new ArrayList<>(initialCapacity);
 	}
 
 	/**
@@ -59,12 +55,12 @@ public final class CList<T>
 	 * collection. A shallow copy of the given collection is created.
 	 */
 	public CList(Collection<T> mutableCollection) {
-		array = new ArrayList<T>(mutableCollection);
+		array = new ArrayList<>(mutableCollection);
 	}
 
 	private CList(boolean init) {
 		if (init)
-			array = new ArrayList<T>();
+			array = new ArrayList<>();
 		else
 			array = null;
 	}
@@ -73,7 +69,7 @@ public final class CList<T>
 	 * Creates an empty and unclosed {@link CList}.
 	 */
 	public static <T2> CList<T2> clist() {
-		return new CList<T2>();
+		return new CList<>();
 	}
 
 	/**
@@ -81,7 +77,7 @@ public final class CList<T>
 	 * given initial capacity.
 	 */
 	public static <T2> CList<T2> clist(int initialCapacity) {
-		return new CList<T2>(initialCapacity);
+		return new CList<>(initialCapacity);
 	}
 
 	/**
@@ -89,7 +85,7 @@ public final class CList<T>
 	 * collection. A shallow copy of the given collection is created.
 	 */
 	public static <T2> CList<T2> clist(Collection<T2> mutableCollection) {
-		return new CList<T2>(mutableCollection);
+		return new CList<>(mutableCollection);
 	}
 
 	/**
@@ -98,7 +94,7 @@ public final class CList<T>
 	 * The memory is shared until the new list receives the first write operation.
 	 */
 	public static <T2> CList<T2> clist(IList<T2> v) {
-		CList<T2> ret = new CList<T2>(false);
+		CList<T2> ret = new CList<>(false);
 		ret.sharedMemory = true;
 		if (v instanceof CList)
 			ret.array = ((CList<T2>) v).array; //avoid a stack of redirections. use array directly
@@ -111,10 +107,10 @@ public final class CList<T>
 	 * Creates an unclosed {@link CList} with the given items.
 	 */
 	@SafeVarargs public static <T2> CList<T2> clist(T2... data) {
-		ArrayList<T2> array = new ArrayList<T2>(data.length);
+		ArrayList<T2> array = new ArrayList<>(data.length);
 		for (T2 o : data)
 			array.add(o);
-		return new CList<T2>(array);
+		return new CList<>(array);
 	}
 
 	/**
@@ -122,7 +118,7 @@ public final class CList<T>
 	 * elements with the given value.
 	 */
 	public static <T> CList<T> clistInit(T valueForAll, int size) {
-		CList<T> ret = new CList<T>(size);
+		CList<T> ret = new CList<>(size);
 		for (int i = 0; i < size; i++)
 			ret.add(valueForAll);
 		return ret;
@@ -173,7 +169,7 @@ public final class CList<T>
 			throw new IllegalStateException("list is closed");
 		//if shared memory is used, create full copy instead
 		if (sharedMemory) {
-			array = new ArrayList<T>(array);
+			array = new ArrayList<>(array);
 			sharedMemory = false;
 		}
 	}

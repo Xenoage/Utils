@@ -1,13 +1,12 @@
 package org.pcollections.tests;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-
+import junit.framework.TestCase;
 import org.pcollections.PVector;
 import org.pcollections.TreePVector;
 
-import junit.framework.TestCase;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
 
 public class TreePVectorTest
@@ -20,7 +19,7 @@ public class TreePVectorTest
 	public void testRandomlyAgainstJavaList()
 	{
 		PVector<Integer> pvec = TreePVector.empty();
-		List<Integer> list = new LinkedList<Integer>();
+		List<Integer> list = new LinkedList<>();
 		Random r = new Random();
 		for (int i = 0; i < 1000; i++) {
 			if (pvec.size() == 0 || r.nextBoolean()) { // add

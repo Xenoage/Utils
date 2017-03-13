@@ -33,7 +33,7 @@ public final class ReverseIterator<T>
 			this.list = list;
 		}
 		else {
-			this.list = new ArrayList<T>(0);
+			this.list = new ArrayList<>(0);
 		}
 		this.currentIndex = this.list.size();
 	}
@@ -43,7 +43,7 @@ public final class ReverseIterator<T>
 	 * If null is given, a valid iterator with no elements is returned.
 	 */
 	public static <T> ReverseIterator<T> reverseIt(List<T> list) {
-		return new ReverseIterator<T>(list);
+		return new ReverseIterator<>(list);
 	}
 
 	@Override public boolean hasNext() {

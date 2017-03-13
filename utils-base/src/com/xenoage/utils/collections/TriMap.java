@@ -24,7 +24,7 @@ public class TriMap<T1, T2, T3> {
 	private Tuple3<T1, T2, T3> defaultValue = null;
 	
 	public static <T1, T2, T3> TriMap<T1, T2, T3> triMap() {
-		return new TriMap<T1, T2, T3>();
+		return new TriMap<>();
 	}
 	
 	public int size() {

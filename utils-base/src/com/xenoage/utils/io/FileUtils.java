@@ -1,10 +1,10 @@
 package com.xenoage.utils.io;
 
-import static com.xenoage.utils.collections.CollectionUtils.alist;
+import com.xenoage.utils.kernel.Tuple2;
 
 import java.util.List;
 
-import com.xenoage.utils.kernel.Tuple2;
+import static com.xenoage.utils.collections.CollectionUtils.alist;
 
 /**
  * Some useful file system functions.
@@ -45,11 +45,11 @@ public class FileUtils {
 		if (endPos > -1) {
 			String dir = p.substring(0, endPos);
 			String file = p.substring(endPos + 1);
-			return new Tuple2<String, String>(dir, file);
+			return new Tuple2<>(dir, file);
 		}
 		else {
 			//only filename
-			return new Tuple2<String, String>("", p);
+			return new Tuple2<>("", p);
 		}
 	}
 

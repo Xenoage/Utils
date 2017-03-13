@@ -37,7 +37,7 @@ public class CheckUtils {
 	 * or contains null.
 	 * For convenience, the array is returned.
 	 */
-	public static <T> T[] checkNotNullIn(T[] a)
+	public static <T> T[] checkNotNullIn(T... a)
 		throws IllegalStateException {
 		if (a == null)
 			throw new IllegalStateException();

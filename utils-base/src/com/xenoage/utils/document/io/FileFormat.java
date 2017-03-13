@@ -1,8 +1,8 @@
 package com.xenoage.utils.document.io;
 
-import static com.xenoage.utils.kernel.Range.range;
-
 import com.xenoage.utils.document.Document;
+
+import static com.xenoage.utils.kernel.Range.range;
 
 /**
  * General information on a file format for a document.
@@ -111,7 +111,7 @@ public final class FileFormat<T extends Document> {
 	 * Returns a copy of this {@link FileFormat} with the given input and output class.
 	 */
 	public FileFormat<T> withIO(FileInput<T> input, FileOutput<T> output) {
-		return new FileFormat<T>(id, name, defaultExtension, otherExtensions, input, output);
+		return new FileFormat<>(id, name, defaultExtension, otherExtensions, input, output);
 	}
 
 	/**

@@ -1,11 +1,9 @@
 package com.xenoage.utils.jse.collections;
 
-import static com.xenoage.utils.collections.CollectionUtils.alist;
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 
-import com.xenoage.utils.jse.collections.WeakList;
+import static com.xenoage.utils.collections.CollectionUtils.alist;
+import static org.junit.Assert.*;
 
 /**
  * Test cases for the {@link WeakList}.
@@ -17,7 +15,7 @@ public class WeakListTest {
 	@Test public void test()
 		throws InterruptedException {
 		//create list
-		WeakList<Object> list = new WeakList<Object>();
+		WeakList<Object> list = new WeakList<>();
 		Object o1 = new Object();
 		Object o2Temp = new Object();
 		Object o3 = new Object();

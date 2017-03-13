@@ -105,7 +105,7 @@ public class LanguageReader {
 		//replace all tokens
 		for (String key : entries.keySet()) {
 			String value = entries.get(key);
-			if (value.indexOf("{") > -1) {
+			if (value.contains("{")) {
 				entries.put(key, replaceTokens(value, entries));
 			}
 		}
@@ -132,8 +132,7 @@ public class LanguageReader {
 		//read vocabulary data
 		HashMap<String, String> entries = map();
 		List<Element> eEntries = XMLReader.elements(root, "voc");
-		for (int i = 0; i < eEntries.size(); i++) {
-			Element e = eEntries.get(i);
+		for (Element e : eEntries) {
 			String eID = XMLReader.attributeNotNull(e, "key");
 			String eValue = XMLReader.attributeNotNull(e, "value");
 			eValue = eValue.replaceAll("\\\\n", "\n");

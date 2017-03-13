@@ -23,7 +23,7 @@ public class MultiIt<T>
 	}
 
 	@SafeVarargs public static <T> MultiIt<T> multiIt(Iterator<? extends T>... iterators) {
-		return new MultiIt<T>(iterators);
+		return new MultiIt<>(iterators);
 	}
 
 	@Override public boolean hasNext() {

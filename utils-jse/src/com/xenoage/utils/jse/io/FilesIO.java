@@ -208,7 +208,7 @@ public class FilesIO
 		}
 		else {
 			//relative path
-			Set<String> ret = new HashSet<String>();
+			Set<String> ret = new HashSet<>();
 			for (int iDir = 0; iDir < 3; iDir++) {
 				File baseDir = null;
 				switch (iDir) {
@@ -255,7 +255,7 @@ public class FilesIO
 		}
 		else {
 			//relative path
-			Set<String> ret = new HashSet<String>();
+			Set<String> ret = new HashSet<>();
 			for (int iDir = 0; iDir < 3; iDir++) {
 				File baseDir = null;
 				switch (iDir) {
@@ -283,8 +283,8 @@ public class FilesIO
 		File[] dirs = dir.listFiles(JseFileUtils.getDirectoriesFilter());
 		if (dirs != null) {
 			List<String> ret = alist();
-			for (int i = 0; i < dirs.length; i++) {
-				ret.add(dirs[i].getName());
+			for (File d : dirs) {
+				ret.add(d.getName());
 			}
 			return ret;
 		}

@@ -1,10 +1,10 @@
 package com.xenoage.utils.iterators;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Tests for {@link MultiListIt}.
@@ -18,7 +18,7 @@ public class MultiListItTest {
 		List<Integer> list2 = Arrays.asList();
 		List<Integer> list3 = Arrays.asList(4);
 		List<Integer> list4 = Arrays.asList();
-		MultiListIt<Integer> it = new MultiListIt<Integer>(list1, list2, list3, list4);
+		MultiListIt<Integer> it = new MultiListIt<>(list1, list2, list3, list4);
 		for (int i = 1; i <= 4; i++) {
 			Assert.assertTrue(it.hasNext());
 			Assert.assertEquals(i, it.next().intValue());

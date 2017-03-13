@@ -1,12 +1,12 @@
 package com.xenoage.utils.document;
 
-import static com.xenoage.utils.kernel.Range.range;
+import com.xenoage.utils.document.command.CommandPerformer;
+import com.xenoage.utils.document.io.NotesFormats;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.xenoage.utils.document.command.CommandPerformer;
-import com.xenoage.utils.document.io.NotesFormats;
+import static com.xenoage.utils.kernel.Range.range;
 
 /**
  * Class for testing the {@link Document} interface.
@@ -17,7 +17,7 @@ import com.xenoage.utils.document.io.NotesFormats;
 public class Notes
 	implements Document {
 
-	private List<String> lines = new ArrayList<String>();
+	private List<String> lines = new ArrayList<>();
 
 	private CommandPerformer commandPerformer = new CommandPerformer(this);
 	private NotesFormats supportedFormats = new NotesFormats();

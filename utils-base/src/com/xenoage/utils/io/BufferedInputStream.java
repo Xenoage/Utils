@@ -57,7 +57,7 @@ public class BufferedInputStream
 		return data;
 	}
 	
-	@Override public int read(byte[] b)
+	@Override public int read(byte... b)
 		throws IOException {
 		return StreamUtils.read(this, b);
 	}

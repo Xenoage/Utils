@@ -1,21 +1,7 @@
 package com.xenoage.utils.jse.xml;
 
-import static com.xenoage.utils.kernel.Range.range;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
-
+import com.xenoage.utils.annotations.MaybeNull;
+import com.xenoage.utils.annotations.NonNull;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -23,8 +9,20 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.xenoage.utils.annotations.MaybeNull;
-import com.xenoage.utils.annotations.NonNull;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.xenoage.utils.kernel.Range.range;
 
 /**
  * This class contains some helper functions
@@ -208,7 +206,7 @@ public class XMLReader {
 	 * list is empty. 
 	 */
 	public static List<Element> elements(@MaybeNull Node parent, @NonNull String name) {
-		ArrayList<Element> ret = new ArrayList<Element>();
+		ArrayList<Element> ret = new ArrayList<>();
 		if (parent != null) {
 			for (Node node = parent.getFirstChild(); node != null; node = node.getNextSibling()) {
 				if (node.getNodeName().equals(name))
@@ -223,7 +221,7 @@ public class XMLReader {
 	 * If no such elements are found, the returned list is empty. 
 	 */
 	public static ArrayList<Element> elements(Element parent) {
-		ArrayList<Element> ret = new ArrayList<Element>(parent.getChildNodes().getLength());
+		ArrayList<Element> ret = new ArrayList<>(parent.getChildNodes().getLength());
 		for (Node node = parent.getFirstChild(); node != null; node = node.getNextSibling()) {
 			if (node.getNodeType() == Node.ELEMENT_NODE)
 				ret.add((Element) node);

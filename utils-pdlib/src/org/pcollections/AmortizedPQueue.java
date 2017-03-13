@@ -144,7 +144,7 @@ public class AmortizedPQueue<E> extends AbstractQueue<E> implements PQueue<E> {
 		throw new UnsupportedOperationException();
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String... args) {
 		AmortizedPQueue<Integer> queue = new AmortizedPQueue<Integer>();
 		
 		queue = queue.plus(1).minus().minus().plus(2).plus(3).plus(4).plus(5).minus().plus(6).plus(7);

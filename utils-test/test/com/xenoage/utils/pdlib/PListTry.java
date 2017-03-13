@@ -2,8 +2,6 @@ package com.xenoage.utils.pdlib;
 
 import java.util.ArrayList;
 
-import com.xenoage.utils.pdlib.PList;
-
 /**
  * Manual tests for {@link PList}.
  * 
@@ -29,12 +27,12 @@ public class PListTry {
 		int size = 3000000;
 		int steps = 5;
 		//create raw array
-		ArrayList<Integer> raw = new ArrayList<Integer>(size);
+		ArrayList<Integer> raw = new ArrayList<>(size);
 		for (int i = 0; i < size; i++) {
 			raw.add(i);
 		}
 		//create PVector
-		PList<Integer> p = new PList<Integer>(raw);
+		PList<Integer> p = new PList<>(raw);
 		PList<Integer> firstRef = p;
 		//measure memory usage
 		gcAndSleep();

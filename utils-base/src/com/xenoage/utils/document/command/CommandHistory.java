@@ -1,9 +1,9 @@
 package com.xenoage.utils.document.command;
 
-import static com.xenoage.utils.kernel.Range.rangeReverse;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.xenoage.utils.kernel.Range.rangeReverse;
 
 /**
  * A history of {@link Command}s executed on the same {@link CommandPerformer}.
@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class CommandHistory {
 
-	private ArrayList<Command> history = new ArrayList<Command>();
+	private ArrayList<Command> history = new ArrayList<>();
 	private int historyPosition = -1;
 
 
@@ -85,7 +85,7 @@ public class CommandHistory {
 	 * Gets a list of the undoable commands. The first one is the command, that must be undone first.
 	 */
 	public List<Command> getUndoableCommands() {
-		ArrayList<Command> ret = new ArrayList<Command>();
+		ArrayList<Command> ret = new ArrayList<>();
 		for (int i : rangeReverse(historyPosition, 0)) {
 			ret.add(history.get(i));
 		}

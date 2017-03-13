@@ -1,6 +1,5 @@
 package com.xenoage.utils.promise;
 
-import com.xenoage.utils.async.*;
 import org.junit.Test;
 
 import java.util.Timer;
@@ -29,51 +28,23 @@ public class PromiseTest {
 		result1 = 0;
 		result2 = 0;
 		//start with 5.
-		sync(new Promise<Integer>(new Executor<Integer>() {
-			@Override public void run(Return<Integer> r) {
-				r.resolve(5);
-			}
-		})
+		sync(new Promise<Integer>(r -> r.resolve(5))
 		//now a async function which needs 2 seconds. 5 * 2 = 10.
-		.thenAsync(new Function<Integer, Promise<Integer>>() {
-			@Override public Promise<Integer> run(Integer value) {
-				return new Promise<Integer>(new Executor<Integer>() {
-					@Override public void run(Return<Integer> r) {
-						new Timer().schedule(new TimerTask() {
-							@Override public void run() {
-								r.resolve(value * 2);
-							}
-						}, 1000);
-					}
-				});
+		.thenAsync(value -> new Promise<Integer>(r -> new Timer().schedule(new TimerTask() {
+			@Override public void run() {
+				r.resolve(value * 2);
 			}
-		})
+		}, 1000)))
 		//now a sync function. 10 + 3 = 13.
-		.thenSync(new Function<Integer, Integer>() {
-			@Override public Integer run(Integer value) {
-				return value + 3;
-			}
-		})
+		.thenSync(value -> value + 3)
 		//now another async function which needs only 500 ms. 13 * 3 = 39.
-		.thenAsync(new Function<Integer, Promise<Integer>>() {
-			@Override public Promise<Integer> run(Integer value) {
-				return new Promise<Integer>(new Executor<Integer>() {
-					@Override public void run(Return<Integer> r) {
-						new Timer().schedule(new TimerTask() {
-							@Override public void run() {
-								r.resolve(value * 3);
-							}
-						}, 500);
-					}
-				});
+		.thenAsync(value -> new Promise<Integer>(r -> new Timer().schedule(new TimerTask() {
+			@Override public void run() {
+				r.resolve(value * 3);
 			}
-		})
+		}, 500)))
 		//now save the result
-		.thenDo(new Consumer<Integer>() {
-			@Override public void run(Integer value) {
-				result1 = value;
-			}
-		}));
+		.thenDo(value -> result1 = value));
 		assertEquals(39, result1);
 	}
 
@@ -115,8 +86,8 @@ public class PromiseTest {
 			sync(new Promise<Integer>(r -> r.resolve(4))
 				.thenSync(v -> v / 0) //div/0 error
 				.thenSync(v -> { result1 = 10; return 20; }) //may not be executed
-				.thenDo(v -> { result2 = v; }) //may not be executed
-				.onError(e -> { result1 = 1; })); //must be executed
+				.thenDo(v -> result2 = v) //may not be executed
+				.onError(e -> result1 = 1)); //must be executed
 		} catch (Exception ex) {
 		}
 		assertEquals(1, result1);
@@ -147,7 +118,7 @@ public class PromiseTest {
 				.thenDo(
 						v -> result1 = v)
 				.onError(
-						e -> { result2 = 1; })); //must be executed
+						e -> result2 = 1)); //must be executed
 		} catch (Exception ex) {
 		}
 		assertEquals(0, result1);

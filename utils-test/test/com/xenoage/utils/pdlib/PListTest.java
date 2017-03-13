@@ -1,11 +1,10 @@
 package com.xenoage.utils.pdlib;
 
+import org.junit.Test;
+
 import static com.xenoage.utils.kernel.Tuple2.t;
 import static com.xenoage.utils.pdlib.PList.plist;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 
 /**
@@ -18,7 +17,7 @@ public class PListTest
 
 	@Test public void withTest()
 	{
-		PList<Integer> v = new PList<Integer>();
+		PList<Integer> v = new PList<>();
 		try {
 			v = v.with(5, 10);
 			fail("Should throw IndexOutOfBoundsException");
@@ -29,7 +28,7 @@ public class PListTest
 
 	@Test public void withExtendTest()
 	{
-		PList<Integer> v = new PList<Integer>();
+		PList<Integer> v = new PList<>();
 		v = v.withExtend(3, 5, 1);
 		assertEquals(plist(1, 1, 1, 5), v);
 	}

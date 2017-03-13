@@ -28,12 +28,7 @@ public final class Fraction
 	private final int numerator;
 	private final int denominator;
 
-	//ZONG-120: replace by lambda later
-	public static Comparator<Fraction> comparator = new Comparator<Fraction>() {
-		@Override public int compare(Fraction f1, Fraction f2) {
-			return f1.compareTo(f2);
-		}
-	};
+	public static Comparator<Fraction> comparator = Fraction::compareTo;
 
 
 	/**

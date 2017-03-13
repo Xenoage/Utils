@@ -19,7 +19,7 @@ public class Calculator {
 	 * Returns the result asynchronously.
 	 */
 	public static Promise<Integer> calc(int value1, Op op, int value2) {
-		Promise<Integer> ret = new Promise<Integer>(r -> {
+		Promise<Integer> ret = new Promise<>(r -> {
 			//Plus returns immediately
 			if (op == Plus) {
 				r.resolve(value1 + value2);

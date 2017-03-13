@@ -16,7 +16,7 @@ public class Gauss {
 	 * @param b  vector with n elements
 	 * @return  solution vector
 	 */
-	public static double[] solve(double[][] A, double[] b) {
+	public static double[] solve(double[][] A, double... b) {
 		int n = A.length;
 
 		//create a triangular matrix column after column

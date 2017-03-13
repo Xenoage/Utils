@@ -24,7 +24,7 @@ public class BiMap<T1, T2> {
 	private Tuple2<T1, T2> defaultValue = t(null, null);
 
 	public static <T1, T2> BiMap<T1, T2> biMap() {
-		return new BiMap<T1, T2>();
+		return new BiMap<>();
 	}
 
 	public int size() {

@@ -27,7 +27,7 @@ public class FXUtils {
 	 * @deprecated just a test
 	 */
 	@Deprecated
-	public static Stage createStageFromFXML(String fxmlPath, String title, VocID[] voc)
+	public static Stage createStageFromFXML(String fxmlPath, String title, VocID... voc)
 		throws IOException {
 		Parent root = createNodeFromFXML(fxmlPath, voc);
 		Scene scene = new Scene(root);
@@ -43,7 +43,7 @@ public class FXUtils {
 	 * @deprecated just a test
 	 */
 	@Deprecated
-	public static Parent createNodeFromFXML(String fxmlPath, VocID[] voc)
+	public static Parent createNodeFromFXML(String fxmlPath, VocID... voc)
 		throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(FXUtils.class.getResource(fxmlPath));

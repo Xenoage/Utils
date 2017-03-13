@@ -11,7 +11,7 @@ import com.xenoage.utils.annotations.MaybeNull;
  */
 public class Optional<T> {
 	
-	private static Optional<Object> absent = new Optional<Object>(null);
+	private static Optional<Object> absent = new Optional<>(null);
 
 	private T value;
 	
@@ -22,7 +22,7 @@ public class Optional<T> {
 	public static <T> Optional<T> of(T value) {
 		if (value == null)
 			throw new IllegalArgumentException("value is null");
-		return new Optional<T>(value);
+		return new Optional<>(value);
 	}
 	
 	/**

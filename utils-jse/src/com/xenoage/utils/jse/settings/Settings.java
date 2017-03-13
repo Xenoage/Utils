@@ -1,24 +1,19 @@
 package com.xenoage.utils.jse.settings;
 
-import static com.xenoage.utils.jse.JsePlatformUtils.io;
-import static com.xenoage.utils.log.Log.log;
-import static com.xenoage.utils.log.Report.error;
-import static com.xenoage.utils.log.Report.warning;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Properties;
-
 import com.xenoage.utils.Parser;
 import com.xenoage.utils.error.BasicErrorProcessing;
 import com.xenoage.utils.io.FileUtils;
 import com.xenoage.utils.jse.io.DesktopIO;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.*;
+
+import static com.xenoage.utils.jse.JsePlatformUtils.io;
+import static com.xenoage.utils.log.Log.log;
+import static com.xenoage.utils.log.Report.error;
+import static com.xenoage.utils.log.Report.warning;
 
 /**
  * This class manages simple configuration data, which is String values
@@ -77,7 +72,7 @@ public class Settings {
 			this.directory = this.directory.substring(0, this.directory.length() - 1);
 		}
 		// load the settings from the .settings files
-		this.files = new Hashtable<String, Properties>();
+		this.files = new Hashtable<>();
 		List<String> fileList = null;
 		fileList = io().listFiles(directory);
 		for (String file : fileList) {
@@ -121,11 +116,7 @@ public class Settings {
 	 * @param value the new value of the setting. It is converted to a string internally.
 	 */
 	public void setSetting(String key, String file, Object value) {
-		Properties p = files.get(file);
-		if (p == null) {
-			p = new Properties();
-			files.put(file, p);
-		}
+		Properties p = files.computeIfAbsent(file, k -> new Properties());
 		p.put(key, value.toString());
 	}
 
@@ -207,12 +198,11 @@ public class Settings {
 	 * Gets all settings of the given file as a {@link HashMap}. If the file
 	 * does not exist, null is returned. If there are no entries, an empty
 	 * {@link HashMap} is returned.
-	 * @param key the key of the setting
 	 * @param file the filename where the setting can be found, without
 	 * extension
 	 */
 	public HashMap<String, String> getAllSettings(String file) {
-		HashMap<String, String> ret = new HashMap<String, String>();
+		HashMap<String, String> ret = new HashMap<>();
 		Properties p = files.get(file);
 		if (p != null) {
 			Enumeration<Object> keys = p.keys();

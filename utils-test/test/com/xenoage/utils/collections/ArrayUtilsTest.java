@@ -1,14 +1,12 @@
 package com.xenoage.utils.collections;
 
-import static com.xenoage.utils.collections.ArrayUtils.max;
-import static com.xenoage.utils.collections.ArrayUtils.min;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.junit.Test;
 
 import java.util.ArrayList;
 
-import org.junit.Test;
+import static com.xenoage.utils.collections.ArrayUtils.max;
+import static com.xenoage.utils.collections.ArrayUtils.min;
+import static org.junit.Assert.*;
 
 /**
  * Tests for {@link ArrayUtils}.
@@ -34,7 +32,7 @@ public class ArrayUtilsTest {
 		assertNotNull(a);
 		assertEquals(0, a.length);
 		//empty array
-		al = new ArrayList<Integer>();
+		al = new ArrayList<>();
 		a = ArrayUtils.toIntArray(al);
 		assertEquals(0, a.length);
 		//filled array
@@ -47,19 +45,19 @@ public class ArrayUtilsTest {
 	}
 	
 	@Test public void minTestInt() {
-		assertEquals(5, min(new int[]{6, 8, 5, 6}));
+		assertEquals(5, min(6, 8, 5, 6));
 	}
 	
 	@Test public void minTestGeneric() {
-		assertEquals((Integer) 5, min(new Integer[]{6, 8, 5, 6}));
+		assertEquals(5, min(6, 8, 5, 6));
 	}
 	
 	@Test public void maxTestInt() {
-		assertEquals(8, max(new int[]{6, 8, 5, 6}));
+		assertEquals(8, max(6, 8, 5, 6));
 	}
 	
 	@Test public void maxTestGeneric() {
-		assertEquals((Integer) 8, max(new Integer[]{6, 8, 5, 6}));
+		assertEquals(8, max(6, 8, 5, 6));
 	}
 
 }

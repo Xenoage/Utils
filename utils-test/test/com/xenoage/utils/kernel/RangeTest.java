@@ -1,17 +1,13 @@
 package com.xenoage.utils.kernel;
 
-import static com.xenoage.utils.kernel.Range.range;
-import static com.xenoage.utils.kernel.Range.rangeReverse;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Iterator;
 
-import org.junit.Test;
-
-import com.xenoage.utils.kernel.Range;
+import static com.xenoage.utils.kernel.Range.range;
+import static com.xenoage.utils.kernel.Range.rangeReverse;
+import static org.junit.Assert.*;
 
 /**
  * Test cases for the {@link Range} class.
@@ -54,7 +50,7 @@ public class RangeTest {
 	}
 
 	@Test public void rangeTest4() {
-		Range r = range(new int[] { 5, 2, 8 });
+		Range r = range(5, 2, 8);
 		Iterator<Integer> it = r.iterator();
 		for (int i = 0; i <= 2; i++) {
 			assertTrue(it.hasNext());

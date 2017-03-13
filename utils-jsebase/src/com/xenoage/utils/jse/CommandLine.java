@@ -14,7 +14,7 @@ public class CommandLine {
 		return args;
 	}
 
-	public static void setArgs(String[] args) {
+	public static void setArgs(String... args) {
 		CommandLine.args = args;
 	}
 	

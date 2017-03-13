@@ -82,16 +82,15 @@ public class GwtPlatformUtils
 	}
 
 	@Override public Promise<InputStream> openFileAsync(String filePath) {
-		return new Promise<InputStream>(ret -> {
-			gwtIO().openFileAsync(filePath, new AsyncResult<InputStream>() {
-				@Override public void onSuccess(InputStream data) {
-					ret.resolve(data);
-				}
-				@Override public void onFailure(Exception ex) {
-					ret.reject(ex);
-				}
-			});
-		});
+		return new Promise<>(ret -> gwtIO().openFileAsync(filePath, new AsyncResult<InputStream>() {
+			@Override public void onSuccess(InputStream data) {
+				ret.resolve(data);
+			}
+
+			@Override public void onFailure(Exception ex) {
+				ret.reject(ex);
+			}
+		}));
 	}
 
 	/**

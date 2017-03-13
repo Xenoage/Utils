@@ -1,10 +1,10 @@
 package com.xenoage.utils.collections;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 import java.util.LinkedList;
 
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  * Tests for {@link CollectionUtils}.
@@ -22,7 +22,7 @@ public class CollectionUtilsTest {
 	}
 
 	private LinkedList<Integer> list() {
-		LinkedList<Integer> ret = new LinkedList<Integer>();
+		LinkedList<Integer> ret = new LinkedList<>();
 		ret.add(2);
 		ret.add(8);
 		ret.add(3);

@@ -15,7 +15,7 @@ public class NotesFormats
 	}
 
 	private FileFormat<Notes> getTextFormat() {
-		return new FileFormat<Notes>("notestxt", "Notes Text", ".notestxt", new String[0], new NotesInput(),
+		return new FileFormat<>("notestxt", "Notes Text", ".notestxt", new String[0], new NotesInput(),
 				new NotesOutput());
 	}
 

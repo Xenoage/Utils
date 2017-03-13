@@ -43,7 +43,7 @@ public class JseStreamUtils {
 	 */
 	public static String readToString(InputStream in) {
 		try {
-			StringBuffer fileData = new StringBuffer(1024);
+			StringBuilder fileData = new StringBuilder(1024);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
 			char[] buf = new char[1024];
 			int numRead = 0;

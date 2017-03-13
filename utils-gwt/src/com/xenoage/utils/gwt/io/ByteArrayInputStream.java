@@ -14,7 +14,7 @@ public class ByteArrayInputStream {
 	private int pos;
 	private int count;
 
-	public ByteArrayInputStream(byte buf[]) {
+	public ByteArrayInputStream(byte... buf) {
 		this.buf = buf;
 		this.pos = 0;
 		this.count = buf.length;

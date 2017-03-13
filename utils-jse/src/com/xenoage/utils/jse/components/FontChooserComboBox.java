@@ -1,24 +1,17 @@
 package com.xenoage.utils.jse.components;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GraphicsEnvironment;
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicComboBoxEditor;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
-import javax.swing.plaf.basic.BasicComboBoxEditor;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.PlainDocument;
 
 /**
  * Combobox which lists all installed fonts, sorted alphabetically.
@@ -46,9 +39,9 @@ public class FontChooserComboBox
 	private int recentFontsCount = 5;
 
 	private List<String> fontNames;
-	private HashMap<String, FontChooserComboBoxItem> itemsCache = new HashMap<String, FontChooserComboBoxItem>();
+	private HashMap<String, FontChooserComboBoxItem> itemsCache = new HashMap<>();
 	private LinkedList<String> recentFontNames;
-	private HashMap<String, FontChooserComboBoxItem> recentItemsCache = new HashMap<String, FontChooserComboBoxItem>();
+	private HashMap<String, FontChooserComboBoxItem> recentItemsCache = new HashMap<>();
 
 
 	/**
@@ -62,7 +55,7 @@ public class FontChooserComboBox
 		this.fontNames = Arrays.asList(fontNames);
 
 		//recent fonts
-		recentFontNames = new LinkedList<String>();
+		recentFontNames = new LinkedList<>();
 
 		//fill combo box
 		JLabel label = new JLabel();

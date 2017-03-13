@@ -1,8 +1,8 @@
 package com.xenoage.utils.collections;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * Tests for {@link SortedList}.
@@ -14,7 +14,7 @@ public class SortedListTest {
 	@Test public void addWithDuplicatesTest() {
 		boolean duplicates = true;
 		//test presorted numbers
-		SortedList<Integer> list = new SortedList<Integer>(duplicates);
+		SortedList<Integer> list = new SortedList<>(duplicates);
 		list.add(0);
 		list.add(1);
 		list.add(2);
@@ -25,7 +25,7 @@ public class SortedListTest {
 			assertEquals(x, list.get(i).intValue());
 		}
 		//test mixed numbers
-		list = new SortedList<Integer>(duplicates);
+		list = new SortedList<>(duplicates);
 		list.add(2);
 		list.add(1);
 		list.add(3);
@@ -36,7 +36,7 @@ public class SortedListTest {
 			assertEquals(x, list.get(i).intValue());
 		}
 		//test reversely presorted numbers
-		list = new SortedList<Integer>(duplicates);
+		list = new SortedList<>(duplicates);
 		list.add(3);
 		list.add(2);
 		list.add(2);
@@ -51,7 +51,7 @@ public class SortedListTest {
 	@Test public void addWithoutDuplicatesTest() {
 		boolean duplicates = false;
 		//test presorted numbers
-		SortedList<Integer> list = new SortedList<Integer>(duplicates);
+		SortedList<Integer> list = new SortedList<>(duplicates);
 		list.add(0);
 		list.add(0);
 		list.add(1);
@@ -62,7 +62,7 @@ public class SortedListTest {
 			assertEquals(i, list.get(i).intValue());
 		}
 		//test mixed numbers
-		list = new SortedList<Integer>(duplicates);
+		list = new SortedList<>(duplicates);
 		list.add(2);
 		list.add(0);
 		list.add(1);
@@ -75,7 +75,7 @@ public class SortedListTest {
 			assertEquals(i, list.get(i).intValue());
 		}
 		//test reversely presorted numbers
-		list = new SortedList<Integer>(duplicates);
+		list = new SortedList<>(duplicates);
 		list.add(3);
 		list.add(2);
 		list.add(2);
@@ -89,7 +89,7 @@ public class SortedListTest {
 
 	@Test public void addOrReplaceTest() {
 		boolean duplicates = false;
-		SortedList<Comp> list = new SortedList<Comp>(duplicates);
+		SortedList<Comp> list = new SortedList<>(duplicates);
 		//add numbers
 		list.addOrReplace(new Comp(0, 100));
 		list.addOrReplace(new Comp(0, 101));
@@ -108,11 +108,11 @@ public class SortedListTest {
 	}
 
 	@Test public void mergeTest() {
-		SortedList<Integer> list1 = new SortedList<Integer>(false);
+		SortedList<Integer> list1 = new SortedList<>(false);
 		list1.add(4);
 		list1.add(6);
 		list1.add(7);
-		SortedList<Integer> list2 = new SortedList<Integer>(true);
+		SortedList<Integer> list2 = new SortedList<>(true);
 		list2.add(5);
 		list2.add(7);
 		list2.add(7);
@@ -136,7 +136,7 @@ public class SortedListTest {
 	
 	
 	@Test public void getFirstAndGetLastTest() {
-		SortedList<Integer> list = new SortedList<Integer>(false);
+		SortedList<Integer> list = new SortedList<>(false);
 		list.add(2);
 		list.add(1);
 		list.add(3);

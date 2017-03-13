@@ -36,7 +36,7 @@ public class NullableList {
 	 */
 	public static <T> List<T> add(List<T> list, T e) {
 		if (list == null)
-			list = new ArrayList<T>();
+			list = new ArrayList<>();
 		list.add(e);
 		return list;
 	}
