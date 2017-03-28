@@ -2,6 +2,8 @@ package com.xenoage.utils.math;
 
 import com.xenoage.utils.math.geom.Point2f;
 import com.xenoage.utils.math.geom.Point2i;
+import com.xenoage.utils.math.geom.Size2f;
+import com.xenoage.utils.math.geom.Size2i;
 
 /**
  * Some functions to convert values into
@@ -76,6 +78,42 @@ public class Units {
 	 */
 	public static Point2f pxToMm(Point2f px, float scaling) {
 		return new Point2f(pxToMm(px.x, scaling), pxToMm(px.y, scaling));
+	}
+
+	/**
+	 * Converts the given mm into pixels,
+	 * respecting the given scaling factor
+	 * relative to 72 dpi.
+	 */
+	public static Size2f mmToPx(Size2f sizeMm, float scaling) {
+		return new Size2f(mmToPx(sizeMm.width, scaling), mmToPx(sizeMm.height, scaling));
+	}
+
+	/**
+	 * Converts the given mm into pixels,
+	 * respecting the given scaling factorpxToMm
+	 * relative to 72 dpi.
+	 */
+	public static Size2i mmToPxInt(Size2f sizeMm, float scaling) {
+		return new Size2i(Math.round(mmToPx(sizeMm.width, scaling)), Math.round(mmToPx(sizeMm.height, scaling)));
+	}
+
+	/**
+	 * Converts the given pixels into mm,
+	 * respecting the given scaling factor
+	 * relative to 72 dpi.
+	 */
+	public static Size2f pxToMm(Size2f sizePx, float scaling) {
+		return new Size2f(pxToMm(sizePx.width, scaling), pxToMm(sizePx.height, scaling));
+	}
+
+	/**
+	 * Converts the given pixels into mm,
+	 * respecting the given scaling factor
+	 * relative to 72 dpi.
+	 */
+	public static Size2f pxToMm(Size2i sizePx, float scaling) {
+		return new Size2f(pxToMm(sizePx.width, scaling), pxToMm(sizePx.height, scaling));
 	}
 
 	private Units() {

@@ -25,6 +25,14 @@ public final class Size2i {
 		return width * height;
 	}
 
+	public Size2i scale(int scaling) {
+		return new Size2i(width * scaling, height * scaling);
+	}
+
+	public Size2f scale(float scaling) {
+		return new Size2f(width * scaling, height * scaling);
+	}
+
 	@Override public boolean equals(Object obj) {
 		if (obj instanceof Size2i) {
 			Size2i size = (Size2i) obj;
