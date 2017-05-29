@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import static com.xenoage.utils.collections.CollectionUtils.alist;
 import static com.xenoage.utils.collections.CollectionUtils.alistInit;
-import static com.xenoage.utils.kernel.Range.range;
 
 /**
  * Two-dimensional array.
@@ -18,7 +17,7 @@ import static com.xenoage.utils.kernel.Range.range;
  */
 public class Table<T> {
 
-	private ArrayList<ArrayList<T>> cells = alist(); //[y][x]
+	private ArrayList<T> cells = alist(); //index = y * columnsCount + x
 
 	private int columnsCount = 0;
 	private int rowsCount = 0;
@@ -26,16 +25,14 @@ public class Table<T> {
 	public Table(int columnsCount, int rowsCount) {
 		this.columnsCount = columnsCount;
 		this.rowsCount = rowsCount;
-		cells = alistInit(null, rowsCount);
-		for (int y : range(rowsCount))
-			cells.set(y, alistInit(null, columnsCount));
+		cells = alistInit(null, rowsCount * columnsCount);
 	}
 
 	/**
 	 * Gets the number of columns.
 	 * When there are no rows, the number of columns is always 0.
 	 */
-	public int getColumnsCount() {
+	public synchronized int getColumnsCount() {
 		if (rowsCount == 0)
 			return 0;
 		return columnsCount;
@@ -45,10 +42,18 @@ public class Table<T> {
 	 * Gets the number of rows.
 	 * When there are no columns, the number of rows is always 0.
 	 */
-	public int getRowsCount() {
+	public synchronized int getRowsCount() {
 		if (columnsCount == 0)
 			return 0;
 		return rowsCount;
+	}
+
+	/**
+	 * Gets the raw cell data. This method is only provided for JPA support
+	 * and should not be used otherwise.
+	 */
+	public ArrayList<T> getCells() {
+		return cells;
 	}
 
 	/**
@@ -56,8 +61,9 @@ public class Table<T> {
 	 */
 	public synchronized void addColumn() {
 		columnsCount++;
-		for (int i : range(rowsCount))
-			cells.get(i).add(null);
+		cells.ensureCapacity(columnsCount * rowsCount);
+		for (int i = 0; i < rowsCount; i++)
+			cells.add((i + 1) * columnsCount - 1,null);
 	}
 
 	/**
@@ -65,17 +71,18 @@ public class Table<T> {
 	 */
 	public synchronized void addColumn(int x) {
 		columnsCount++;
-		for (int i : range(rowsCount))
-			cells.get(i).add(x, null);
+		cells.ensureCapacity(columnsCount * rowsCount);
+		for (int i = 0; i < rowsCount; i++)
+			cells.add(i * columnsCount + x, null);
 	}
 
 	/**
 	 * Removes the column at the given column index.
 	 */
 	public synchronized void removeColumn(int x) {
+		for (int i = rowsCount - 1; i >= 0; i--)
+			cells.remove(i * columnsCount + x);
 		columnsCount--;
-		for (int i : range(rowsCount))
-			cells.get(i).remove(x);
 	}
 
 	/**
@@ -83,8 +90,9 @@ public class Table<T> {
 	 */
 	public synchronized void addRow() {
 		rowsCount++;
-		ArrayList<T> row = alistInit(null, columnsCount);
-		cells.add(row);
+		cells.ensureCapacity(columnsCount * rowsCount);
+		for (int i = 0; i < columnsCount; i++)
+			cells.add(null);
 	}
 
 	/**
@@ -92,30 +100,34 @@ public class Table<T> {
 	 */
 	public synchronized void addRow(int y) {
 		rowsCount++;
-		ArrayList<T> row = alistInit(null, columnsCount);
-		cells.add(y, row);
+		cells.ensureCapacity(columnsCount * rowsCount);
+		for (int i = 0; i < columnsCount; i++)
+			cells.add(y * columnsCount, null);
 	}
 
 	/**
 	 * Removes the row at the given row index.
 	 */
 	public synchronized void removeRow(int y) {
+		for (int i = 0; i < columnsCount; i++)
+			cells.remove(y * columnsCount);
 		rowsCount--;
-		cells.remove(y);
 	}
 
 	/**
 	 * Gets the value at the given column and row, or null if not set.
 	 */
 	public synchronized T get(int x, int y) {
-		return cells.get(y).get(x);
+		int index = y * columnsCount + x;
+		return cells.get(index);
 	}
 
 	/**
 	 * Sets the value at the given column and row.
 	 */
 	public synchronized void set(int x, int y, T value) {
-		cells.get(y).set(x, value);
+		int index = y * columnsCount + x;
+		cells.set(index, value);
 	}
 
 }
