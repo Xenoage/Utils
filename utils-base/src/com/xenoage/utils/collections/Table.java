@@ -17,10 +17,16 @@ import static com.xenoage.utils.collections.CollectionUtils.alistInit;
  */
 public class Table<T> {
 
-	private ArrayList<T> cells = alist(); //index = y * columnsCount + x
+	private ArrayList<T> cells; //index = y * columnsCount + x
 
-	private int columnsCount = 0;
-	private int rowsCount = 0;
+	private int columnsCount;
+	private int rowsCount;
+
+	public Table() {
+		columnsCount = 0;
+		rowsCount = 0;
+		cells = alist();
+	}
 
 	public Table(int columnsCount, int rowsCount) {
 		this.columnsCount = columnsCount;
